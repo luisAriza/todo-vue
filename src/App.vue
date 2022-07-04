@@ -6,6 +6,7 @@
   <router-view/>
 </template>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
