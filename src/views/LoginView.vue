@@ -1,7 +1,7 @@
 <template lang="pug">
 .login
-	h2.title Sign Up
-	Form(buttonName="login")
+	h2.title Log In
+	Form(buttonName="Log In")
 </template>
 
 <script>
