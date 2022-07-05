@@ -1,11 +1,19 @@
-<template lang="pug">
-.home
-  h1.text-xl Estate Task
-  p Tareas...
+<template>
+<div class="home">
+  <h1 class="text-xl">Home Task Master</h1>
+  <p v-if="!userLogged">User logged: {{ userLogged }}</p>
+</div>
 </template>
 
 <script>
-  export default {
-    name: 'HomeView',
+import auth from "@/utils/auth";
+
+export default {
+  name: 'HomeView',
+  computed: {
+    userLogged() {
+      return auth.getUserLogged();
+    }
   }
+}
 </script>

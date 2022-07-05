@@ -1,5 +1,5 @@
 <template lang="pug">
-from.form__container(action name="form" @submit.prevent="register()")
+form.form__container(action name="form" @submit.prevent="register()")
 	label(for="email") Email:
 		input(type="email"
 			id="email"
@@ -14,14 +14,14 @@ from.form__container(action name="form" @submit.prevent="register()")
 			required
 			v-model="password"
 			@blur="v$.password.$touch")
-		p(v-if="v$.password.$error") Password field has an error, minimum 8 characters
+		p(v-if="v$.password.$error") minimum 8 characters
 	label(for="password-repeat") Password:
 		input(type="password"
 			id="password-repeat"
 			required
 			v-model="passwordRepeat"
 			@blur="v$.passwordRepeat.$touch")
-		p(v-if="v$.passwordRepeat.$error") Password field has an error, minimum 8 characters
+		p(v-if="v$.passwordRepeat.$error") Repeat password
 	input(class="button"
 		type="submit"
 		value="Sign Up")
@@ -51,7 +51,11 @@ export default {
 		async register() {
 			try {
 				await auth.register(this.email, this.password);
-				this.$router.push("/")
+				const user = {
+					email: this.email
+				};
+				auth.setUserLogged(user);
+				this.$router.push("/");
 			} catch (error) {
 				console.log(error);
 			}
@@ -66,11 +70,11 @@ export default {
 			},
 			password: {
 				required,
-				minLength: minLength(3)
+				minLength: minLength(4)
 			},
 			passwordRepeat: {
 				required,
-				minLength: minLength(3)
+				minLength: minLength(4)
 			},
 		}
 	}

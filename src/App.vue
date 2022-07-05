@@ -1,12 +1,18 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <!-- <router-link to="/about">About</router-link> | -->
-    <router-link to="/login">Log In</router-link> |
-    <router-link to="/register">Sign Up</router-link>
-  </nav>
+  <Navbar/>
   <router-view/>
 </template>
+
+<script>
+import Navbar from "@/components/Navbar.vue"
+
+export default {
+  name: "App",
+  components: {
+    Navbar
+  }
+}
+</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>

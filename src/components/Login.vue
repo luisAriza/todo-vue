@@ -1,13 +1,24 @@
 <template lang="pug">
-from.form__container(action name="form" @submit.prevent="login()")
+form.form__container(action name="form" @submit.prevent="login()")
   label(for="email") Email:
-    input(type="email" id="email" required placeholder="user@example.com" @blur="v$.email.$touch" v-model="email")
+    input(type="email"
+      id="email"
+      placeholder="user@example.com"
+      @blur="v$.email.$touch"
+      v-model="email"
+      required)
     p(v-if="v$.email.$error") Email field has an error
   label(for="password") Password:
-    input(type="password" id="password" required v-model="password" @blur="v$.password.$touch")
+    input(type="password"
+      id="password"
+      v-model="password"
+      @blur="v$.password.$touch"
+      required)
     p(v-if="v$.password.$error") Password field has an error, minimum 8 characters
   p(v-if="error" class="error") Has introducido mal el email o la contraseña.
-  input(class="submit" type="submit" value="log In")
+  input(class="submit"
+    type="submit"
+    value="log In")
   p.msg ¿No tienes cuenta?
     router-link(to="/register") Regístrate
 </template>
@@ -35,8 +46,13 @@ export default {
     async login() {
       try {
         await auth.login(this.email, this.password);
+        const user = {
+          email: this.email
+        };
+        auth.setUserLogged(user);
         this.$router.push("/");
       } catch (error) {
+        console.log(error);
         this.error = true;
       }
     }
@@ -46,11 +62,11 @@ export default {
       email: {
         email,
         required,
-        minLength: minLength(3)
+        minLength: minLength(4)
       },
       password: {
         required,
-        minLength: minLength(8)
+        minLength: minLength(4)
       },
     }
   }
