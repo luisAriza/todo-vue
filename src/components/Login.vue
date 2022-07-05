@@ -6,12 +6,16 @@ from.form__container(action name="form" @submit.prevent="login()")
   label(for="password") Password:
     input(type="password" id="password" required v-model="password" @blur="v$.password.$touch")
     p(v-if="v$.password.$error") Password field has an error, minimum 8 characters
+  p(v-if="error" class="error") Has introducido mal el email o la contraseña.
   input(class="submit" type="submit" value="log In")
+  p.msg ¿No tienes cuenta?
+    router-link(to="/register") Regístrate
 </template>
 
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
+import auth from "@/utils/auth"
 
 export default {
   name: "Login",
@@ -24,12 +28,17 @@ export default {
     return {
       email: "",
       password: "",
+      error: false
     }
   },
   methods: {
-    login() {
-      console.log(this.email);
-      console.log(this.password);
+    async login() {
+      try {
+        await auth.login(this.email, this.password);
+        this.$router.push("/");
+      } catch (error) {
+        this.error = true;
+      }
     }
   },
   validations() {

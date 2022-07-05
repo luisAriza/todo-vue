@@ -43,13 +43,18 @@ export default {
 		return {
 			email: "",
 			password: "",
-			passwordRepeat: ""
+			passwordRepeat: "",
+			error: false
 		}
 	},
 	methods: {
 		async register() {
-			const response = await auth.register(this.email, this.password);
-			console.log(response);
+			try {
+				await auth.register(this.email, this.password);
+				this.$router.push("/")
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	},
 	validations() {
