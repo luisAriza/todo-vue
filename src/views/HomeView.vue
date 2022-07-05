@@ -1,6 +1,6 @@
 <template lang="pug">
 .home
-  h1.text-xl Home Page
+  h1.text-xl Estate Task
 </template>
 
 <script>
