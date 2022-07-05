@@ -1,11 +1,11 @@
 <template lang="pug">
-form.form__container(action name="form" @submit.prevent="login()")
+form.form__container(action name="form-login" @submit.prevent="login()")
   label(for="email") Email:
     input(type="email"
       id="email"
       placeholder="user@example.com"
-      @blur="v$.email.$touch"
       v-model="email"
+      @blur="v$.email.$touch"
       required)
     p(v-if="v$.email.$error") Email field has an error
   label(for="password") Password:

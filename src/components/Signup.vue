@@ -1,26 +1,26 @@
 <template lang="pug">
-form.form__container(action name="form" @submit.prevent="register()")
+form.form__container(action name="form-register" @submit.prevent="register()")
 	label(for="email") Email:
 		input(type="email"
 			id="email"
-			required
 			placeholder="user@example.com"
+			v-model="email"
 			@blur="v$.email.$touch"
-			v-model="email")
+			required)
 		p(v-if="v$.email.$error") Email field has an error
 	label(for="password") Password:
 		input(type="password"
 			id="password"
-			required
 			v-model="password"
-			@blur="v$.password.$touch")
+			@blur="v$.password.$touch"
+			required)
 		p(v-if="v$.password.$error") minimum 8 characters
 	label(for="password-repeat") Password:
 		input(type="password"
 			id="password-repeat"
-			required
 			v-model="passwordRepeat"
-			@blur="v$.passwordRepeat.$touch")
+			@blur="v$.passwordRepeat.$touch"
+			required)
 		p(v-if="v$.passwordRepeat.$error") Repeat password
 	input(class="button"
 		type="submit"
@@ -29,7 +29,7 @@ form.form__container(action name="form" @submit.prevent="register()")
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, email, minLength } from '@vuelidate/validators'
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
 import auth from "@/utils/auth"
 
 export default {
@@ -52,7 +52,7 @@ export default {
 			try {
 				await auth.register(this.email, this.password);
 				const user = {
-					email: this.email
+					email: this.email,
 				};
 				auth.setUserLogged(user);
 				this.$router.push("/");
@@ -66,7 +66,7 @@ export default {
 			email: {
 				email,
 				required,
-				minLength: minLength(3)
+				minLength: minLength(4)
 			},
 			password: {
 				required,
@@ -74,7 +74,8 @@ export default {
 			},
 			passwordRepeat: {
 				required,
-				minLength: minLength(4)
+				minLength: minLength(4),
+				sameAsPassword: sameAs(this.password)
 			},
 		}
 	}
