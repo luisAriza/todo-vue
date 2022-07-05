@@ -1,17 +1,17 @@
 <template lang="pug">
 .login
 	h2.title Log In
-	Form(buttonName="Log In")
+	Login
 </template>
 
 <script>
 // @ is an alias to /src
-import Form from '@/components/Form.vue'
+import Login from '@/components/Login.vue'
 
 export default {
 	name: 'LoginView',
 	components: {
-		Form
+		Login
 	}
 }
 </script>
