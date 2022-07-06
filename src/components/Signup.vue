@@ -1,13 +1,13 @@
 <template lang="pug">
 form.form__container(action name="signup" @submit.prevent="saveRegister()")
-  label(for="name") User name
+  label(for="name") Nickname
   input(id="name"
     type="name"
     placeholder="julio890"
-    @blur="v$.user.name.$touch"
-    v-model="user.name"
+    @blur="v$.user.$touch"
+    v-model="user"
     required)
-  p(v-if="v$.user.name.$error") minimum 4 characters
+  p(v-if="v$.user.$error") minimum 4 characters
   label(for="email") Email
   input(id="email"
     type="email"
@@ -37,10 +37,7 @@ export default {
   name: "Signup",
   data() {
     return {
-      user: {
-        name: "",
-        tasks: []
-      },
+      user: "",
       email: "",
       password: "",
       error: false
@@ -55,10 +52,9 @@ export default {
         this.error = true;
       } else {
         user_records.push({
-          "user": this.user.name,
+          "user": this.user,
           "email": this.email,
           "psw": this.password,
-          "tasks": this.user.tasks
         })
         localStorage.setItem("users", JSON.stringify(user_records));
         this.$router.push("/");
@@ -73,10 +69,8 @@ export default {
   validations() {
     return {
       user: {
-        name: {
-          required,
-          minLength: minLength(4)
-        }
+        required,
+        minLength: minLength(4)
       },
       email: {
         email,

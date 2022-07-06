@@ -27,6 +27,7 @@ form.form__container(action name="login" @submit.prevent="login()")
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required, minLength, email } from '@vuelidate/validators'
+import { array } from 'yargs';
 
 export default {
   name: "Login",
@@ -35,6 +36,7 @@ export default {
       email: "",
       password: "",
       error: false,
+      task: {}
     }
   },
   methods: {
@@ -42,10 +44,16 @@ export default {
       let user_records = new Array();
       user_records = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [];
 
+      let task_records = new Array();
+      task_records = JSON.parse(localStorage.getItem("tasks_records")) ? JSON.parse(localStorage.getItem("tasks_records")) : [];
+
       if (user_records.some((v) => v.email == this.email && v.psw == this.password )) {
         let current_user = user_records.filter((v) => v.email == this.email && v.psw == this.password)[0];
         localStorage.setItem('user', current_user.user);
-        localStorage.setItem('tasks', current_user.tasks);
+        task_records.push({
+          "user": current_user.user,
+        });
+        localStorage.setItem("tasks_records", JSON.stringify(task_records));
         this.$router.push("/home");
       } else {
         this.error = true;
