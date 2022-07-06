@@ -3,7 +3,6 @@
 		<label for="task">New Task</label>
 		<input id="task" type="text" placeholder="Title" v-model="task.title" @blur="v$.task.title.$touch" required>
 		<p v-if="v$.task.title.$error">Enter title of task</p>
-		<!-- <p v-if="error" class="error">Title existent</p> -->
 		<textarea name="description" placeholder="Description" cols="30" rows="3" v-model="task.description"
 			@blur="v$.task.description.$touch" required>
 		</textarea>
@@ -11,12 +10,20 @@
 		</div>
 		<p v-if="v$.task.description.$error">Enter description of task</p>
 		<button class="button" type="submit">Create Task</button>
-		<ul>
-			<li>
-				{{showTask()}}
-			</li>
-		</ul>
 	</form>
+	<p v-if="noLogged">
+		No logged.
+		<router-link to="/">Log In</router-link>
+	</p>
+	<ul class="task-list mt-10">
+		<li v-for="(item, i) in taskList" :key="i">
+			Title: {{item.title}} - Description: {{item.description}} - Tags:
+			<span v-for="(tag, j) in item.tags" :key="'tag' + j">{{tag}}</span>
+			<span>
+				<img src="@/assets/delete.svg" alt="close icon" class="inline cursor-pointer" @click="deleteTask()"/>
+			</span>
+		</li>
+	</ul>
 </template>
 
 <script>
@@ -34,7 +41,7 @@ export default {
 				description: "",
 				tags: []
 			},
-			TaskPrint: false,
+			noLogged: false,
 		}
 	},
 	methods: {
@@ -51,11 +58,26 @@ export default {
 				localStorage.setItem("tasks", JSON.stringify(task_records));
 			}
 		},
-		showTask() {
-			let task_records = JSON.parse(this.tasks)
-			console.log(task_records[0].tasks)
-			return task_records[0].tasks
+		deleteTask() {
+			return localStorage.removeItem(this.taskList[0])
 		}
+	},
+	computed: {
+		taskList() {
+			if (this.user != null || undefined) {
+				let tasks = JSON.parse(this.tasks);
+				//index del user
+				let tasksIndex = tasks.findIndex((v) => v.user == this.user);
+				//tarea del user seleccionada
+				let tasksUser = tasks[tasksIndex].tasks;
+
+				console.log(tasksUser);
+
+				return tasksUser;
+			} else {
+				this.noLogged = true;
+			}
+		},
 	},
 	setup() {
 		return {
