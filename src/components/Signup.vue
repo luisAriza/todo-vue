@@ -1,6 +1,6 @@
 <template lang="pug">
 form.form__container(action name="signup" @submit.prevent="saveRegister()")
-  label(for="user") User name
+  label(for="user") Name
   input(id="user"
     type="name"
     placeholder="username"
@@ -8,7 +8,7 @@ form.form__container(action name="signup" @submit.prevent="saveRegister()")
     @blur="v$.user.$touch"
     required)
   p(v-if="v$.user.$error") minimum 4 characters
-  label(for="email") User name
+  label(for="email") Email
   input(id="email"
     type="email"
     placeholder="user@example.com"
@@ -57,6 +57,7 @@ export default {
           "psw": this.password
         })
         localStorage.setItem("users", JSON.stringify(user_records));
+        this.$router.push("/");
       }
       console.log(`Usuario: ${this.user} | Email: ${this.email} | Contraseña: ${this.password}`)
     }

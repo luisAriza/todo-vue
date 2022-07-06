@@ -1,6 +1,6 @@
 <template lang="pug">
 .login
-	h2.title Log In
+	h2.title Sign Up
 	Signup
 </template>
 

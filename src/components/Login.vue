@@ -1,13 +1,13 @@
 <template lang="pug">
 form.form__container(action name="login" @submit.prevent="login()")
-  label(for="email") Email
-  input(id="email"
-    type="email"
-    placeholder="user@example.com"
-    v-model="email"
-    @blur="v$.email.$touch"
+  label(for="username") User
+  input(id="username"
+    type="text"
+    placeholder="email or username"
+    v-model="username"
+    @blur="v$.username.$touch"
     required)
-  p(v-if="v$.email.$error") minimum 4 characters
+  p(v-if="v$.username.$error") Enter your account
   label(for="psw") Password
   input(id="psw"
     type="password"
@@ -20,22 +20,19 @@ form.form__container(action name="login" @submit.prevent="login()")
   input(class="submit-btn"
     type="submit"
     value="Log In")
+  p.msg ¿No tienes cuenta?
+    router-link(to="/register")  Sign Up
 </template>
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, minLength, email } from '@vuelidate/validators'
-
-// if (name != '') {
-  // alert('Please visit profile');
-  // window.location.href = "profile.html";
-// }
+import { required, minLength } from '@vuelidate/validators'
 
 export default {
   name: "Login",
   data() {
     return {
-      email: "",
+      username: "",
       password: "",
       error: false,
     }
@@ -45,15 +42,14 @@ export default {
       let user_records = new Array();
       user_records = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [];
 
-      if (user_records.some((v) => v.email == this.email && v.psw == this.password )) {
-        let current_user = user_records.filter((v) => v.email == this.email && v.psw == this.password)[0];
+      if (user_records.some((v) => (v.user == this.username || v.email == this.username) && v.psw == this.password )) {
+        let current_user = user_records.filter((v) => (v.user == this.username || v.email == this.username) && v.psw == this.password)[0];
         localStorage.setItem('user', current_user.user);
         localStorage.setItem('email', current_user.email);
         this.$router.push("/home");
       } else {
         this.error = true;
       }
-      console.log(`Email: ${this.email}, Contraseña: ${this.password}`)
     }
   },
   setup() {
@@ -63,8 +59,7 @@ export default {
   },
   validations() {
     return {
-      email: {
-        email,
+      username: {
         required,
         minLength: minLength(4)
       },
