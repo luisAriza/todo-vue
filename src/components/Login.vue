@@ -27,7 +27,6 @@ form.form__container(action name="login" @submit.prevent="login()")
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required, minLength, email } from '@vuelidate/validators'
-import { array } from 'yargs';
 
 export default {
   name: "Login",
@@ -44,16 +43,23 @@ export default {
       let user_records = new Array();
       user_records = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [];
 
-      let task_records = new Array();
-      task_records = JSON.parse(localStorage.getItem("tasks_records")) ? JSON.parse(localStorage.getItem("tasks_records")) : [];
-
-      if (user_records.some((v) => v.email == this.email && v.psw == this.password )) {
+      if (user_records.some((v) => v.email == this.email && v.psw == this.password)) {
         let current_user = user_records.filter((v) => v.email == this.email && v.psw == this.password)[0];
-        localStorage.setItem('user', current_user.user);
-        task_records.push({
-          "user": current_user.user,
-        });
-        localStorage.setItem("tasks_records", JSON.stringify(task_records));
+        localStorage.setItem("user", current_user.user);
+
+        let task_records = new Array();
+        task_records = JSON.parse(localStorage.getItem("tasks")) ? JSON.parse(localStorage.getItem("tasks")) : [];
+
+        if (task_records.some((v) => v.user == current_user.user)) {
+          console.log("Ya este usuario ha entrado")
+        } else {
+          task_records.push({
+            "user": current_user.user,
+            "tasks": new Array()
+          })
+          localStorage.setItem("tasks", JSON.stringify(task_records));
+        }
+
         this.$router.push("/home");
       } else {
         this.error = true;

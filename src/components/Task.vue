@@ -7,6 +7,8 @@
 		<textarea name="description" placeholder="Description" cols="30" rows="3" v-model="task.description"
 			@blur="v$.task.description.$touch" required>
 		</textarea>
+		<div class="tags">
+		</div>
 		<p v-if="v$.task.description.$error">Enter description of task</p>
 		<button class="button" type="submit">Create Task</button>
 		<ul>
@@ -19,39 +21,40 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, maxLength } from '@vuelidate/validators'
+import { required } from '@vuelidate/validators'
 
 export default {
 	name: "Task",
 	data() {
 		return {
 			user: localStorage.getItem("user"),
+			tasks: localStorage.getItem("tasks"),
 			task: {
 				title: "",
-				description: ""
-			// tags: [],
+				description: "",
+				tags: []
 			},
+			TaskPrint: false,
 		}
 	},
 	methods: {
 		createTask() {
 			let task_records = new Array();
-			task_records = JSON.parse(localStorage.getItem("tasks_records")) ? JSON.parse(localStorage.getItem("tasks_records")) : [];
+			task_records = JSON.parse(this.tasks) ? JSON.parse(this.tasks) : [];
+			//index del user
+			let tasksIndex = task_records.findIndex((v) => v.user == this.user);
+			//tarea del user seleccionada
+			let tasks = task_records[tasksIndex].tasks;
 
 			if (task_records.some((v) => v.user == this.user)) {
-				// let current_user = task_records.filter((v) => v.user == this.user)[0];
-				// task_records.push({
-				// 	"tasks": [this.task]
-				// })
-				console.log(localStorage.getItem("tasks_records"));
-				// localStorage.setItem("tasks_records", current_user.task)
-			} else {
-				console.log(localStorage.getItem("tasks_records"));
-				// localStorage.setItem("tasks_records", JSON.stringify(task_records));
+				tasks.push(this.task)
+				localStorage.setItem("tasks", JSON.stringify(task_records));
 			}
 		},
 		showTask() {
-
+			let task_records = JSON.parse(this.tasks)
+			console.log(task_records[0].tasks)
+			return task_records[0].tasks
 		}
 	},
 	setup() {
@@ -67,7 +70,6 @@ export default {
 				},
 				description: {
 					required,
-					maxLength: maxLength(120)
 				}
 			}
 		}
