@@ -31,7 +31,7 @@ export default {
 	methods: {
 		Logout() {
 			localStorage.removeItem('user');
-			localStorage.removeItem('email');
+			localStorage.removeItem('tasks');
 
 			this.$router.push("/");
 		}

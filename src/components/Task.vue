@@ -1,45 +1,91 @@
 <template>
 	<form @submit.prevent="createTask">
-		<label for="task">Nueva tarea</label>
+		<label for="task">New Task</label>
 		<input type="text" v-model="titleTask" id="task">
-		<textarea name="descriptionTask" cols="30" rows="3" v-model="descriptionTask"></textarea>
-		<input class="button" type="submit" value="Crear tarea">
+		<textarea name="description" cols="30" rows="3" v-model="descriptionTask"></textarea>
+		<input type="submit" class="button" value="Create Task">
 		<ul>
-			<li v-for="(task, i) in tasks" :key="'task' + i" :class="{completed: task.completed}"
-				@click="completeTask(task.text)">
-				{{task.text}}
-			</li>
+			<li></li>
 		</ul>
 	</form>
 </template>
 
 <script>
+// showData();
+// function saveData() {
+// 	let task_name;
+// 	task_name = document.getElementById("task_name").value;
+
+// 	let task_records = new Array();
+// 	task_records = JSON.parse(localStorage.getItem("toDoList")) ? JSON.parse(localStorage.getItem("toDoList")) : []
+// 	if (task_records.some((v) => { return v.task_name == task_name })) {
+// 		alert("duplicate data");
+// 	}
+// 	else {
+// 		task_records.push({
+// 			"task_name": task_name,
+// 			"status": '0',
+// 		})
+// 		localStorage.setItem("toDoList", JSON.stringify(task_records));
+// 	}
+// 	showData();
+// }
+
+// function showData() {
+// 	document.getElementById("showUsers").innerHTML = "";
+// 	let task_records = new Array();
+// 	task_records = JSON.parse(localStorage.getItem("toDoList")) ? JSON.parse(localStorage.getItem("toDoList")) : []
+// 	if (task_records) {
+// 		for (let i = 0; i < task_records.length; i++) {
+// 			let addDiv = document.createElement('div');
+// 			addDiv.className = "row";
+// 			let status = task_records[i].status == "1" ? true : false;
+// 			if (status) {
+// 				addDiv.innerHTML = '  <div class="col-sm-12" style="padding: 10px;color:red;"><input type="checkbox" checked /> ' + task_records[i].task_name + ' <button class="btn btn-info" onclick="deleteData(' + i + ')">Delete</button> <button class="btn btn-warning" onclick="setStatus(' + i + ',0)">Un-Mark</button></div>';
+
+// 			}
+// 			else {
+// 				addDiv.innerHTML = '  <div class="col-sm-12" style="padding: 10px;color:red;"><input type="checkbox" /> ' + task_records[i].task_name + ' <button class="btn btn-info" onclick="deleteData(' + i + ')">Delete</button> <button class="btn btn-success" onclick="setStatus(' + i + ',1)">Mark Done</button></div>';
+
+// 			}
+// 			document.getElementById("showUsers").appendChild(addDiv);
+
+// 		}
+// 	}
+// }
+
+// function setStatus(index, status_type) {
+// 	let task_records = new Array();
+// 	task_records = JSON.parse(localStorage.getItem("toDoList")) ? JSON.parse(localStorage.getItem("toDoList")) : []
+// 	task_records[index].status = status_type;
+// 	localStorage.setItem("toDoList", JSON.stringify(task_records));
+
+// 	showData();
+// }
+// function deleteData(index) {
+// 	let task_records = new Array();
+// 	task_records = JSON.parse(localStorage.getItem("toDoList")) ? JSON.parse(localStorage.getItem("toDoList")) : []
+// 	task_records.splice(index, 1)
+// 	localStorage.setItem("toDoList", JSON.stringify(task_records));
+// 	this.showData();
+// }
+// function clearData() {
+// 	window.localStorage.clear();
+// 	this.showData();
+// }
 export default {
 	name: "Task",
 	data() {
 		return {
 			titleTask: "",
 			descriptionTask: "",
+			tags: [],
 			tasks: []
 		}
 	},
 	methods: {
 		createTask() {
-			let task = {
-				text: this.titleTask,
-				completed: false
-			};
-			this.tasks.push(task);
-			this.titleTask = "";
-			console.log(this.tasks);
-		},
-		completeTask(taskText) {
-			for (let i = 0; i < this.tasks.length; i++) {
-				let task = this.tasks[i];
-				if (taskText === task.text) {
-					task.completed = !task.completed;
-				}
-			}
+			
 		}
 	}
 }
@@ -48,7 +94,7 @@ export default {
 <style scoped>
 
 form {
-	@apply grid gap-6 w-full justify-items-center mt-8
+	@apply grid gap-4 w-full justify-items-center mt-10
 }
 input, textarea {
 	@apply border px-2 rounded-md outline-none w-full p-1

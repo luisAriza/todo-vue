@@ -1,13 +1,13 @@
 <template lang="pug">
 form.form__container(action name="login" @submit.prevent="login()")
-  label(for="username") User
-  input(id="username"
-    type="text"
-    placeholder="email or username"
-    v-model="username"
-    @blur="v$.username.$touch"
+  label(for="email") Email
+  input(id="email"
+    type="email"
+    placeholder="user@example.com"
+    v-model="email"
+    @blur="v$.email.$touch"
     required)
-  p(v-if="v$.username.$error") Enter your account
+  p(v-if="v$.email.$error") Enter your email
   label(for="psw") Password
   input(id="psw"
     type="password"
@@ -26,13 +26,13 @@ form.form__container(action name="login" @submit.prevent="login()")
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, minLength } from '@vuelidate/validators'
+import { required, minLength, email } from '@vuelidate/validators'
 
 export default {
   name: "Login",
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
       error: false,
     }
@@ -42,10 +42,10 @@ export default {
       let user_records = new Array();
       user_records = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [];
 
-      if (user_records.some((v) => (v.user == this.username || v.email == this.username) && v.psw == this.password )) {
-        let current_user = user_records.filter((v) => (v.user == this.username || v.email == this.username) && v.psw == this.password)[0];
+      if (user_records.some((v) => v.email == this.email && v.psw == this.password )) {
+        let current_user = user_records.filter((v) => v.email == this.email && v.psw == this.password)[0];
         localStorage.setItem('user', current_user.user);
-        localStorage.setItem('email', current_user.email);
+        localStorage.setItem('tasks', current_user.tasks);
         this.$router.push("/home");
       } else {
         this.error = true;
@@ -59,7 +59,8 @@ export default {
   },
   validations() {
     return {
-      username: {
+      email: {
+        email,
         required,
         minLength: minLength(4)
       },
