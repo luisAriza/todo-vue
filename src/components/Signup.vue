@@ -1,98 +1,100 @@
 <template lang="pug">
-form.form__container(action name="form-register" @submit.prevent="register()")
-	label(for="email") Email:
-		input(type="email"
-			id="email"
-			placeholder="user@example.com"
-			v-model="email"
-			@blur="v$.email.$touch"
-			required)
-		p(v-if="v$.email.$error") Email field has an error
-	label(for="password") Password:
-		input(type="password"
-			id="password"
-			v-model="password"
-			@blur="v$.password.$touch"
-			required)
-		p(v-if="v$.password.$error") minimum 8 characters
-	label(for="password-repeat") Password:
-		input(type="password"
-			id="password-repeat"
-			v-model="passwordRepeat"
-			@blur="v$.passwordRepeat.$touch"
-			required)
-		p(v-if="v$.passwordRepeat.$error") Repeat password
-	input(class="button"
-		type="submit"
-		value="Sign Up")
+form.form__container(action name="signup" @submit.prevent="saveRegister()")
+  label(for="user") User name
+  input(id="user"
+    type="name"
+    placeholder="username"
+    v-model="user"
+    @blur="v$.user.$touch"
+    required)
+  p(v-if="v$.user.$error") minimum 4 characters
+  label(for="email") User name
+  input(id="email"
+    type="email"
+    placeholder="user@example.com"
+    v-model="email"
+    @blur="v$.email.$touch"
+    required)
+  label(for="psw") Password
+  input(id="psw"
+    type="password"
+    placeholder="password"
+    v-model="password"
+    @blur="v$.password.$touch"
+    required)
+  p(v-if="v$.password.$error") Password field has an error, minimum 8 characters
+  p(v-if="error" class="error") User or email existent
+  input(class="submit-btn"
+    type="submit"
+    value="Sig Up")
 </template>
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, email, minLength, sameAs } from '@vuelidate/validators'
-import auth from "@/utils/auth"
+import { required, minLength, email } from '@vuelidate/validators'
 
 export default {
-	name: "Signup",
-	setup() {
-		return {
-			v$: useVuelidate()
-		}
-	},
-	data() {
-		return {
-			email: "",
-			password: "",
-			passwordRepeat: "",
-			error: false
-		}
-	},
-	methods: {
-		async register() {
-			try {
-				await auth.register(this.email, this.password);
-				const user = {
-					email: this.email,
-				};
-				auth.setUserLogged(user);
-				this.$router.push("/");
-			} catch (error) {
-				console.log(error);
-			}
-		}
-	},
-	validations() {
-		return {
-			email: {
-				email,
-				required,
-				minLength: minLength(4)
-			},
-			password: {
-				required,
-				minLength: minLength(4)
-			},
-			passwordRepeat: {
-				required,
-				minLength: minLength(4),
-				sameAsPassword: sameAs(this.password)
-			},
-		}
-	}
+  name: "Signup",
+  data() {
+    return {
+      user: "",
+      email: "",
+      password: "",
+      error: false
+    }
+  },
+  methods: {
+    saveRegister() {
+      let user_records = new Array();
+      user_records = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [];
+
+      if (user_records.some((v) => v.user == this.user || v.email == this.email )) {
+        this.error = true;
+      } else {
+        user_records.push({
+          "user": this.user,
+          "email": this.email,
+          "psw": this.password
+        })
+        localStorage.setItem("users", JSON.stringify(user_records));
+      }
+      console.log(`Usuario: ${this.user} | Email: ${this.email} | Contraseña: ${this.password}`)
+    }
+  },
+  setup() {
+    return {
+      v$: useVuelidate()
+    }
+  },
+  validations() {
+    return {
+      user: {
+        required,
+        minLength: minLength(4)
+      },
+      email: {
+        email,
+        required,
+        minLength: minLength(6)
+      },
+      password: {
+        required,
+        minLength: minLength(8)
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
 .form__container {
-	@apply grid gap-8 w-full justify-items-start
+  @apply grid gap-4 w-full justify-items-center
 }
-
 input {
-	@apply ml-10 border px-2 rounded-md outline-none
+  @apply border px-2 rounded-md outline-none w-full p-1
 }
-
-.button {
-	@apply bg-slate-300 p-2 w-full justify-self-center cursor-pointer m-0
+.submit-btn {
+  @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer
 }
 </style>
 

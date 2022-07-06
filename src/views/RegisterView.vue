@@ -1,6 +1,6 @@
 <template lang="pug">
-.register.grid.gap-10.mx-auto.w-96
-	h2.register__title.text-xl Sign Up
+.login
+	h2.title Log In
 	Signup
 </template>
 
@@ -14,3 +14,12 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+.login {
+	@apply  grid gap-10 mx-auto w-96
+}
+.title {
+	@apply text-xl
+}
+</style>

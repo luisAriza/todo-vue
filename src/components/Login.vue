@@ -1,60 +1,64 @@
 <template lang="pug">
-form.form__container(action name="form-login" @submit.prevent="login()")
-  label(for="email") Email:
-    input(type="email"
-      id="email"
-      placeholder="user@example.com"
-      v-model="email"
-      @blur="v$.email.$touch"
-      required)
-    p(v-if="v$.email.$error") Email field has an error
-  label(for="password") Password:
-    input(type="password"
-      id="password"
-      v-model="password"
-      @blur="v$.password.$touch"
-      required)
-    p(v-if="v$.password.$error") Password field has an error, minimum 8 characters
-  p(v-if="error" class="error") Has introducido mal el email o la contraseña.
-  input(class="submit"
+form.form__container(action name="login" @submit.prevent="login()")
+  label(for="email") Email
+  input(id="email"
+    type="email"
+    placeholder="user@example.com"
+    v-model="email"
+    @blur="v$.email.$touch"
+    required)
+  p(v-if="v$.email.$error") minimum 4 characters
+  label(for="psw") Password
+  input(id="psw"
+    type="password"
+    placeholder="password"
+    v-model="password"
+    @blur="v$.password.$touch"
+    required)
+  p(v-if="v$.password.$error") Password field has an error, minimum 8 characters
+  p(v-if="error" class="error") Email or password incorrect.
+  input(class="submit-btn"
     type="submit"
-    value="log In")
-  p.msg ¿No tienes cuenta?
-    router-link(to="/register") Regístrate
+    value="Log In")
 </template>
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, email, minLength } from '@vuelidate/validators'
-import auth from "@/utils/auth"
+import { required, minLength, email } from '@vuelidate/validators'
+
+// if (name != '') {
+  // alert('Please visit profile');
+  // window.location.href = "profile.html";
+// }
 
 export default {
   name: "Login",
-  setup() {
-    return {
-      v$: useVuelidate()
-    }
-  },
   data() {
     return {
       email: "",
       password: "",
-      error: false
+      error: false,
     }
   },
   methods: {
-    async login() {
-      try {
-        await auth.login(this.email, this.password);
-        const user = {
-          email: this.email
-        };
-        auth.setUserLogged(user);
-        this.$router.push("/");
-      } catch (error) {
-        console.log(error);
+    login() {
+      let user_records = new Array();
+      user_records = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [];
+
+      if (user_records.some((v) => v.email == this.email && v.psw == this.password )) {
+        let current_user = user_records.filter((v) => v.email == this.email && v.psw == this.password)[0];
+        localStorage.setItem('user', current_user.user);
+        localStorage.setItem('email', current_user.email);
+        this.$router.push("/home");
+      } else {
         this.error = true;
       }
+      console.log(`Email: ${this.email}, Contraseña: ${this.password}`)
+    }
+  },
+  setup() {
+    return {
+      v$: useVuelidate()
     }
   },
   validations() {
@@ -66,7 +70,7 @@ export default {
       },
       password: {
         required,
-        minLength: minLength(4)
+        minLength: minLength(8)
       },
     }
   }
@@ -75,13 +79,13 @@ export default {
 
 <style scoped>
 .form__container {
-  @apply grid gap-8 w-full justify-items-start
+  @apply grid gap-4 w-full justify-items-center
 }
 input {
-  @apply ml-10 border px-2 rounded-md outline-none
+  @apply border px-2 rounded-md outline-none w-full p-1
 }
-.submit {
-  @apply bg-slate-300 border rounded-md p-2 w-full justify-self-center cursor-pointer
+.submit-btn {
+  @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer
 }
 </style>
 

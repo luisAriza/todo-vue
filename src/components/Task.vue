@@ -51,10 +51,10 @@ form {
 	@apply grid gap-6 w-full justify-items-center mt-8
 }
 input, textarea {
-	@apply border px-2 rounded-md outline-none w-full
+	@apply border px-2 rounded-md outline-none w-full p-1
 }
 .button {
-	@apply bg-green-400 cursor-pointer
+	@apply bg-green-400 cursor-pointer p-3
 }
 ul {
 	list-style: circle;
