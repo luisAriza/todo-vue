@@ -55,7 +55,8 @@ export default {
         } else {
           task_records.push({
             "user": current_user.user,
-            "tasks": new Array()
+            "tasks": new Array(),
+            "completed": new Array()
           })
           localStorage.setItem("tasks", JSON.stringify(task_records));
         }
@@ -75,8 +76,7 @@ export default {
     return {
       email: {
         email,
-        required,
-        minLength: minLength(4)
+        required
       },
       password: {
         required,

@@ -75,7 +75,6 @@ export default {
       email: {
         email,
         required,
-        minLength: minLength(6)
       },
       password: {
         required,
