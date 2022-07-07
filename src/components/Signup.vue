@@ -1,5 +1,5 @@
 <template lang="pug">
-form.form__container(action name="signup" @submit.prevent="saveRegister()")
+form.form__container(action name="signup" @submit.prevent="saveRecord()")
   label(for="name") Nickname
   input(id="name"
     type="name"
@@ -44,21 +44,30 @@ export default {
     }
   },
   methods: {
-    saveRegister() {
-      let user_records = new Array();
-      user_records = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [];
+    saveRecord() {
+      let usersRecords = new Array();
+      usersRecords = this.usersRecords;
 
-      if (user_records.some((v) => v.user == this.user || v.email == this.email )) {
+      let userRepeat = (v) => v.user == this.user || v.email == this.email;
+
+      if (usersRecords.some(userRepeat)) {
         this.error = true;
       } else {
-        user_records.push({
+        usersRecords.push({
           "user": this.user,
           "email": this.email,
           "psw": this.password,
         })
-        localStorage.setItem("users", JSON.stringify(user_records));
+        localStorage.setItem("users", JSON.stringify(usersRecords));
         this.$router.push("/");
       }
+    }
+  },
+  computed: {
+    usersRecords() {
+      let tasks = localStorage.getItem("users");
+
+      return JSON.parse(tasks);
     }
   },
   setup() {

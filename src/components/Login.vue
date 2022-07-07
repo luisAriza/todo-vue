@@ -40,32 +40,42 @@ export default {
   },
   methods: {
     login() {
-      let user_records = new Array();
-      user_records = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [];
+      let usersRecords = this.usersRecords;
+      let tasksRecords = this.tasksRecords ? this.tasksRecords : [];
 
-      if (user_records.some((v) => v.email == this.email && v.psw == this.password)) {
-        let current_user = user_records.filter((v) => v.email == this.email && v.psw == this.password)[0];
-        localStorage.setItem("user", current_user.user);
+      let validation = (v) => v.email == this.email && v.psw == this.password;
 
-        let task_records = new Array();
-        task_records = JSON.parse(localStorage.getItem("tasks")) ? JSON.parse(localStorage.getItem("tasks")) : [];
+      if (usersRecords.some(validation)) {
+        let currentUser = usersRecords.filter(validation)[0];
+        localStorage.setItem("user", currentUser.user);
 
-        if (task_records.some((v) => v.user == current_user.user)) {
-          console.log("Ya este usuario ha entrado")
+        if (tasksRecords.some((v) => v.user == currentUser.user)) {
+          console.log("Ya este usuario ha ingresado")
         } else {
-          task_records.push({
-            "user": current_user.user,
+          tasksRecords.push({
+            "user": currentUser.user,
             "tasks": new Array(),
             "completed": new Array()
           })
-          localStorage.setItem("tasks", JSON.stringify(task_records));
+          localStorage.setItem("tasks", JSON.stringify(tasksRecords));
         }
-
         this.$router.push("/home");
       } else {
         this.error = true;
       }
     }
+  },
+  computed: {
+    usersRecords() {
+      let tasks = localStorage.getItem("users");
+
+      return JSON.parse(tasks);
+    },
+    tasksRecords() {
+      let tasks = localStorage.getItem("tasks");
+
+      return JSON.parse(tasks);
+    },
   },
   setup() {
     return {
