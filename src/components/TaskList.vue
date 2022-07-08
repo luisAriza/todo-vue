@@ -1,34 +1,23 @@
-<template>
-	<section>
-		<ul class="task-list mt-10 w-96">
-			<li class="flex justify-between w-full" v-for="(item, i) in tasksUser" :key="i">
-				<span>
-					<img src="@/assets/check.svg" alt="check icon" width="20" height="20" class="inline cursor-pointer"
-						@click="checkTask()" />
-				</span>
-				{{ i + 1 }} - Title: {{ item.title }} - Description: {{ item.description }}
-				<span v-for="(tag, j) in item.tags" :key="'tag' + j">{{tag}}</span>
-				<span>
-					<img src="@/assets/delete.svg" alt="close icon" width="20" height="20" class="delete inline cursor-pointer"
-						@click="deleteTask()" />
-				</span>
-			</li>
-		</ul>
-		<ul class="task-checked-list mt-10 w-96">
-			<li class="flex justify-between w-full" v-for="(item2, k) in tasksChecked" :key="k">
-				<span>
-					<img src="@/assets/check.svg" alt="check icon" width="20" height="20" class="inline cursor-pointer"
-						@click="uncheckTask()" />
-				</span>
-				{{k + 1}} - Title: {{item2.title}} - Description: {{item2.description}}
-				<span v-for="(tag, l) in item2.tags" :key="'tag' + l">{{tag}}</span>
-				<span>
-					<img src="@/assets/delete.svg" alt="close icon" width="20" height="20" class="inline cursor-pointer"
-						@click="deleteTask()" />
-				</span>
-			</li>
-		</ul>
-	</section>
+<template lang="pug">
+section
+	ul.task-list.mt-10.w-96
+		li.flex.justify-between.w-full(v-for='(item, i) in tasksUser', :key='i')
+			span
+				img.inline.cursor-pointer(src='@/assets/check.svg', alt='check icon', width='20', height='20', @click='checkTask()')
+			| {{i + 1}}. {{item.title}}: {{item.description}}
+			span(v-for='(tag, j) in item.tags', :key="'tag' + j") {{tag}}
+			| {{tag}}
+			span
+				img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='deleteTask()')
+	ul.task-checked-list.mt-10.w-96
+		li.flex.justify-between.w-full(v-for='(item, k) in tasksChecked', :key='k')
+			span
+				img.inline.cursor-pointer(src='@/assets/check.svg', alt='check icon', width='20', height='20', @click='uncheckTask()')
+			| {{k + 1}}. {{item.title}}: {{item.description}}
+			span(v-for='(tag, l) in item.tags', :key="'tag' + l") {{tag}}
+			| {{tag}}
+			span
+				img.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='deleteTask()')
 </template>
 
 <script>

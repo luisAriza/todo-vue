@@ -1,15 +1,13 @@
-<template>
-	<nav>
-		<router-link to="/home">Home</router-link>
-		<div v-show="!userLogged" class="login-btn">
-			<router-link to="/"> Log In</router-link> |
-			<router-link to="/register">Sig Up</router-link>
-		</div>
-		<div v-show="userLogged" class="profile">
-			<p v-text="user"></p>
-			<button @click="Logout()" type="button">Log out</button>
-		</div>
-	</nav>
+<template lang="pug">
+nav
+	router-link(to="/home") Home
+	.login-btn(v-show="!userLogged")
+		router-link(to="/") Log In
+		span  |
+		router-link(to="/register")  Sig Up
+	.profile(v-show="userLogged")
+		p Welcome {{user}}
+		button(@click="Logout()" type="button") Log out
 </template>
 
 <script>
@@ -39,9 +37,11 @@ export default {
 </script>
 
 <style scoped>
+
 nav {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 30px;
 }
 nav a {
@@ -59,7 +59,10 @@ div {
 	align-items: center;
 	gap: 12px;
 }
+.profile p {
+	@apply font-semibold capitalize text-lg
+}
 button {
-	@apply bg-slate-700 text-green-400 px-2 py-1 rounded-lg font-bold
+	@apply border-green-400 border text-green-400 px-2 py-1 rounded-lg font-bold
 }
 </style>

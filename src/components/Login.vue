@@ -1,25 +1,28 @@
 <template lang="pug">
 form.form__container(action name="login" @submit.prevent="login()")
-  label(for="email") Email
+  .field
+    label(for="email") Email
+    p(v-if="v$.email.$error") Enter your email
   input(id="email"
     type="email"
     placeholder="user@example.com"
     v-model="email"
     @blur="v$.email.$touch"
     required)
-  p(v-if="v$.email.$error") Enter your email
-  label(for="psw") Password
+  .field
+    label(for="psw") Password
+    p(v-if="v$.password.$error") Minimum 8 characters
   input(id="psw"
     type="password"
+    placeholder="password"
     v-model="password"
     @blur="v$.password.$touch"
     required)
-  p(v-if="v$.password.$error") Password field has an error, minimum 8 characters
-  p(v-if="error" class="error") Email or password incorrect.
+  p.error(v-if="error") Email or password incorrect
   input(class="submit-btn"
     type="submit"
     value="Log In")
-  p.msg.text-sm Don't have an account?
+  p.msg.text-sm.justify-self-center Don't have an account?
     router-link(to="/register" class="signup") Sign Up
 </template>
 
@@ -103,14 +106,23 @@ export default {
 label {
   @apply pl-2 font-semibold text-sm
 }
+.field {
+  @apply w-full flex items-end justify-between
+}
+.field p {
+  @apply text-xs text-red-600 pr-2
+}
+.error {
+  @apply text-xs text-red-600 justify-self-center
+}
 input {
   @apply border px-2 rounded-md outline-none w-full p-1 mb-6
 }
-.signup {
-  @apply text-green-400 font-semibold ml-1
-}
 .submit-btn {
   @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-bold text-lg mb-1
+}
+.signup {
+  @apply text-green-400 font-semibold ml-1
 }
 </style>
 

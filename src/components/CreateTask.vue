@@ -1,16 +1,21 @@
-<template>
-	<form @submit.prevent="createTask()">
-		<label for="task">New Task</label>
-		<input id="task" type="text" placeholder="Title" v-model="task.title" @blur="v$.task.title.$touch" required />
-		<p v-if="v$.task.title.$error">Enter title of task</p>
-		<textarea name="description" placeholder="Description" cols="30" rows="3" v-model="task.description"
-			@blur="v$.task.description.$touch" required>
-		</textarea>
-		<p v-if="v$.task.description.$error">Enter description of task</p>
-		<div class="tags flex gap-4">
-		</div>
-		<button class="button" type="submit">Create Task</button>
-	</form>
+<template lang="pug">
+form(@submit.prevent="createTask()")
+	label(for="task") New Task
+	input(id="task"
+		type="text"
+		placeholder="Title"
+		v-model="task.title"
+		@blur="v$.task.title.$touch"
+		required)
+	p(v-if="v$.task.title.$error") Title required
+	textarea(placeholder="Description"
+		cols="30" rows="3"
+		v-model="task.description"
+		@blur="v$.task.description.$touch"
+		required)
+	p(v-if="v$.task.description.$error") Description required
+	.tags.flex.gap-4
+	button(class="button" type="submit") Create Task
 </template>
 
 <script>
@@ -91,12 +96,10 @@ export default {
 form {
 	@apply grid gap-4 w-full justify-items-center mt-10
 }
-
 input,
 textarea {
 	@apply border px-2 rounded-md outline-none w-full p-1
 }
-
 button {
 	@apply bg-green-400 cursor-pointer p-3 w-full rounded-md
 }

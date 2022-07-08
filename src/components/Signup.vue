@@ -1,28 +1,33 @@
 <template lang="pug">
 form.form__container(action name="signup" @submit.prevent="saveRecord()")
-  label(for="name") Nickname
+  .field
+    label(for="name") Nickname
+    p(v-if="v$.user.$error") Minimum 4 characters | Required
   input(id="name"
     type="name"
     placeholder="julio890"
     @blur="v$.user.$touch"
     v-model="user"
     required)
-  p(v-if="v$.user.$error") minimum 4 characters
-  label(for="email") Email
+  .field
+    label(for="email") Email
+    p(v-if="v$.email.$error") Required
   input(id="email"
     type="email"
     placeholder="user@example.com"
     v-model="email"
     @blur="v$.email.$touch"
     required)
-  label(for="psw") Password
+  .field
+    label(for="psw") Password
+    p(v-if="v$.password.$error") Minimum 8 characters
   input(id="psw"
     type="password"
+    placeholder="password"
     v-model="password"
     @blur="v$.password.$touch"
     required)
-  p(v-if="v$.password.$error") Password field has an error, minimum 8 characters
-  p(v-if="error" class="error") User or email existent
+  p.error(v-if="error") User or email existent
   input(class="submit-btn"
     type="submit"
     value="Sign Up")
@@ -99,6 +104,17 @@ export default {
 }
 label {
   @apply pl-2 font-semibold text-sm
+}
+.field {
+  @apply w-full flex items-end justify-between
+}
+
+.field p {
+  @apply text-xs text-red-600 pr-2
+}
+
+.error {
+  @apply text-xs text-red-600 justify-self-center
 }
 input {
   @apply border px-2 rounded-md outline-none w-full p-1 mb-6
