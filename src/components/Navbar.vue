@@ -6,7 +6,7 @@
 			<router-link to="/register">Sig Up</router-link>
 		</div>
 		<div v-show="userLogged" class="profile">
-			<p>Welcome {{user}}</p>
+			<p v-text="user"></p>
 			<button @click="Logout()" type="button">Log out</button>
 		</div>
 	</nav>

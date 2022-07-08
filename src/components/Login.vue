@@ -11,7 +11,6 @@ form.form__container(action name="login" @submit.prevent="login()")
   label(for="psw") Password
   input(id="psw"
     type="password"
-    placeholder="password"
     v-model="password"
     @blur="v$.password.$touch"
     required)
@@ -20,8 +19,8 @@ form.form__container(action name="login" @submit.prevent="login()")
   input(class="submit-btn"
     type="submit"
     value="Log In")
-  p.msg ¿No tienes cuenta?
-    router-link(to="/register")  Sign Up
+  p.msg.text-sm Don't have an account?
+    router-link(to="/register" class="signup") Sign Up
 </template>
 
 <script>
@@ -99,13 +98,19 @@ export default {
 
 <style scoped>
 .form__container {
-  @apply grid gap-4 w-full justify-items-center
+  @apply grid justify-items-start gap-1 w-full
+}
+label {
+  @apply pl-2 font-semibold text-sm
 }
 input {
-  @apply border px-2 rounded-md outline-none w-full p-1
+  @apply border px-2 rounded-md outline-none w-full p-1 mb-6
+}
+.signup {
+  @apply text-green-400 font-semibold ml-1
 }
 .submit-btn {
-  @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer
+  @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-bold text-lg mb-1
 }
 </style>
 
