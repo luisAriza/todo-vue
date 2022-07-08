@@ -14,7 +14,24 @@ form(@submit.prevent="createTask()")
 		@blur="v$.task.description.$touch"
 		required)
 	p(v-if="v$.task.description.$error") Description required
-	.tags.flex.gap-4
+	ul.tags.flex.gap-4 Tags
+		li(v-for="tag in task.tags.sort()") {{ tag }}
+	ul.tags.flex.gap-4 Select your tags:
+		li
+			input.hidden(type="checkbox" id="work" value="Work" v-model="task.tags")
+			label(for='work') Work
+		li
+			input.hidden(type="checkbox" id="study" value="Study" v-model="task.tags")
+			label(for='study') Study
+		li
+			input.hidden(type="checkbox" id="project" value="Project" v-model="task.tags")
+			label(for='project') Project
+		li
+			input.hidden(type="checkbox" id="important" value="Important" v-model="task.tags")
+			label(for='important') Important
+		li
+			input.hidden(type="checkbox" id="urgent" value="Urgent" v-model="task.tags")
+			label(for='urgent') Urgent
 	button(class="button" type="submit") Create Task
 </template>
 
@@ -67,7 +84,11 @@ export default {
 			if (tasks.some(titleRepeat)) {
 				console.log("La tarea ya existe");
 			} else {
-				tasks.unshift(this.task);
+				tasks.unshift({
+					title: this.task.title,
+					description: this.task.description,
+					tags: this.task.tags.sort()
+				});
 				localStorage.setItem("tasks", JSON.stringify(tasksRecords));
 			}
 		}

@@ -5,8 +5,7 @@ section
 			span
 				img.inline.cursor-pointer(src='@/assets/check.svg', alt='check icon', width='20', height='20', @click='checkTask(i)')
 			| {{task.title}}: {{task.description}}
-			span(v-for='(tag, j) in task.tags', :key="'tag' + j") {{tag}}
-			| {{tag}}
+			span(v-for='tag in task.tags') {{tag}}
 			span
 				img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='deleteTask(i)')
 	ul.task-checked-list.mt-10.w-96
@@ -14,8 +13,7 @@ section
 			span
 				img.inline.cursor-pointer(src='@/assets/check.svg', alt='check icon', width='20', height='20', @click='uncheckTask(i)')
 			| {{taskChecked.title}}: {{taskChecked.description}}
-			span(v-for='(tag, j) in taskChecked.tags', :key="'tag' + j") {{tag}}
-			| {{tag}}
+			span(v-for='tag in taskChecked.tags') {{tag}}
 			span
 				img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='deleteTaskChecked(i)')
 </template>
