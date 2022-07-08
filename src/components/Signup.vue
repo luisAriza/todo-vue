@@ -47,6 +47,13 @@ export default {
       error: false
     }
   },
+  computed: {
+    usersRecords() {
+      let tasks = localStorage.getItem("users");
+
+      return JSON.parse(tasks);
+    }
+  },
   methods: {
     saveRecord() {
       let usersRecords = new Array();
@@ -65,13 +72,6 @@ export default {
         localStorage.setItem("users", JSON.stringify(usersRecords));
         this.$router.push("/");
       }
-    }
-  },
-  computed: {
-    usersRecords() {
-      let tasks = localStorage.getItem("users");
-
-      return JSON.parse(tasks);
     }
   },
   setup() {

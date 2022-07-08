@@ -40,6 +40,18 @@ export default {
       task: {}
     }
   },
+  computed: {
+    usersRecords() {
+      let tasks = localStorage.getItem("users");
+
+      return JSON.parse(tasks);
+    },
+    tasksRecords() {
+      let tasks = localStorage.getItem("tasks");
+
+      return JSON.parse(tasks);
+    },
+  },
   methods: {
     login() {
       let usersRecords = this.usersRecords;
@@ -66,18 +78,6 @@ export default {
         this.error = true;
       }
     }
-  },
-  computed: {
-    usersRecords() {
-      let tasks = localStorage.getItem("users");
-
-      return JSON.parse(tasks);
-    },
-    tasksRecords() {
-      let tasks = localStorage.getItem("tasks");
-
-      return JSON.parse(tasks);
-    },
   },
   setup() {
     return {

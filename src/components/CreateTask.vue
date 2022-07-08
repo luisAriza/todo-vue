@@ -32,7 +32,8 @@ form(@submit.prevent="createTask()")
 		li
 			input.hidden(type="checkbox" id="urgent" value="Urgent" v-model="task.tags")
 			label(for='urgent') Urgent
-	button(class="button" type="submit") Create Task
+	button(class="reset-btn" type="button" @click="reset") Clean inputs
+	button(class="submit-btn" type="submit") Create Task
 </template>
 
 <script>
@@ -91,6 +92,9 @@ export default {
 				});
 				localStorage.setItem("tasks", JSON.stringify(tasksRecords));
 			}
+		},
+		reset() {
+			return Object.assign(this.$data, this.$options.data());
 		}
 	},
 	setup() {

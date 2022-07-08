@@ -25,6 +25,34 @@ export default {
 			user: localStorage.getItem("user")
 		}
 	},
+	computed: {
+		tasksRecords() {
+			let tasks = localStorage.getItem("tasks");
+
+			return JSON.parse(tasks);
+		},
+		idUser() {
+			let tasksRecords = this.tasksRecords;
+			// Index(posición en el array) del user a identificar en tareas registradas
+			let tasksIndexUser = tasksRecords.findIndex((v) => v.user == this.user);
+			// User seleccionado en tareas registradas
+			return tasksRecords[tasksIndexUser];
+		},
+		tasksUser() {
+			if (this.user != null || undefined) {
+				let tasksUser = this.idUser.tasks;
+
+				return tasksUser;
+			}
+		},
+		tasksChecked() {
+			if (this.user != null || undefined) {
+				let tasksUserCompleted = this.idUser.completed;
+
+				return tasksUserCompleted;
+			}
+		}
+	},
 	methods: {
 		checkTask(i) {
 			let tasks = this.tasksUser;
@@ -53,34 +81,6 @@ export default {
 
 			tasksChecked.splice(i, 1);
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
-		}
-	},
-	computed: {
-		tasksRecords() {
-			let tasks = localStorage.getItem("tasks");
-
-			return JSON.parse(tasks);
-		},
-		idUser() {
-			let tasksRecords = this.tasksRecords;
-			// Index(posición en el array) del user a identificar en tareas registradas
-			let tasksIndexUser = tasksRecords.findIndex((v) => v.user == this.user);
-			// User seleccionado en tareas registradas
-			return tasksRecords[tasksIndexUser];
-		},
-		tasksUser() {
-			if (this.user != null || undefined) {
-				let tasksUser = this.idUser.tasks;
-
-				return tasksUser;
-			}
-		},
-		tasksChecked() {
-			if (this.user != null || undefined) {
-				let tasksUserCompleted = this.idUser.completed;
-
-				return tasksUserCompleted;
-			}
 		}
 	}
 }
