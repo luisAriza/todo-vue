@@ -67,7 +67,7 @@ export default {
 			if (tasks.some(titleRepeat)) {
 				console.log("La tarea ya existe");
 			} else {
-				tasks.push(this.task);
+				tasks.unshift(this.task);
 				localStorage.setItem("tasks", JSON.stringify(tasksRecords));
 			}
 		}
