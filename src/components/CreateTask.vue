@@ -17,22 +17,10 @@ form(@submit.prevent="createTask()")
 	ul.tags.flex.gap-4 Tags
 		li(v-for="tag in task.tags.sort()") {{ tag }}
 	ul.tags.flex.gap-4 Select your tags:
-		li
-			input.hidden(type="checkbox" id="work" value="Work" v-model="task.tags")
-			label(for='work') Work
-		li
-			input.hidden(type="checkbox" id="study" value="Study" v-model="task.tags")
-			label(for='study') Study
-		li
-			input.hidden(type="checkbox" id="project" value="Project" v-model="task.tags")
-			label(for='project') Project
-		li
-			input.hidden(type="checkbox" id="important" value="Important" v-model="task.tags")
-			label(for='important') Important
-		li
-			input.hidden(type="checkbox" id="urgent" value="Urgent" v-model="task.tags")
-			label(for='urgent') Urgent
-	button(class="reset-btn" type="button" @click="reset") Clean inputs
+		li(v-for="tag in tags")
+			input.hidden(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
+			label(:for='tag') {{ tag }}
+	button(class="reset-btn" @click="reset()") Clean inputs
 	button(class="submit-btn" type="submit") Create Task
 </template>
 
@@ -50,6 +38,13 @@ export default {
 				description: "",
 				tags: []
 			},
+			tags: [
+				"Work",
+				"Study",
+				"Project",
+				"Important",
+				"Urgent"
+			]
 		}
 	},
 	computed: {

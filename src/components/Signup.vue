@@ -49,15 +49,14 @@ export default {
   },
   computed: {
     usersRecords() {
-      let tasks = localStorage.getItem("users");
+      let users = localStorage.getItem("users");
 
-      return JSON.parse(tasks);
+      return JSON.parse(users);
     }
   },
   methods: {
     saveRecord() {
-      let usersRecords = new Array();
-      usersRecords = this.usersRecords;
+      let usersRecords = this.usersRecords ? this.usersRecords : [];
 
       let userRepeat = (v) => v.user == this.user || v.email == this.email;
 

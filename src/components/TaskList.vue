@@ -1,5 +1,11 @@
 <template lang="pug">
-section
+section.grid.mt-4
+	.flex.gap-4 Filter for tags:
+		span(v-for="tag in filterTags") {{tag}}
+	ul.flex.gap-4.justify-center
+		li(v-for="ftag in tags")
+			input.hidden(type="checkbox", :id="ftag", :value="ftag", v-model="filterTags")
+			label(:for='ftag') {{ ftag }}
 	ul.task-list.mt-10.w-96
 		li.flex.justify-between.w-full(v-for='(task, i) in tasksUser', :key='i')
 			span
@@ -22,7 +28,15 @@ section
 export default {
 	data() {
 		return {
-			user: localStorage.getItem("user")
+			user: localStorage.getItem("user"),
+			tags: [
+				"work",
+				"study",
+				"project",
+				"important",
+				"urgent"
+			],
+			filterTags: []
 		}
 	},
 	computed: {
@@ -31,23 +45,23 @@ export default {
 
 			return JSON.parse(tasks);
 		},
-		idUser() {
+		indexUser() {
 			let tasksRecords = this.tasksRecords;
-			// Index(posición en el array) del user a identificar en tareas registradas
-			let tasksIndexUser = tasksRecords.findIndex((v) => v.user == this.user);
+			// Posición en el array del user a identificar en las tareas registradas
+			let indexTasksUser = tasksRecords.findIndex((v) => v.user == this.user);
 			// User seleccionado en tareas registradas
-			return tasksRecords[tasksIndexUser];
+			return tasksRecords[indexTasksUser];
 		},
 		tasksUser() {
 			if (this.user != null || undefined) {
-				let tasksUser = this.idUser.tasks;
+				let tasksUser = this.indexUser.tasks;
 
 				return tasksUser;
 			}
 		},
 		tasksChecked() {
 			if (this.user != null || undefined) {
-				let tasksUserCompleted = this.idUser.completed;
+				let tasksUserCompleted = this.indexUser.completed;
 
 				return tasksUserCompleted;
 			}
@@ -84,7 +98,6 @@ export default {
 		}
 	}
 }
-
 </script>
 
 <style scoped>

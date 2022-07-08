@@ -42,9 +42,9 @@ export default {
   },
   computed: {
     usersRecords() {
-      let tasks = localStorage.getItem("users");
+      let users = localStorage.getItem("users");
 
-      return JSON.parse(tasks);
+      return JSON.parse(users);
     },
     tasksRecords() {
       let tasks = localStorage.getItem("tasks");
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     login() {
-      let usersRecords = this.usersRecords;
+      let usersRecords = this.usersRecords ? this.usersRecords : [];
       let tasksRecords = this.tasksRecords ? this.tasksRecords : [];
 
       let validation = (v) => v.email == this.email && v.psw == this.password;
