@@ -10,8 +10,8 @@ form(@submit.prevent="addTask()")
 		v-model="task.description")
 	ul.tags.flex.gap-4
 		li(v-for="tag in tags")
-			input(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
 			label(:for='tag') {{ tag }}
+			input(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
 	button(class="submit-btn" type="submit") Add Task
 section.grid.mt-4
 	h2.text-2xl.my-4 Lista de tareas
@@ -25,7 +25,7 @@ section.grid.mt-4
 			| {{ task.title }}
 			| {{ task.description }}
 			span(v-for='tag in task.tags') {{ tag }}
-			span(@click='remove()' :class="taskClass3(task)")
+			span(@click='remove(i)', class="remove")
 </template>
 
 <script>
@@ -35,13 +35,15 @@ export default {
 	data() {
 		return {
 			search: "",
-			tasksCreated: undefined,
 			completed: false,
+			selected: false,
+			tasksCreated: [],
 			task: {
 				title: "",
 				description: "",
 				tags: [],
 				completed: false,
+				selected: false,
 			},
 			tags: [
 				"Work",
@@ -97,19 +99,6 @@ export default {
 		}
 	},
 	methods: {
-		taskCompleted(task) {
-			(task.completed = !task.completed)
-			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
-		},
-		taskClass(task) {
-			return [task.completed ? "checked" : "unchecked"];
-		},
-		taskClass2(task) {
-			return [task.completed ? "check" : "uncheck"];
-		},
-		taskClass3(task) {
-			return [task.completed ? "check" : "uncheck"];
-		},
 		addTask() {
 			let tasksUser = this.tasksRecordsUser;
 
@@ -125,7 +114,7 @@ export default {
 					title: this.task.title,
 					description: this.task.description,
 					tags: this.task.tags.sort(),
-					completed: false
+					completed: false,
 				});
 				// Para reiniciar el formulario
 				this.task = {
@@ -136,30 +125,41 @@ export default {
 				localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 			}
 		},
-		edit() {
-			// this.tasksRecordsUser[i];
-			// localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
-			if (this.editing == false) {
-				return this.editing = true;
-			} else {
-				return this.editing = false;
-			}
+		taskCompleted(task) {
+			(task.completed = !task.completed)
+			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
-		remove(task) {
+		taskClass(task) {
+			return [task.completed ? "checked" : "unchecked"];
+		},
+		taskClass2(task) {
+			return [task.completed ? "check" : "uncheck"];
+		},
+		taskClass3(task) {
+			return [task.selected ? "check" : "uncheck"];
+		},
+		edit() {
 			
 		},
-		removeRecords(i) {
-			let tasks = this.tasksRecordsUser;
+		remove(i) {
+			let sizeTaskCreated = this.tasksCreated.length
+			let sizeTaskList = this.tasksList.length
 
-			tasks.splice(i, 1);
+			if (sizeTaskCreated == sizeTaskList) {
+				this.tasksCreated.splice(i, 1)
+			} else if (sizeTaskCreated > sizeTaskList) {
+				this.tasksCreated
+					.splice(this.tasksCreated
+						.indexOf(this.tasksList
+							.splice(i, 1)[0]))
+			}
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
-		}
+		},
 	},
 	created() {
 		if (localStorage.getItem("tasks") != null) {
 			this.tasksCreated = this.tasksRecordsUser;
 		}
-		console.log(this.tasksCreated)
 	}
 }
 </script>
