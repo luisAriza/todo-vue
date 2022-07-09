@@ -20,12 +20,12 @@ section.grid.mt-4
 		h3 Task uncompleted: {{ tasksIncompleted }}
 	input.border(type="text", placeholder="Search task", v-model="search")
 	ul.my-8
-		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasks', :key='i')
-			span(@click='taskCompleted(task)' :class="taskClass(task)")
+		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasksList', :key='i' :class="taskClass(task)")
+			span(@click='taskCompleted(task)' :class="taskClass2(task)")
 			| {{ task.title }}
 			| {{ task.description }}
 			span(v-for='tag in task.tags') {{ tag }}
-			img.inline(src='@/assets/delete.svg', width='20', height='20', @click='remove(i)')
+			span(@click='remove()' :class="taskClass3(task)")
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
 	data() {
 		return {
 			search: "",
-			tasksCreated: [],
+			tasksCreated: undefined,
 			completed: false,
 			task: {
 				title: "",
@@ -57,9 +57,10 @@ export default {
 
 			return JSON.parse(tasks);
 		},
-		tasksUser() {
+		tasksRecordsUser() {
 			let user = localStorage.getItem("user");
 			let tasksRecords = this.tasksRecords;
+
 			// Index(posición en el array) del user a identificar en tareas registradas
 			let tasksIndexUser = tasksRecords.findIndex((v) => v.user == user);
 			// User seleccionado en tareas registradas
@@ -69,7 +70,7 @@ export default {
 				return tasksUser;
 			}
 		},
-		searches() {
+		searchFilter() {
 			return (item) => {
 				return item.title.toLowerCase()
 					.includes(this.search.toLowerCase())
@@ -81,8 +82,8 @@ export default {
 						.includes(this.search.toLowerCase())
 			}
 		},
-		tasks() {
-			return this.tasksCreated.filter(this.searches)
+		tasksList() {
+			return this.tasksCreated.filter(this.searchFilter)
 		},
 		tasksCompleted() {
 			return this.tasksCreated.filter((task) => {
@@ -97,19 +98,28 @@ export default {
 	},
 	methods: {
 		taskCompleted(task) {
-			return (task.completed = !task.completed);
+			(task.completed = !task.completed)
+			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		taskClass(task) {
+			return [task.completed ? "checked" : "unchecked"];
+		},
+		taskClass2(task) {
+			return [task.completed ? "check" : "uncheck"];
+		},
+		taskClass3(task) {
 			return [task.completed ? "check" : "uncheck"];
 		},
 		addTask() {
-			let tasksRecords = this.tasksRecords;
-			let tasks = this.tasksUser;
+			let tasksUser = this.tasksRecordsUser;
 
 			let titleRepeat = (v) => v.title == this.task.title;
 
-			if (tasks.some(titleRepeat) || this.task.title.length <= 1 || this.task.description.length <= 1) {
-				console.log("La tarea ya existe, o no tiene titulo");
+			if (tasksUser.some(titleRepeat) ||
+				this.task.title.length <= 2 ||
+				this.task.description.length <= 2
+			) {
+				console.log("La tarea ya existe, o no falta llenar campos");
 			} else {
 				this.tasksCreated.push({
 					title: this.task.title,
@@ -123,11 +133,11 @@ export default {
 					description: "",
 					tags: [],
 				};
-				localStorage.setItem("tasks", JSON.stringify(tasksRecords));
+				localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 			}
 		},
 		edit() {
-			// this.tasksUser[i];
+			// this.tasksRecordsUser[i];
 			// localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 			if (this.editing == false) {
 				return this.editing = true;
@@ -135,14 +145,11 @@ export default {
 				return this.editing = false;
 			}
 		},
-		remove(i) {
-			let tasks = this.tasksUser;
-
-			tasks.splice(i, 1);
-			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
+		remove(task) {
+			
 		},
 		removeRecords(i) {
-			let tasks = this.tasksUser;
+			let tasks = this.tasksRecordsUser;
 
 			tasks.splice(i, 1);
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
@@ -150,9 +157,9 @@ export default {
 	},
 	created() {
 		if (localStorage.getItem("tasks") != null) {
-			this.tasksCreated = this.tasksUser;
+			this.tasksCreated = this.tasksRecordsUser;
 		}
-			console.log(this.tasksUser)
+		console.log(this.tasksCreated)
 	}
 }
 </script>
@@ -164,23 +171,41 @@ export default {
 form {
 	@apply grid gap-4 w-full justify-items-center mt-10
 }
-
 input,
 textarea {
 	@apply border px-2 rounded-md outline-none w-full p-1
 }
-
 .submit-btn {
 	@apply bg-green-400 cursor-pointer p-3 w-full rounded-md
 }
 .check {
-	@apply text-red-500
+	width: 20px;
+	height: 20px;
+	background-image: url("../assets/check.svg");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
-.check::before {
-	content: "com";
+.checked {
+	@apply text-slate-400 cursor-pointer line-through
 }
-
-.uncheck::before {
-	content: "inc";
+.uncheck {
+	width: 20px;
+	height: 20px;
+	background-image: url("../assets/uncheck.svg");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.unchecked {
+	@apply text-slate-900 cursor-pointer
+}
+.remove {
+	width: 20px;
+	height: 20px;
+	background-image: url('../assets/delete.svg');
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 </style>
