@@ -2,7 +2,7 @@ import Task from "@/components/Task.vue";
 
 export default {
   name: "Tasks",
-  components: {
+  component: {
     Task,
   },
   data() {
@@ -45,6 +45,16 @@ export default {
         titulo: "",
         description: "",
       };
+    },
+    tareaCompletada(tarea) {
+      return (tarea.completada = !tarea.completada);
+    },
+    claseTareas(tarea) {
+      return [tarea.completada ? "check" : "uncheck"];
+      // return {
+      // 	'check': tarea.completada,
+      // 	'uncheck': !tarea.completada
+      // }
     },
   },
 };

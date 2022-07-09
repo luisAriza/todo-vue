@@ -68,8 +68,7 @@ export default {
         } else {
           tasksRecords.push({
             "user": currentUser.user,
-            "tasks": new Array(),
-            "completed": new Array()
+            "tasks": new Array()
           })
           localStorage.setItem("tasks", JSON.stringify(tasksRecords));
         }

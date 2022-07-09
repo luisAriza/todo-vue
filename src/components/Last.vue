@@ -1,5 +1,5 @@
 <template lang="pug">
-form(@submit.prevent="createTask()")
+form(@submit.prevent="addTask()")
 	label(for="task") New Task
 	input(id="task"
 		type="text"
@@ -8,67 +8,47 @@ form(@submit.prevent="createTask()")
 	textarea(placeholder="Description"
 		cols="30" rows="3"
 		v-model="task.description")
-	ul.tags.flex.gap-4 Select your tags:
+	ul.tags.flex.gap-4
 		li(v-for="tag in tags")
-			input.hidden(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
+			input(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
 			label(:for='tag') {{ tag }}
-	p {{ task.title }}
-	p {{ task.description }}
-	ul.tags.flex.gap-4 Tags
-		li(v-for="tag in task.tags.sort()") {{ tag }}
-	button(class="submit-btn" type="submit") Create Task
-	h2 Lista de tareas
-	//- ul
-	//- 	li(v-for="task in tasks")
-	//- 		span {{task.title}}
-	//- 		span {{task.description}}
-	//- 		span {{task.tags}}
-	section.grid.mt-4
-	input.border(type="text", v-model="search" placeholder="Search task...")
-	ul.task-list.mt-10
+	button(class="submit-btn" type="submit") Add Task
+section.grid.mt-4
+	h2.text-2xl.my-4 Lista de tareas
+	.mb-2
+		h3 Task completed: {{ tasksCompleted }}
+		h3 Task uncompleted: {{ tasksIncompleted }}
+	input.border(type="text", placeholder="Search task", v-model="search")
+	ul.my-8
 		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasks', :key='i')
-			span: img.inline.cursor-pointer(src='@/assets/check.svg', alt='check icon', width='20', height='20', @click='checkTask(i)')
+			span(@click='taskCompleted(task)' :class="taskClass(task)")
 			| {{ task.title }}
-			p(@click="showDescription == false ? showDescription = true : showDescription = false") V
-				span(v-show="showDescription == true") {{ task.description }}
+			| {{ task.description }}
 			span(v-for='tag in task.tags') {{ tag }}
-			button(@click="edit()") edit
-			span: img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='remove(i)')
-			input.border(v-show="editing", type="text", v-model="task.title")
-		li.flex.justify-between.w-full.text-red-500(v-for='(taskChecked, i) in tasks', :key='i')
-			span: img.inline.cursor-pointer(src='@/assets/check.svg', alt='check icon', width='20', height='20', @click='uncheckTask(i)')
-			| {{ taskChecked.title }}: {{ taskChecked.description }}
-			span(v-for='tag in taskChecked.tags') {{ tag }}
-			span: img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='removeChecked(i)')
-	//- TaskList
+			img.inline(src='@/assets/delete.svg', width='20', height='20', @click='remove(i)')
 </template>
 
 <script>
-// import TaskList from "@/components/TaskList.vue"
 
 export default {
-	// components: {
-	// 	TaskList
-	// },
 	name: "CreateTask",
 	data() {
 		return {
-			user: localStorage.getItem("user"),
-			showDescription: false,
-			editing: false,
 			search: "",
+			tasksCreated: [],
+			completed: false,
 			task: {
 				title: "",
 				description: "",
 				tags: [],
+				completed: false,
 			},
 			tags: [
-				"work",
-				"study",
-				"urgent",
-				"important"
-			],
-			tasksCreated: []
+				"Work",
+				"Study",
+				"Urgent",
+				"Important"
+			]
 		}
 	},
 	computed: {
@@ -77,27 +57,16 @@ export default {
 
 			return JSON.parse(tasks);
 		},
-		indexUser() {
+		tasksUser() {
+			let user = localStorage.getItem("user");
 			let tasksRecords = this.tasksRecords;
 			// Index(posición en el array) del user a identificar en tareas registradas
-			let tasksIndexUser = tasksRecords.findIndex((v) => v.user == this.user);
+			let tasksIndexUser = tasksRecords.findIndex((v) => v.user == user);
 			// User seleccionado en tareas registradas
-			return tasksRecords[tasksIndexUser]
-		},
-		tasksUser() {
-			if (this.user != null || undefined) {
-				let tasksUser = this.indexUser.tasks;
+			if (user != null || undefined) {
+				let tasksUser = tasksRecords[tasksIndexUser].tasks
 
 				return tasksUser;
-			} else {
-				this.noLogged = true;
-			}
-		},
-		tasksUserChecked() {
-			if (this.user != null || undefined) {
-				let tasksUserCompleted = this.indexUser.completed;
-
-				return tasksUserCompleted;
 			}
 		},
 		searches() {
@@ -115,12 +84,25 @@ export default {
 		tasks() {
 			return this.tasksCreated.filter(this.searches)
 		},
-		// tasksChecked() {
-		// 	return this.tasksCreated.filter(this.searches)
-		// }
+		tasksCompleted() {
+			return this.tasksCreated.filter((task) => {
+				return task.completed;
+			}).length;
+		},
+		tasksIncompleted() {
+			return this.tasksCreated.filter((task) => {
+				return !task.completed;
+			}).length;
+		}
 	},
 	methods: {
-		createTask() {
+		taskCompleted(task) {
+			return (task.completed = !task.completed);
+		},
+		taskClass(task) {
+			return [task.completed ? "check" : "uncheck"];
+		},
+		addTask() {
 			let tasksRecords = this.tasksRecords;
 			let tasks = this.tasksUser;
 
@@ -129,15 +111,11 @@ export default {
 			if (tasks.some(titleRepeat) || this.task.title.length <= 1 || this.task.description.length <= 1) {
 				console.log("La tarea ya existe, o no tiene titulo");
 			} else {
-				tasks.unshift({
+				this.tasksCreated.push({
 					title: this.task.title,
 					description: this.task.description,
 					tags: this.task.tags.sort(),
-				});
-				this.tasks.push({
-					title: this.task.title,
-					description: this.task.description,
-					tags: this.task.tags.sort(),
+					completed: false
 				});
 				// Para reiniciar el formulario
 				this.task = {
@@ -157,39 +135,32 @@ export default {
 				return this.editing = false;
 			}
 		},
-		checkTask(i) {
-			let tasks = this.tasksUser;
-			let tasksChecked = this.tasksUserChecked;
-			let task = tasks.splice(i, 1);
-
-			tasksChecked.unshift(task.pop());
-			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
-		},
-		uncheckTask(i) {
-			let tasks = this.tasksUser;
-			let tasksChecked = this.tasksUserChecked;
-			let task = tasksChecked.splice(i, 1);
-
-			tasks.push(task.pop());
-			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
-		},
 		remove(i) {
 			let tasks = this.tasksUser;
 
 			tasks.splice(i, 1);
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
-		removeChecked(i) {
-			let tasksChecked = this.tasksUserChecked;
+		removeRecords(i) {
+			let tasks = this.tasksUser;
 
-			tasksChecked.splice(i, 1);
+			tasks.splice(i, 1);
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		}
+	},
+	created() {
+		if (localStorage.getItem("tasks") != null) {
+			this.tasksCreated = this.tasksUser;
+		}
+			console.log(this.tasksUser)
 	}
 }
 </script>
 
 <style scoped>
+
+
+
 form {
 	@apply grid gap-4 w-full justify-items-center mt-10
 }
@@ -201,5 +172,15 @@ textarea {
 
 .submit-btn {
 	@apply bg-green-400 cursor-pointer p-3 w-full rounded-md
+}
+.check {
+	@apply text-red-500
+}
+.check::before {
+	content: "com";
+}
+
+.uncheck::before {
+	content: "inc";
 }
 </style>
