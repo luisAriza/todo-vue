@@ -39,9 +39,6 @@ export default {
 				tags: []
 			},
 			tags: [
-				"Work",
-				"Study",
-				"Project",
 				"Important",
 				"Urgent"
 			]
