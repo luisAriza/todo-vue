@@ -2,20 +2,19 @@
   <Navbar />
   <div class="home grid justify-center">
     <h1 class="text-xl">Home Task Master</h1>
-    <CreateTask />
+    <Last />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue"
-import CreateTask from "@/components/CreateTask.vue"
-
+import Last from "@/components/Last.vue"
 
 export default {
   name: 'HomeView',
   components: {
     Navbar,
-    CreateTask,
+    Last
   }
 }
 </script>
