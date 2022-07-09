@@ -1,11 +1,11 @@
 <template lang="pug">
 nav
-	router-link(to="/home") Home
-	.login-btn(v-show="!userLogged")
+	.login-btn(v-if="userLogged == null")
 		router-link(to="/") Log In
 		span  |
 		router-link(to="/register")  Sig Up
-	.profile(v-show="userLogged")
+	.profile(v-else)
+		router-link(to="/home") Home
 		p Welcome {{user}}
 		button(@click="Logout()" type="button") Log out
 </template>
@@ -56,6 +56,8 @@ div {
 }
 .profile {
 	display: flex;
+	width: 100%;
+	justify-content: space-between;
 	align-items: center;
 	gap: 12px;
 }

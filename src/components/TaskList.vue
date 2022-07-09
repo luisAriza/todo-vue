@@ -1,25 +1,32 @@
 <template lang="pug">
 section.grid.mt-4
-	input.border(type="text", v-model="search" placeholder="Search...")
+	input.border(type="text", v-model="search" placeholder="Search task...")
 	ul.task-list.mt-10.w-96
 		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasks', :key='i')
 			span: img.inline.cursor-pointer(src='@/assets/check.svg', alt='check icon', width='20', height='20', @click='checkTask(i)')
-			| {{ task.title }}: {{ task.description }}
+			| {{ task.title }}
+			p(@click="showDescription == false ? showDescription = true : showDescription = false") V
+				span(v-show="showDescription == true") {{ task.description }}
 			span(v-for='tag in task.tags') {{ tag }}
-			span: img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='deleteTask(i)')
+			span: img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='remove(i)')
 		li.flex.justify-between.w-full.text-red-500(v-for='(taskChecked, i) in tasksChecked', :key='i')
 			span: img.inline.cursor-pointer(src='@/assets/check.svg', alt='check icon', width='20', height='20', @click='uncheckTask(i)')
 			| {{ taskChecked.title }}: {{ taskChecked.description }}
 			span(v-for='tag in taskChecked.tags') {{ tag }}
-			span: img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='deleteTaskChecked(i)')
+			span: img.delete.inline.cursor-pointer(src='@/assets/delete.svg', alt='close icon', width='20', height='20', @click='removeChecked(i)')
 </template>
 
 <script>
 export default {
+	name: "TaskList",
+	props: {
+		saludar: String
+	},
 	data() {
 		return {
 			search: "",
-			user: localStorage.getItem("user")
+			user: localStorage.getItem("user"),
+			showDescription: false
 		}
 	},
 	computed: {
@@ -57,7 +64,7 @@ export default {
 				item.description.toLowerCase()
 					.includes(this.search.toLowerCase())
 				||
-				item.tags[0].toLowerCase()
+					item.tags.join('').toLowerCase()
 					.includes(this.search.toLowerCase())
 			}
 		},
@@ -85,13 +92,13 @@ export default {
 			tasks.push(task.pop());
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
-		deleteTask(i) {
+		remove(i) {
 			let tasks = this.tasksUser;
 
 			tasks.splice(i, 1);
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
-		deleteTaskChecked(i) {
+		removeChecked(i) {
 			let tasksChecked = this.tasksUserChecked;
 
 			tasksChecked.splice(i, 1);

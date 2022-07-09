@@ -20,15 +20,20 @@ form(@submit.prevent="createTask()")
 		li(v-for="tag in tags")
 			input.hidden(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
 			label(:for='tag') {{ tag }}
-	button(class="reset-btn" @click="reset()") Clean inputs
 	button(class="submit-btn" type="submit") Create Task
+	p {{saludar="mensaje con props"}}
+	TaskList
 </template>
 
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import TaskList from "@/components/TaskList.vue"
 
 export default {
+	components: {
+		TaskList
+	},
 	name: "CreateTask",
 	data() {
 		return {
@@ -39,8 +44,8 @@ export default {
 				tags: []
 			},
 			tags: [
-				"Important",
-				"Urgent"
+				"important",
+				"urgent"
 			]
 		}
 	},
@@ -50,7 +55,7 @@ export default {
 
 			return JSON.parse(tasks);
 		},
-		idUser() {
+		indexUser() {
 			let tasksRecords = this.tasksRecords;
 			// Index(posición en el array) del user a identificar en tareas registradas
 			let tasksIndexUser = tasksRecords.findIndex((v) => v.user == this.user);
@@ -59,7 +64,7 @@ export default {
 		},
 		tasksUser() {
 			if (this.user != null || undefined) {
-				let tasksUser = this.idUser.tasks;
+				let tasksUser = this.indexUser.tasks;
 
 				return tasksUser;
 			} else {
@@ -82,11 +87,14 @@ export default {
 					description: this.task.description,
 					tags: this.task.tags.sort()
 				});
+				// Para reiniciar el formulario
+				this.task = {
+					title: "",
+					description: "",
+					tags: []
+				};
 				localStorage.setItem("tasks", JSON.stringify(tasksRecords));
 			}
-		},
-		reset() {
-			return Object.assign(this.$data, this.$options.data());
 		}
 	},
 	setup() {
