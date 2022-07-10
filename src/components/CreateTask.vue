@@ -1,4 +1,5 @@
 <template lang="pug">
+Test(type="submit" class="submit-btn")
 form.w-full(@submit.prevent="addTask()")
 	label(for="task") New Task
 	input(id="task"
@@ -12,45 +13,21 @@ form.w-full(@submit.prevent="addTask()")
 		small(v-for="tag in tags")
 			label(:for='tag') {{ tag }}
 			input(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
-	button(class="submit-btn" type="submit") Add Task
-section.grid.mt-4.w-full
-	h2.text-2xl.my-4 Lista de tareas
-	.mb-2
-		h3 Completed: {{ tasksCompleted }}/{{ tasksCreated.length }}
-	input.border(type="text", placeholder="Search task", v-model="search")
-	.tags.flex.gap-4
-		p Filter by tags
-		small(v-for="(tag, i) in tags", :key="i + '0'")
-			label(:for="i + '0'") {{ tag }}
-			input(type="checkbox", :id="i + '0'", :value="tag", v-model="searchTags")
-	ul.my-8
-		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasksList', :key='i' :class="taskClass(task)")
-			span(@click='taskCompleted(task)' :class="taskClass2(task)")
-			span(v-show="!task.edited" @dblclick="edit(task, i)") {{ task.title }}
-			span(v-show="!task.edited" @dblclick="edit(task, i)") {{ task.description }}
-			small(v-show="!task.edited", v-for='tag in task.tags') {{ tag }}
-			input(v-show="task.edited"
-				type="text"
-				v-model="task.title"
-				@blur="noEdit(task, i)"
-				@keyup.esc="noEdit(task, i)"
-				@keyup.enter="doneEdit(task, i)")
-			input(v-show="task.edited"
-				type="textarea"
-				v-model="task.description"
-				@blur="noEdit(task, i)"
-				@keyup.esc="noEdit(task, i)"
-				@keyup.enter="doneEdit(task, i)")
-			small(v-show="task.edited", v-for="(tag, j) in tags", :key="j")
-				label(:for='j') {{ tag }}
-				input(type="checkbox", v-model="task.tags",	:id="j", :value="tag")
-			span(@click='remove(i)', class="remove")
+	button(class="submit-btn" type="submit") +Add Task
+TaskList
 </template>
 
 <script>
+import Test from "@/components/Test.vue";
+import TaskList from "@/components/TaskList.vue";
+import { onUpdated } from "vue";
 
 export default {
 	name: "CreateTask",
+	components: {
+		Test,
+		TaskList
+	},
 	data() {
 		return {
 			cache: "",
@@ -169,7 +146,7 @@ export default {
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		noEdit(task, i) {
-			this.task[i] = {
+			this.tasksCreated[i] = {
 				title: this.cache.title,
 				description: this.cache.description,
 				tags: this.cache.tags
@@ -195,14 +172,14 @@ export default {
 		if (localStorage.getItem("tasks") != null) {
 			this.tasksCreated = this.tasksRecordsUser;
 		}
-	}
+	},
 }
 </script>
 
 <style scoped>
-
-
-
+h1 {
+	color: red
+}
 form {
 	@apply grid gap-4 w-full justify-items-center mt-10
 }
@@ -213,34 +190,5 @@ textarea {
 .submit-btn {
 	@apply bg-green-400 cursor-pointer p-3 w-full rounded-md
 }
-.check {
-	width: 20px;
-	height: 20px;
-	background-image: url("../assets/check.svg");
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-.checked {
-	@apply text-slate-400 cursor-pointer line-through
-}
-.uncheck {
-	width: 20px;
-	height: 20px;
-	background-image: url("../assets/uncheck.svg");
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-.unchecked {
-	@apply text-slate-900 cursor-pointer
-}
-.remove {
-	width: 20px;
-	height: 20px;
-	background-image: url('../assets/delete.svg');
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
+
 </style>

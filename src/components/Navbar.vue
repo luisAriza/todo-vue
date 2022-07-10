@@ -1,13 +1,13 @@
 <template lang="pug">
 nav
-	.login-btn(v-if="userLogged == null")
+	.login-btn(v-if="!userLogged")
 		router-link(to="/") Log In
 		span  |
 		router-link(to="/register")  Sig Up
 	.profile(v-else)
 		router-link(to="/home") Home
 		p Welcome {{user}}
-		button(@click="Logout()" type="button") Log out
+		button(@click="Logout()") Log out
 </template>
 
 <script>
