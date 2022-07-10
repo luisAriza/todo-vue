@@ -22,14 +22,22 @@ section.grid.mt-4.w-full
 	ul.my-8
 		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasksList', :key='i' :class="taskClass(task)")
 			span(@click='taskCompleted(task)' :class="taskClass2(task)")
-			span(v-show="!edited" @dblclick="edit()") {{ task.title }}
-			input(v-show="edited",type="text" v-model="task.title" @keyup.enter="doneEdit()")
-			span(v-show="!edited" @dblclick="edit()") {{ task.description }}
-			input(v-show="edited"	type="textarea"	v-model="task.description" @keyup.enter="doneEdit()")
-			span(v-show="!edited", v-for='tag in task.tags') {{ tag }}
-			span(v-show="edited", v-for="(tag, i) in tags", :key="i")
-				label(:for='i') {{ tag }}
-				input(type="checkbox", v-model="task.tags",	:id="i", :value="tag")
+			span(v-show="!task.edited" @dblclick="edit(task , i)") {{ task.title }}
+			span(v-show="!task.edited" @dblclick="edit(task, i)") {{ task.description }}
+			span(v-show="!task.edited", v-for='tag in task.tags') {{ tag }}
+			input(v-show="task.edited"
+				type="text"
+				v-model="task.title"
+				@keyup.esc="noEdit(task, i)"
+				@keyup.enter="doneEdit(task, i)")
+			input(v-show="task.edited"
+				type="textarea"
+				v-model="task.description"
+				@keyup.esc="noEdit(task, i)"
+				@keyup.enter="doneEdit(task, i)")
+			span(v-show="task.edited", v-for="(tag, j) in tags", :key="j")
+				label(:for='j') {{ tag }}
+				input(type="checkbox", v-model="task.tags",	:id="j", :value="tag")
 			span(@click='remove(i)', class="remove")
 </template>
 
@@ -40,14 +48,14 @@ export default {
 	data() {
 		return {
 			search: "",
-			completed: false,
-			edited: false,
+			cache: "",
 			tasksCreated: [],
 			task: {
 				title: "",
 				description: "",
 				tags: [],
 				completed: false,
+				edited: false,
 			},
 			tags: [
 				"Work",
@@ -100,9 +108,6 @@ export default {
 			return this.tasksCreated.filter((task) => {
 				return !task.completed;
 			}).length;
-		},
-		saveRecords() {
-			return localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		}
 	},
 	methods: {
@@ -122,6 +127,7 @@ export default {
 					description: this.task.description,
 					tags: this.task.tags.sort(),
 					completed: false,
+					edited: false,
 				});
 				// Para reiniciar el formulario
 				this.task = {
@@ -129,12 +135,12 @@ export default {
 					description: "",
 					tags: [],
 				};
-				this.saveRecords;
+				localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 			}
 		},
 		taskCompleted(task) {
 			(task.completed = !task.completed)
-			this.saveRecords;
+			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		taskClass(task) {
 			return [task.completed ? "checked" : "unchecked"];
@@ -142,16 +148,29 @@ export default {
 		taskClass2(task) {
 			return [task.completed ? "check" : "uncheck"];
 		},
-		edit() {
-			this.edited = true;
-			this.saveRecords;
+		edit(task, i) {
+			this.cache = {
+				title: this.tasksList[i].title,
+				description: this.tasksList[i].description,
+				tags: this.tasksList[i].tags
+			}
+			task.edited = true;
+			console.log(this.cache);
 		},
-		doneEdit() {
-			// if (!this.tasksList[i].title) {
-			// 	this.remove(i)
-			// }
-			this.saveRecords;
-			this.edited = false
+		doneEdit(task, i) {
+			if (!this.tasksList[i].title) {
+				this.remove(i)
+			}
+			task.edited = false;
+			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
+		},
+		noEdit(task, i) {
+			this.tasksList[i] = {
+				title: this.cache.title,
+				description: this.cache.description,
+				tags: this.cache.tags
+			}
+			task.edited = false
 		},
 		remove(i) {
 			let sizeTaskCreated = this.tasksCreated.length
@@ -165,7 +184,7 @@ export default {
 						.indexOf(this.tasksList
 							.splice(i, 1)[0]))
 			}
-			this.saveRecords;
+			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 	},
 	created() {
