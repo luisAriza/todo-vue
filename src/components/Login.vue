@@ -64,7 +64,7 @@ export default {
         localStorage.setItem("user", currentUser.user);
 
         if (tasksRecords.some((v) => v.user == currentUser.user)) {
-          console.log("Ya este usuario ha ingresado")
+          console.log("Usuario antiguo")
         } else {
           tasksRecords.push({
             "user": currentUser.user,

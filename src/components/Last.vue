@@ -16,8 +16,7 @@ form.w-full(@submit.prevent="addTask()")
 section.grid.mt-4.w-full
 	h2.text-2xl.my-4 Lista de tareas
 	.mb-2
-		h3 Task completed: {{ tasksCompleted }}
-		h3 Task uncompleted: {{ tasksIncompleted }}
+		h3 Completed: {{ tasksCompleted }}/{{ tasksCreated.length }}
 	input.border(type="text", placeholder="Search task", v-model="search")
 	.tags.flex.gap-4
 		p Filter by tags
@@ -27,9 +26,9 @@ section.grid.mt-4.w-full
 	ul.my-8
 		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasksList', :key='i' :class="taskClass(task)")
 			span(@click='taskCompleted(task)' :class="taskClass2(task)")
-			span(v-show="!task.edited" @dblclick="edit(task , i)") {{ task.title }}
+			span(v-show="!task.edited" @dblclick="edit(task, i)") {{ task.title }}
 			span(v-show="!task.edited" @dblclick="edit(task, i)") {{ task.description }}
-			span(v-show="!task.edited", v-for='tag in task.tags') {{ tag }}
+			small(v-show="!task.edited", v-for='tag in task.tags') {{ tag }}
 			input(v-show="task.edited"
 				type="text"
 				v-model="task.title"
@@ -54,9 +53,9 @@ export default {
 	name: "CreateTask",
 	data() {
 		return {
+			cache: "",
 			search: "",
 			searchTags: [],
-			cache: "",
 			tasksCreated: [],
 			task: {
 				title: "",
@@ -68,6 +67,7 @@ export default {
 			tags: [
 				"Work",
 				"Study",
+				"Gym",
 				"Urgent",
 				"Important"
 			]
@@ -112,11 +112,6 @@ export default {
 		tasksCompleted() {
 			return this.tasksCreated.filter((task) => {
 				return task.completed;
-			}).length;
-		},
-		tasksIncompleted() {
-			return this.tasksCreated.filter((task) => {
-				return !task.completed;
 			}).length;
 		}
 	},
@@ -174,12 +169,12 @@ export default {
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		noEdit(task, i) {
-			this.tasksList[i] = {
+			this.task[i] = {
 				title: this.cache.title,
 				description: this.cache.description,
 				tags: this.cache.tags
 			}
-			task.edited = false
+			task.edited = false;
 		},
 		remove(i) {
 			let sizeTaskCreated = this.tasksCreated.length
@@ -200,9 +195,6 @@ export default {
 		if (localStorage.getItem("tasks") != null) {
 			this.tasksCreated = this.tasksRecordsUser;
 		}
-	},
-	updated() {
-		this.tasksCreated = this.tasksRecordsUser;
 	}
 }
 </script>
