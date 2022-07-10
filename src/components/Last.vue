@@ -1,5 +1,5 @@
 <template lang="pug">
-form(@submit.prevent="addTask()")
+form.w-full(@submit.prevent="addTask()")
 	label(for="task") New Task
 	input(id="task"
 		type="text"
@@ -13,7 +13,7 @@ form(@submit.prevent="addTask()")
 			label(:for='tag') {{ tag }}
 			input(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
 	button(class="submit-btn" type="submit") Add Task
-section.grid.mt-4
+section.grid.mt-4.w-full
 	h2.text-2xl.my-4 Lista de tareas
 	.mb-2
 		h3 Task completed: {{ tasksCompleted }}
@@ -22,9 +22,14 @@ section.grid.mt-4
 	ul.my-8
 		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasksList', :key='i' :class="taskClass(task)")
 			span(@click='taskCompleted(task)' :class="taskClass2(task)")
-			| {{ task.title }}
-			| {{ task.description }}
-			span(v-for='tag in task.tags') {{ tag }}
+			span(v-show="!edited" @dblclick="edit()") {{ task.title }}
+			input(v-show="edited",type="text" v-model="task.title" @keyup.enter="doneEdit()")
+			span(v-show="!edited" @dblclick="edit()") {{ task.description }}
+			input(v-show="edited"	type="textarea"	v-model="task.description" @keyup.enter="doneEdit()")
+			span(v-show="!edited", v-for='tag in task.tags') {{ tag }}
+			span(v-show="edited", v-for="(tag, i) in tags", :key="i")
+				label(:for='i') {{ tag }}
+				input(type="checkbox", v-model="task.tags",	:id="i", :value="tag")
 			span(@click='remove(i)', class="remove")
 </template>
 
@@ -36,14 +41,13 @@ export default {
 		return {
 			search: "",
 			completed: false,
-			selected: false,
+			edited: false,
 			tasksCreated: [],
 			task: {
 				title: "",
 				description: "",
 				tags: [],
 				completed: false,
-				selected: false,
 			},
 			tags: [
 				"Work",
@@ -96,6 +100,9 @@ export default {
 			return this.tasksCreated.filter((task) => {
 				return !task.completed;
 			}).length;
+		},
+		saveRecords() {
+			return localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		}
 	},
 	methods: {
@@ -122,12 +129,12 @@ export default {
 					description: "",
 					tags: [],
 				};
-				localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
+				this.saveRecords;
 			}
 		},
 		taskCompleted(task) {
 			(task.completed = !task.completed)
-			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
+			this.saveRecords;
 		},
 		taskClass(task) {
 			return [task.completed ? "checked" : "unchecked"];
@@ -135,11 +142,16 @@ export default {
 		taskClass2(task) {
 			return [task.completed ? "check" : "uncheck"];
 		},
-		taskClass3(task) {
-			return [task.selected ? "check" : "uncheck"];
-		},
 		edit() {
-			
+			this.edited = true;
+			this.saveRecords;
+		},
+		doneEdit() {
+			// if (!this.tasksList[i].title) {
+			// 	this.remove(i)
+			// }
+			this.saveRecords;
+			this.edited = false
 		},
 		remove(i) {
 			let sizeTaskCreated = this.tasksCreated.length
@@ -153,7 +165,7 @@ export default {
 						.indexOf(this.tasksList
 							.splice(i, 1)[0]))
 			}
-			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
+			this.saveRecords;
 		},
 	},
 	created() {

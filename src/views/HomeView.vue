@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div class="home grid justify-center">
+  <div class="home grid justify-center w-full">
     <h1 class="text-xl">Home Task Master</h1>
     <Last />
   </div>
