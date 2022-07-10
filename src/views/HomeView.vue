@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div class="home grid justify-center w-full">
+  <div class="home">
     <h1 class="text-xl">Home Task Master</h1>
     <CreateTask />
   </div>
@@ -18,3 +18,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.home {
+  @apply grid justify-center w-full
+}
+</style>

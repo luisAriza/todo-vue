@@ -20,7 +20,6 @@ TaskList
 <script>
 import Test from "@/components/Test.vue";
 import TaskList from "@/components/TaskList.vue";
-import { onUpdated } from "vue";
 
 export default {
 	name: "CreateTask",
@@ -86,9 +85,9 @@ export default {
 		tasksList() {
 			return this.tasksCreated.filter(this.searchFilter)
 		},
-		tasksCompleted() {
+		tasksUncompleted() {
 			return this.tasksCreated.filter((task) => {
-				return task.completed;
+				return !task.completed;
 			}).length;
 		}
 	},
@@ -146,12 +145,13 @@ export default {
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		noEdit(task, i) {
-			this.tasksCreated[i] = {
-				title: this.cache.title,
-				description: this.cache.description,
-				tags: this.cache.tags
-			}
 			task.edited = false;
+			// this.tasksList[i] = {
+			// 	title: this.cache.title,
+			// 	description: this.cache.description,
+			// 	tags: this.cache.tags
+			// }
+			// localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		remove(i) {
 			let sizeTaskCreated = this.tasksCreated.length
