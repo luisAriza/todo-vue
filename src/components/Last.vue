@@ -8,8 +8,8 @@ form.w-full(@submit.prevent="addTask()")
 	textarea(placeholder="Description"
 		cols="30" rows="3"
 		v-model="task.description")
-	ul.tags.flex.gap-4
-		li(v-for="tag in tags")
+	.tags.flex.gap-4
+		small(v-for="tag in tags")
 			label(:for='tag') {{ tag }}
 			input(type="checkbox", :id="tag", :value="tag", v-model="task.tags")
 	button(class="submit-btn" type="submit") Add Task
@@ -19,6 +19,11 @@ section.grid.mt-4.w-full
 		h3 Task completed: {{ tasksCompleted }}
 		h3 Task uncompleted: {{ tasksIncompleted }}
 	input.border(type="text", placeholder="Search task", v-model="search")
+	.tags.flex.gap-4
+		p Filter by tags
+		small(v-for="(tag, i) in tags", :key="i + '0'")
+			label(:for="i + '0'") {{ tag }}
+			input(type="checkbox", :id="i + '0'", :value="tag", v-model="searchTags")
 	ul.my-8
 		li.flex.justify-between.w-full.text-blue-500(v-for='(task, i) in tasksList', :key='i' :class="taskClass(task)")
 			span(@click='taskCompleted(task)' :class="taskClass2(task)")
@@ -28,14 +33,16 @@ section.grid.mt-4.w-full
 			input(v-show="task.edited"
 				type="text"
 				v-model="task.title"
+				@blur="noEdit(task, i)"
 				@keyup.esc="noEdit(task, i)"
 				@keyup.enter="doneEdit(task, i)")
 			input(v-show="task.edited"
 				type="textarea"
 				v-model="task.description"
+				@blur="noEdit(task, i)"
 				@keyup.esc="noEdit(task, i)"
 				@keyup.enter="doneEdit(task, i)")
-			span(v-show="task.edited", v-for="(tag, j) in tags", :key="j")
+			small(v-show="task.edited", v-for="(tag, j) in tags", :key="j")
 				label(:for='j') {{ tag }}
 				input(type="checkbox", v-model="task.tags",	:id="j", :value="tag")
 			span(@click='remove(i)', class="remove")
@@ -48,6 +55,7 @@ export default {
 	data() {
 		return {
 			search: "",
+			searchTags: [],
 			cache: "",
 			tasksCreated: [],
 			task: {
@@ -86,14 +94,16 @@ export default {
 		},
 		searchFilter() {
 			return (item) => {
-				return item.title.toLowerCase()
-					.includes(this.search.toLowerCase())
-					||
-					item.description.toLowerCase()
+				if (this.search) {
+					return item.title.toLowerCase()
 						.includes(this.search.toLowerCase())
-					||
-					item.tags.join('').toLowerCase()
-						.includes(this.search.toLowerCase())
+						||
+						item.description.toLowerCase()
+							.includes(this.search.toLowerCase())
+				}	else {
+					return item.tags.sort().join('')
+						.includes(this.searchTags.sort().join(''))
+				}
 			}
 		},
 		tasksList() {
@@ -155,7 +165,6 @@ export default {
 				tags: this.tasksList[i].tags
 			}
 			task.edited = true;
-			console.log(this.cache);
 		},
 		doneEdit(task, i) {
 			if (!this.tasksList[i].title) {
@@ -182,7 +191,7 @@ export default {
 				this.tasksCreated
 					.splice(this.tasksCreated
 						.indexOf(this.tasksList
-							.splice(i, 1)[0]))
+							.splice(i, 1)[0]), 1)
 			}
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
@@ -191,6 +200,9 @@ export default {
 		if (localStorage.getItem("tasks") != null) {
 			this.tasksCreated = this.tasksRecordsUser;
 		}
+	},
+	updated() {
+		this.tasksCreated = this.tasksRecordsUser;
 	}
 }
 </script>
