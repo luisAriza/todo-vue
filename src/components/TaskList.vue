@@ -154,6 +154,7 @@ export default {
 	methods: {
 		taskCompleted(task) {
 			(task.completed = !task.completed)
+			task.edited = false;
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		taskClass(task) {
@@ -216,20 +217,19 @@ export default {
 </script>
 
 <style scoped>
-
 .tasks-list__details {
-	@apply w-full justify-start flex-wrap gap-1
+	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md p-3
 }
 .tasks-list__details span {
-	@apply w-full text-start mb-3 ml-2
+	@apply w-full text-start pb-3 pl-2 mr-10 border-b
 }
 .tasks-list__details input {
-	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-slate-100 text-slate-500;
+	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 ;
 }
 .tasks-list__details small {
 	@apply mr-3 my-1 justify-start
 }
 .noEdit {
-	@apply absolute right-0 top-32 sm:right-32 sm:top-28
+	@apply absolute right-0 top-36 sm:right-36 sm:top-28
 }
 </style>

@@ -1,11 +1,11 @@
 <template lang="pug">
 form.form__container(action name="signup" @submit.prevent="saveRecord()")
   .field
-    label(for="name") Nickname
+    label(for="name") Name
     p(v-if="v$.user.$error") Minimum 4 characters | Required
   input(id="name"
     type="name"
-    placeholder="julio890"
+    placeholder="Julio Perez"
     @blur="v$.user.$touch"
     v-model="user"
     required)
