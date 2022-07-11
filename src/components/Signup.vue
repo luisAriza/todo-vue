@@ -107,18 +107,16 @@ label {
 .field {
   @apply w-full flex items-end justify-between
 }
-
 .field p {
   @apply text-xs text-red-600 pr-2
 }
-
 .error {
   @apply text-xs text-red-600 justify-self-center
 }
 input {
-  @apply border px-2 rounded-md outline-none w-full p-1 mb-6
+  @apply border px-2 rounded-md outline-none w-full p-2 mb-5
 }
 .submit-btn {
-  @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-semibold text-lg
+  @apply bg-green-600 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-semibold text-lg
 }
 </style>

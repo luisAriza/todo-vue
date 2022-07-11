@@ -115,13 +115,13 @@ label {
   @apply text-xs text-red-600 justify-self-center
 }
 input {
-  @apply border px-2 rounded-md outline-none w-full p-1 mb-6
+  @apply border px-2 rounded-md outline-none w-full p-2 mb-5
 }
 .submit-btn {
-  @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-semibold text-lg mb-1
+  @apply bg-green-600 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-semibold text-lg mb-1
 }
 .signup {
-  @apply text-green-400 font-semibold ml-1
+  @apply text-green-600 font-semibold ml-1
 }
 </style>
 

@@ -44,10 +44,8 @@ export default {
 </script>
 
 <style scoped>
-
-
 nav {
-	@apply bg-white shadow-md px-5 py-3
+	@apply bg-white shadow-sm px-5 py-3
 }
 nav a {
 	font-weight: 600;
@@ -77,6 +75,6 @@ div {
 	@apply font-semibold capitalize
 }
 button {
-	@apply border-green-400 border text-green-400 px-2 rounded-md
+	@apply border-green-600 border text-green-600 px-2 rounded-md font-semibold
 }
 </style>

@@ -37,38 +37,51 @@ section.tasks
 					span(
 						v-if='!task.edited',
 						@click="edit(task, i)",
-						class="edit",
-						:class="showDetails ? 'block' : 'hidden'")
+						class="edit")
 					span(
 						v-else,
 						@click="doneEdit(task, i)"
 						class="edit")
 					span(
-						@click="details(task)",
+						@click="taskDetails(task)",
 						class="arrow",
-						:class="showDetails ? 'rotate' : ''")
+						:class="task.details ? 'rotate' : ''")
 					span(@click='remove(i)', class="remove")
-				.tasks-list__details(:class="showDetails ? 'block' : 'hidden'")
+				.tasks-list__details(:class="task.details ? 'flex' : 'hidden'")
+					p.font-bold Description
 					span(class="description") {{ task.description }}
-					input(v-show="task.edited"
+					small(
+						v-show="task.edited"
+						@click='noEdit(task, i)'
+						class="remove noEdit")
+					label.font-semibold(
+						v-show="task.edited"
+						for="editTitle") Edit title
+					input(
+						id="editTitle"
+						v-show="task.edited"
 						type="text"
 						v-model="task.title"
-						@blur="noEdit(task, i)"
 						@keyup.esc="noEdit(task, i)"
 						@keyup.enter="doneEdit(task, i)")
-					input(v-show="task.edited"
+					label.font-semibold(
+						v-show="task.edited"
+						for="editDescription") Edit description
+					input(
+						id="editDescription"
+						v-show="task.edited"
 						type="textarea"
+						rows="3"
 						v-model="task.description"
-						@blur="noEdit(task, i)"
 						@keyup.esc="noEdit(task, i)"
 						@keyup.enter="doneEdit(task, i)")
-					small(v-show="task.edited", v-for="(tag, j) in tags", :key="j")
+					small(v-if="task.edited", v-for="(tag, j) in tags", :key="j")
 						input.hidden(
 							type="checkbox",
 							v-model="task.tags",
-							:id="j",
+							:id="j + 0",
 							:value="tag")
-						label(:for='j') {{ tag }}
+						label(:for='j + 0') {{ tag }}
 </template>
 
 <script>
@@ -84,7 +97,6 @@ export default {
 			cache: "",
 			search: "",
 			showAdd: false,
-			showDetails: false,
 			searchTags: [],
 			tasksCreated: [],
 			tags: [
@@ -149,9 +161,9 @@ export default {
 		taskClass2(task) {
 			return [task.completed ? "check" : "uncheck"];
 		},
-		details(task) {
+		taskDetails(task) {
 			task.edited = false;
-			this.showDetails = !this.showDetails;
+			task.details = !task.details;
 		},
 		edit(task, i) {
 			this.cache = {
@@ -159,17 +171,20 @@ export default {
 				description: this.tasksList[i].description,
 				tags: this.tasksList[i].tags
 			}
-			this.showDetails ? task.edited = true : task.edited = false
+			this.tasksCreated.edited = false
+			task.edited = true;
+			task.details = true;
 		},
 		doneEdit(task, i) {
 			if (!this.tasksList[i].title) {
 				this.remove(i)
 			}
 			task.edited = false;
+			task.details = false;
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		noEdit(task, i) {
-			this.tasksList[i] = {
+			this.tasksCreated[i] = {
 				title: this.cache.title,
 				description: this.cache.description,
 				tags: this.cache.tags
@@ -198,3 +213,22 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+
+.tasks-list__details {
+	@apply w-full justify-start flex-wrap gap-1
+}
+.tasks-list__details span {
+	@apply w-full text-start mb-3 ml-2
+}
+.tasks-list__details input {
+	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-slate-100 text-slate-500;
+}
+.tasks-list__details small {
+	@apply mr-3 my-1 justify-start
+}
+.noEdit {
+	@apply absolute right-0 top-32 sm:right-32 sm:top-28
+}
+</style>

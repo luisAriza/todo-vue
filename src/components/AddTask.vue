@@ -18,7 +18,7 @@ form.w-full(@submit.prevent="addTask()" :class="addClass")
 				v-model="task.tags")
 			label(:for='tag') {{ tag }}
 	button(class="submit-btn" type="submit") Add Task
-	button(class="cancel-btn" @click="this.$parent.showAdd = false") Cancel
+	p(class="cancel-btn" @click="this.$parent.showAdd = false") Cancel
 </template>
 
 <script>
@@ -32,6 +32,7 @@ export default {
 				tags: [],
 				completed: false,
 				edited: false,
+				details: false
 			},
 		}
 	},
@@ -47,8 +48,8 @@ export default {
 			let titleRepeat = (v) => v.title == this.task.title;
 
 			if (tasksUser.some(titleRepeat) ||
-				this.task.title.length <= 2 ||
-				this.task.description.length <= 2
+				this.task.title.length == 0 ||
+				this.task.description.length == 0
 			) {
 				console.log("La tarea ya existe, o no falta llenar campos");
 			} else {
@@ -58,6 +59,7 @@ export default {
 					tags: this.task.tags.sort(),
 					completed: false,
 					edited: false,
+					details: false,
 				});
 				// Para reiniciar el formulario
 				this.task = {
@@ -73,28 +75,27 @@ export default {
 </script>
 
 <style scoped>
-
 form {
 	@apply gap-4 w-full justify-items-center p-4 border-b
 }
 input,
 textarea {
-	@apply w-full max-w-sm outline-none rounded-md px-3 py-2 bg-slate-50 text-slate-500;
+	@apply w-full max-w-sm outline-none rounded-md px-3 py-2 bg-slate-100 text-slate-500;
 }
 .tags {
 	@apply flex justify-start gap-2;
 }
 .tags label {
-	@apply bg-slate-50 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer;
+	@apply bg-slate-100 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer;
 }
 .tags input:checked ~ label{
-	@apply bg-green-300 text-white;
+	@apply bg-green-600 text-white;
 }
 .submit-btn {
-	@apply bg-green-300 text-white cursor-pointer p-2 mt-2 max-w-sm w-full rounded-md
+	@apply bg-green-600 text-white cursor-pointer p-2 mt-2 max-w-sm w-full rounded-md
 }
 .cancel-btn {
-	@apply bg-white text-green-300 border border-green-300 cursor-pointer p-2 -mt-1 mb-1 max-w-sm w-full rounded-md
+	@apply bg-white text-green-600 border border-green-600 cursor-pointer p-2 -mt-1 mb-1 max-w-sm w-full rounded-md
 }
 
 </style>
