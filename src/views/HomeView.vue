@@ -1,9 +1,10 @@
-<template>
-  <Navbar />
-  <div class="home w-full px-2">
-    <h1 class="text-3xl">Estate Task</h1>
-    <TaskList />
-  </div>
+<template lang="pug">
+Navbar
+.home.w-full.px-2
+  .flex.items-center.justify-center.gap-4.pt-8
+    img(src="../assets/project.svg" width="140" alt="logo")
+    h1(class="sm:block hidden font-bold text-3xl uppercase") Estate Task
+  TaskList
 </template>
 
 <script>
