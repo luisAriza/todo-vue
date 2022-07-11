@@ -1,26 +1,24 @@
 <template>
   <Navbar />
-  <div class="home">
-    <h1 class="text-xl">Home Task Master</h1>
-    <CreateTask />
+  <div class="home w-full">
+    <h1 class="text-3xl">Estate Task</h1>
+    <AddTask />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue"
-import CreateTask from "@/components/CreateTask.vue"
+import AddTask from "@/components/AddTask.vue"
 
 export default {
   name: 'HomeView',
   components: {
     Navbar,
-    CreateTask
+    AddTask
   }
 }
 </script>
 
 <style scoped>
-.home {
-  @apply grid justify-center w-full
-}
+
 </style>

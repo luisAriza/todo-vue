@@ -22,7 +22,7 @@ import Test from "@/components/Test.vue";
 import TaskList from "@/components/TaskList.vue";
 
 export default {
-	name: "CreateTask",
+	name: "AddTask",
 	components: {
 		Test,
 		TaskList
@@ -145,13 +145,13 @@ export default {
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		noEdit(task, i) {
+			this.tasksList[i] = {
+				title: this.cache.title,
+				description: this.cache.description,
+				tags: this.cache.tags
+			}
+			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 			task.edited = false;
-			// this.tasksList[i] = {
-			// 	title: this.cache.title,
-			// 	description: this.cache.description,
-			// 	tags: this.cache.tags
-			// }
-			// localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		remove(i) {
 			let sizeTaskCreated = this.tasksCreated.length
