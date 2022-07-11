@@ -8,9 +8,10 @@ section.tasks
 			p.text-slate-500.bg-slate-100.px-4.py-1.w-max.rounded-md
 				span.text-blue-400 {{ tasksUncompleted }}
 				|  / {{ tasksCreated.length }} tasks left
-	.filter
+	.filter(v-show="!showAdd")
 		button.add(@click="showAdd = true") + Add a Task
 		input.filter__searcher(
+			v-show="!showAdd"
 			id="searcher",
 			type="text",
 			placeholder="Search",

@@ -18,7 +18,7 @@ form.w-full(@submit.prevent="addTask()" :class="addClass")
 				v-model="task.tags")
 			label(:for='tag') {{ tag }}
 	button(class="submit-btn" type="submit") Add Task
-	p(class="cancel-btn" @click="this.$parent.showAdd = false") Cancel
+	p(class="cancel-btn" @click="this.$parent.showAdd = false") Back
 </template>
 
 <script>
