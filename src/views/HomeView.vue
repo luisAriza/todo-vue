@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div class="home w-full">
+  <div class="home w-full px-2">
     <h1 class="text-3xl">Estate Task</h1>
     <TaskList />
   </div>

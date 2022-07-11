@@ -31,26 +31,35 @@ section.tasks
 					span(
 						@click='taskCompleted(task)',
 						:class="taskClass2(task)")
-					span(class="task-title", @click="edit(task, i)") {{ task.title }}
+					span(class="task-title") {{ task.title }}
 				ul.tasks-list__tags
 					small(v-for='tag in task.tags') {{ tag }}
 					span(
-						@click="showDetails = !showDetails", class="arrow",
+						v-if='!task.edited',
+						@click="edit(task, i)",
+						class="edit",
+						:class="showDetails ? 'block' : 'hidden'")
+					span(
+						v-else,
+						@click="doneEdit(task, i)"
+						class="edit")
+					span(
+						@click="details(task)",
+						class="arrow",
 						:class="showDetails ? 'rotate' : ''")
 					span(@click='remove(i)', class="remove")
 				.tasks-list__details(:class="showDetails ? 'block' : 'hidden'")
-					span(
-						v-show="!task.edited",
-						class="description"
-						@dblclick="edit(task, i)") {{ task.description }}
+					span(class="description") {{ task.description }}
 					input(v-show="task.edited"
 						type="text"
 						v-model="task.title"
+						@blur="noEdit(task, i)"
 						@keyup.esc="noEdit(task, i)"
 						@keyup.enter="doneEdit(task, i)")
 					input(v-show="task.edited"
 						type="textarea"
 						v-model="task.description"
+						@blur="noEdit(task, i)"
 						@keyup.esc="noEdit(task, i)"
 						@keyup.enter="doneEdit(task, i)")
 					small(v-show="task.edited", v-for="(tag, j) in tags", :key="j")
@@ -140,13 +149,17 @@ export default {
 		taskClass2(task) {
 			return [task.completed ? "check" : "uncheck"];
 		},
+		details(task) {
+			task.edited = false;
+			this.showDetails = !this.showDetails;
+		},
 		edit(task, i) {
 			this.cache = {
 				title: this.tasksList[i].title,
 				description: this.tasksList[i].description,
 				tags: this.tasksList[i].tags
 			}
-			task.edited = true;
+			this.showDetails ? task.edited = true : task.edited = false
 		},
 		doneEdit(task, i) {
 			if (!this.tasksList[i].title) {
@@ -162,7 +175,6 @@ export default {
 				tags: this.cache.tags
 			}
 			task.edited = false;
-			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
 		remove(i) {
 			let sizeTaskCreated = this.tasksCreated.length

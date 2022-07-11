@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply bg-gray-50;
+}
+
 #app {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
@@ -9,7 +13,7 @@
 
 /*  Estilos de TaskList.vue */
 .tasks {
-  @apply grid w-full max-w-[50rem] my-8 mx-auto p-6 rounded-lg shadow-lg shadow-slate-400;
+  @apply grid w-full max-w-[50rem] my-8 mx-auto p-6 rounded-lg shadow-md bg-white;
 }
 .info {
   @apply border-b sm:flex sm:justify-between sm:pb-4 px-2 sm:px-4;
@@ -44,7 +48,7 @@
   @apply grid;
 }
 .tasks-list .list li {
-  @apply grid items-center gap-2 w-full py-3 border-b relative sm:flex;
+  @apply grid items-center sm:justify-between sm:pr-36 gap-2 w-full py-3 border-b relative sm:flex;
 }
 .tasks-list__title {
   @apply flex items-center gap-2;
@@ -55,14 +59,17 @@
 .tasks-list__tags small {
   @apply bg-green-300 text-white rounded-md px-2;
 }
+.tasks-list__tags .edit {
+  @apply absolute top-4 right-24 sm:top-3 sm:right-24;
+}
 .tasks-list__tags .arrow {
-  @apply absolute bottom-10 right-3 sm:bottom-0 sm:top-4 sm:right-12;
+  @apply absolute top-5 right-14 sm:top-4 sm:right-12;
 }
 .tasks-list__tags .rotate {
   @apply rotate-90;
 }
 .tasks-list__tags .remove {
-  @apply absolute right-2 top-3 sm:right-0;
+  @apply absolute top-4 right-2 sm:top-3 sm:right-0;
 }
 
 .check {
@@ -93,6 +100,15 @@
   @apply bg-slate-100 text-gray-400;
 }
 
+.edit {
+  width: 24px;
+  height: 24px;
+  background-image: url("assets/edit.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
 .arrow {
   width: 16px;
   height: 16px;

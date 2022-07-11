@@ -19,8 +19,9 @@ export default {
 </script>
 
 <style scoped>
+
 .login {
-	@apply  grid gap-10 mx-auto max-w-sm py-8 px-5
+	@apply  grid gap-6 mx-auto max-w-sm pt-16 pb-8 px-5
 }
 .title {
 	@apply text-xl font-bold

@@ -119,6 +119,6 @@ input {
   @apply border px-2 rounded-md outline-none w-full p-1 mb-6
 }
 .submit-btn {
-  @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-bold text-lg
+  @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-semibold text-lg
 }
 </style>

@@ -73,18 +73,19 @@ export default {
 </script>
 
 <style scoped>
+
 form {
-	@apply gap-4 w-full justify-items-center p-4 bg-slate-100
+	@apply gap-4 w-full justify-items-center p-4 border-b
 }
 input,
 textarea {
-	@apply w-full max-w-sm outline-none rounded-md px-3 py-2 text-slate-500;
+	@apply w-full max-w-sm outline-none rounded-md px-3 py-2 bg-slate-50 text-slate-500;
 }
 .tags {
 	@apply flex justify-start gap-2;
 }
 .tags label {
-	@apply bg-white text-gray-400 rounded-md py-[2px] px-2 cursor-pointer;
+	@apply bg-slate-50 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer;
 }
 .tags input:checked ~ label{
 	@apply bg-green-300 text-white;

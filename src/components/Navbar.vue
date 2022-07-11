@@ -1,13 +1,20 @@
 <template lang="pug">
 nav
-	.login-btn(v-if="!userLogged")
-		router-link(to="/") Log In
-		span  |
-		router-link(to="/register")  Sig Up
-	.profile(v-else)
-		router-link(to="/home") Home
-		p Welcome {{user}}
-		button(@click="Logout()") Log out
+	.navbar(v-if="!userLogged")
+		figure.left
+			img(src="../assets/logo.svg" width="40" height="40" alt="logo")
+			p To-do Assist
+		.login
+			router-link(to="/") Log In
+			span  |
+			router-link(to="/register")  Sig Up
+	.navbar(v-else)
+		router-link(to="/home").left
+			img(src="../assets/logo.svg" width="40" height="40" alt="logo")
+			p To-do Assist
+		.right
+			p Welcome {{user}}
+			button(@click="Logout()") Log out
 </template>
 
 <script>
@@ -38,33 +45,38 @@ export default {
 
 <style scoped>
 
+
 nav {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 30px;
+	@apply bg-white shadow-md px-5 py-3
 }
 nav a {
-	font-weight: bold;
+	font-weight: 600;
 	color: #2c3e50;
 }
-nav a.router-link-exact-active {
+.login a.router-link-exact-active {
 	color: #42b983;
 }
 div {
 	display: inline-block;
 }
-.profile {
+.navbar {
 	display: flex;
-	width: 100%;
 	justify-content: space-between;
 	align-items: center;
-	gap: 12px;
 }
-.profile p {
-	@apply font-semibold capitalize text-lg
+.left {
+	@apply flex gap-2 items-center font-semibold text-xl
+}
+.left p {
+	@apply hidden sm:block
+}
+.right {
+	@apply flex items-center gap-5
+}
+.right p {
+	@apply font-semibold capitalize
 }
 button {
-	@apply border-green-400 border text-green-400 px-2 py-1 rounded-lg font-bold
+	@apply border-green-400 border text-green-400 px-2 rounded-md
 }
 </style>
