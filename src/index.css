@@ -6,3 +6,109 @@
   font-family: "Poppins", sans-serif;
   font-weight: 500;
 }
+
+/*  Estilos de TaskList.vue */
+.tasks {
+  @apply grid w-full max-w-[50rem] my-8 mx-auto p-6 rounded-lg shadow-lg shadow-slate-400;
+}
+.info {
+  @apply border-b sm:flex sm:justify-between sm:pb-4 px-2 sm:px-4;
+}
+.filter {
+  @apply grid py-4 border-b sm:grid-cols-2 items-center;
+}
+.add {
+  @apply bg-green-300 text-white cursor-pointer p-2 mb-4 w-full rounded-md sm:row-start-1 sm:row-end-3 sm:col-start-2 sm:col-end-3 sm:w-40 sm:m-0 sm:justify-self-end;
+}
+.filter__searcher {
+  @apply w-full sm:max-w-xs outline-none rounded-md bg-slate-50 mb-2 px-3 py-2 text-slate-500;
+}
+.filter__tags {
+  @apply flex justify-start gap-2 mt-2;
+}
+.filter__tags label,
+.tasks-list label {
+  @apply bg-slate-50 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer;
+}
+.filter__tags input:checked ~ label,
+.tasks-list input:checked ~ label {
+  @apply bg-green-300 text-white;
+}
+.tasks-list__details .description {
+  /* @apply; */
+}
+.tasks-list {
+  @apply pb-2;
+}
+.tasks-list .list {
+  @apply grid;
+}
+.tasks-list .list li {
+  @apply grid items-center gap-2 w-full py-3 border-b relative sm:flex;
+}
+.tasks-list__title {
+  @apply flex items-center gap-2;
+}
+.tasks-list__tags {
+  @apply grid grid-flow-col justify-start items-center gap-2;
+}
+.tasks-list__tags small {
+  @apply bg-green-300 text-white rounded-md px-2;
+}
+.tasks-list__tags .arrow {
+  @apply absolute bottom-10 right-3 sm:bottom-0 sm:top-4 sm:right-12;
+}
+.tasks-list__tags .rotate {
+  @apply rotate-90;
+}
+.tasks-list__tags .remove {
+  @apply absolute right-2 top-3 sm:right-0;
+}
+
+.check {
+  width: 20px;
+  height: 20px;
+  background-image: url("assets/check.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  filter: invert(80%);
+}
+.uncheck {
+  width: 20px;
+  height: 20px;
+  background-image: url("assets/uncheck.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  filter: invert(60%);
+}
+.checked .task-title,
+.checked .tasks-list__details .description {
+  @apply text-gray-400;
+}
+.checked .tasks-list__tags small {
+  @apply bg-slate-100 text-gray-400;
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  background-image: url("assets/arrow.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.remove {
+  width: 20px;
+  height: 20px;
+  background-image: url("assets/delete.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  filter: invert(75%);
+}

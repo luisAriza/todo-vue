@@ -122,4 +122,3 @@ input {
   @apply bg-green-400 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-bold text-lg
 }
 </style>
-
