@@ -50,6 +50,15 @@ html {
 .tasks-list__title {
   @apply flex items-center gap-2;
 }
+.task-title {
+  @apply h-6 w-40 text-left truncate md:w-60;
+}
+.tasks-list__title .show-title {
+  @apply h-auto text-clip overflow-auto;
+}
+::-webkit-scrollbar {
+  display: none;
+}
 .tasks-list__tags {
   @apply grid grid-flow-col justify-start items-center gap-2;
 }
@@ -57,21 +66,22 @@ html {
   @apply bg-green-600 text-white rounded-md px-2;
 }
 .tasks-list__tags .edit {
-  @apply absolute top-4 right-24 sm:top-3 sm:right-24;
+  @apply absolute top-3 right-24 sm:top-3 sm:right-24;
 }
 .tasks-list__tags .arrow {
-  @apply absolute top-5 right-14 sm:top-4 sm:right-12;
+  @apply absolute top-4 right-[3.3rem] sm:top-4 sm:right-12;
 }
 .tasks-list__tags .rotate {
   @apply rotate-90;
 }
 .tasks-list__tags .remove {
-  @apply absolute top-4 right-2 sm:top-3 sm:right-0;
+  @apply absolute top-3 right-2 sm:top-3 sm:right-0;
 }
 
 .check {
   width: 20px;
   height: 20px;
+  padding: 10px;
   background-image: url("assets/check.svg");
   background-position: center;
   background-size: cover;
@@ -82,6 +92,7 @@ html {
 .uncheck {
   width: 20px;
   height: 20px;
+  padding: 10px;
   background-image: url("assets/uncheck.svg");
   background-position: center;
   background-size: cover;
@@ -89,11 +100,11 @@ html {
   cursor: pointer;
   filter: invert(60%);
 }
-.checked .task-title,
-.checked .tasks-list__details .description {
+.checked .task-title {
   @apply text-gray-400;
 }
-.checked .tasks-list__tags small {
+.checked .tasks-list__tags small,
+.checked .tasks-list__details {
   @apply bg-gray-100 text-gray-400;
 }
 .checked .tasks-list__tags .edit {

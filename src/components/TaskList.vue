@@ -32,7 +32,9 @@ section.tasks
 					span(
 						@click='taskCompleted(task)',
 						:class="taskClass2(task)")
-					span(class="task-title") {{ task.title }}
+					span(
+						class="task-title",
+						:class="task.details ? 'show-title' : ''") {{ task.title }}
 				ul.tasks-list__tags
 					small(v-for='tag in task.tags') {{ tag }}
 					span(
@@ -55,9 +57,9 @@ section.tasks
 						v-show="task.edited"
 						@click='noEdit(task, i)'
 						class="remove noEdit")
-					label.font-semibold(
+					label.font-semibold.mt-3.w-full(
 						v-show="task.edited"
-						for="editTitle") Edit title
+						for="editTitle") Edit Title
 					input(
 						id="editTitle"
 						v-show="task.edited"
@@ -65,9 +67,9 @@ section.tasks
 						v-model="task.title"
 						@keyup.esc="noEdit(task, i)"
 						@keyup.enter="doneEdit(task, i)")
-					label.font-semibold(
+					label.font-semibold.w-full(
 						v-show="task.edited"
-						for="editDescription") Edit description
+						for="editDescription") Edit Description
 					input(
 						id="editDescription"
 						v-show="task.edited"
@@ -76,7 +78,8 @@ section.tasks
 						v-model="task.description"
 						@keyup.esc="noEdit(task, i)"
 						@keyup.enter="doneEdit(task, i)")
-					small(v-if="task.edited", v-for="(tag, j) in tags", :key="j")
+					p.font-semibold.w-full(v-show="task.edited") Edit Tags
+					small.mb-3(v-if="task.edited", v-for="(tag, j) in tags", :key="j")
 						input.hidden(
 							type="checkbox",
 							v-model="task.tags",
@@ -218,19 +221,25 @@ export default {
 
 <style scoped>
 
+
+
+/* Estilos de los detalles de la lista de tarea */
 .tasks-list__details {
 	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md p-3 shadow-md
+}
+.tasks-list__details .description {
+	@apply font-normal
 }
 .tasks-list__details span {
 	@apply w-full text-start pb-3 pl-2 mr-10 border-b
 }
 .tasks-list__details input {
-	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 shadow-md;
+	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 shadow-md font-normal;
 }
 .tasks-list__details small {
-	@apply mr-3 my-1 justify-start
+	@apply ml-2 my-2 justify-start
 }
 .noEdit {
-	@apply absolute right-0 top-36 sm:right-36 sm:top-28
+	@apply absolute right-4 top-36 sm:right-40 sm:top-28
 }
 </style>

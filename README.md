@@ -1,4 +1,4 @@
-# estate-assist
+# To-do app with VueJs
 
 ## Project setup
 ```
