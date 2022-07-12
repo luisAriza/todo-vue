@@ -217,14 +217,15 @@ export default {
 </script>
 
 <style scoped>
+
 .tasks-list__details {
-	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md p-3
+	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md p-3 shadow-md
 }
 .tasks-list__details span {
 	@apply w-full text-start pb-3 pl-2 mr-10 border-b
 }
 .tasks-list__details input {
-	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 ;
+	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 shadow-md;
 }
 .tasks-list__details small {
 	@apply mr-3 my-1 justify-start

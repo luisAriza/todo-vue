@@ -25,14 +25,14 @@ html {
   @apply bg-green-600 text-white cursor-pointer p-2 mb-4 w-full rounded-md sm:row-start-1 sm:row-end-3 sm:col-start-2 sm:col-end-3 sm:w-40 sm:m-0 sm:justify-self-end;
 }
 .filter__searcher {
-  @apply w-full sm:max-w-xs outline-none rounded-md bg-slate-100 mb-2 px-3 py-2 text-slate-500;
+  @apply w-full sm:max-w-xs outline-none rounded-md bg-slate-100 mb-2 px-3 py-2 text-slate-500 shadow-md;
 }
 .filter__tags {
   @apply flex justify-start gap-2 mt-2;
 }
 .filter__tags label,
 .tasks-list small label {
-  @apply bg-slate-100 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer;
+  @apply bg-slate-100 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer shadow-md;
 }
 .filter__tags input:checked ~ label,
 .tasks-list small input:checked ~ label {
