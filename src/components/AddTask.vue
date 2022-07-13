@@ -76,13 +76,12 @@ export default {
 
 <style scoped>
 
-
 form {
-	@apply gap-4 w-full justify-items-center p-4 border-b
+	@apply gap-4 w-full justify-items-center p-6 border-b
 }
 input,
 textarea {
-	@apply w-full max-w-sm outline-none rounded-md px-3 py-2 bg-slate-100 text-slate-500 shadow-md;
+	@apply w-full max-w-sm outline-none rounded-md px-3 py-2 bg-slate-100 text-slate-500 shadow-md font-normal
 }
 .tags {
 	@apply flex justify-start gap-2 mb-3;

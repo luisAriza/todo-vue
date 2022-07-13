@@ -4,8 +4,8 @@ section.tasks
 		.info__title.text-start
 			p.text-xl.font-bold Immediate Steps
 			p.text-gray-400 These are your immediate steps to complete
-		.info__task-left.text-start.my-4
-			p.text-slate-500.bg-slate-100.px-4.py-1.w-max.rounded-md
+		.info__task-left.text-start.mt-4.mb-6
+			p.text-slate-500.bg-green-50.px-4.py-1.w-max.rounded-md
 				span.text-blue-400 {{ tasksUncompleted }}
 				|  / {{ tasksCreated.length }} tasks left
 	.filter(v-show="!showAdd")
@@ -51,7 +51,7 @@ section.tasks
 						:class="task.details ? 'rotate' : ''")
 					span(@click='remove(i)', class="remove")
 				.tasks-list__details(:class="task.details ? 'flex' : 'hidden'")
-					p.font-bold Description
+					p.font-bold.w-full Description
 					span(class="description") {{ task.description }}
 					small(
 						v-show="task.edited"
@@ -221,17 +221,15 @@ export default {
 
 <style scoped>
 
-
-
 /* Estilos de los detalles de la lista de tarea */
 .tasks-list__details {
-	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md p-3 shadow-md
+	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md mt-2 px-3 py-6 shadow-md
 }
 .tasks-list__details .description {
 	@apply font-normal
 }
 .tasks-list__details span {
-	@apply w-full text-start pb-3 pl-2 mr-10 border-b
+	@apply w-full text-start pb-4 pl-2 border-b
 }
 .tasks-list__details input {
 	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 shadow-md font-normal;
@@ -240,6 +238,6 @@ export default {
 	@apply ml-2 my-2 justify-start
 }
 .noEdit {
-	@apply absolute right-4 top-36 sm:right-40 sm:top-28
+	@apply absolute right-4 bottom-[17rem] xs:bottom-[232px] sm:right-40
 }
 </style>

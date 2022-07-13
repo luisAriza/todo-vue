@@ -115,7 +115,7 @@ label {
   @apply text-xs text-red-600 justify-self-center
 }
 input {
-  @apply border px-2 rounded-md outline-none w-full p-2 mb-5 shadow-md
+  @apply border px-2 rounded-md outline-none w-full p-2 mb-5 shadow-md font-normal
 }
 .submit-btn {
   @apply bg-green-600 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-semibold text-lg mb-1
