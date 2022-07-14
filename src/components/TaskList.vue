@@ -8,22 +8,7 @@ section.tasks
 			p.text-slate-500.bg-green-50.px-4.py-1.w-max.rounded-md
 				span.text-blue-400 {{ tasksUncompleted }}
 				|  / {{ tasksCreated.length }} tasks left
-	.filter(v-show="!showAdd")
-		button.add(@click="showAdd = true") + Add a Task
-		input.filter__searcher(
-			v-show="!showAdd"
-			id="searcher",
-			type="text",
-			placeholder="Search",
-			v-model="search")
-		.filter__tags
-			small(v-for="(tag, i) in tags", :key="i + '0'")
-				input.hidden(
-					type="checkbox",
-					:id="i + '0'",
-					:value="tag",
-					v-model="searchTags")
-				label(:for="i + '0'") {{ tag }}
+	FilterTask
 	AddTask
 	.tasks-list
 		ul.list
@@ -89,11 +74,13 @@ section.tasks
 </template>
 
 <script>
-import AddTask from "@/components/AddTask.vue";
+import AddTask from "@/components/AddTaskComponent.vue";
+import FilterTask from "@/components/FilterTaskComponent.vue";
 
 export default {
 	name: "TaskList",
 	components: {
+		FilterTask,
 		AddTask
 	},
 	data() {

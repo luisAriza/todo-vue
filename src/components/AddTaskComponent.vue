@@ -75,7 +75,6 @@ export default {
 </script>
 
 <style scoped>
-
 form {
 	@apply gap-4 w-full justify-items-center p-6 border-b
 }
@@ -98,5 +97,4 @@ textarea {
 .cancel-btn {
 	@apply bg-white text-green-600 border border-green-600 cursor-pointer p-2 -mt-1 mb-1 max-w-sm w-full rounded-md
 }
-
 </style>
