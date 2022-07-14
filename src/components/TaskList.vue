@@ -38,50 +38,20 @@ section.tasks
 				.tasks-list__details(:class="task.details ? 'flex' : 'hidden'")
 					p.font-bold.w-full Description
 					span(class="description") {{ task.description }}
-					small(
-						v-show="task.edited"
-						@click='noEdit(task, i)'
-						class="remove noEdit")
-					label.font-semibold.mt-3.w-full(
-						v-show="task.edited"
-						for="editTitle") Edit Title
-					input(
-						id="editTitle"
-						v-show="task.edited"
-						type="text"
-						v-model="task.title"
-						@keyup.esc="noEdit(task, i)"
-						@keyup.enter="doneEdit(task, i)")
-					label.font-semibold.w-full(
-						v-show="task.edited"
-						for="editDescription") Edit Description
-					input(
-						id="editDescription"
-						v-show="task.edited"
-						type="textarea"
-						rows="3"
-						v-model="task.description"
-						@keyup.esc="noEdit(task, i)"
-						@keyup.enter="doneEdit(task, i)")
-					p.font-semibold.w-full(v-show="task.edited") Edit Tags
-					small.mb-3(v-if="task.edited", v-for="(tag, j) in tags", :key="j")
-						input.hidden(
-							type="checkbox",
-							v-model="task.tags",
-							:id="j + 0",
-							:value="tag")
-						label(:for='j + 0') {{ tag }}
+					EditTask(:task="task" :i="i")
 </template>
 
 <script>
-import AddTask from "@/components/AddTaskComponent.vue";
 import FilterTask from "@/components/FilterTaskComponent.vue";
+import AddTask from "@/components/AddTaskComponent.vue";
+import EditTask from "@/components/EditTaskComponent.vue";
 
 export default {
 	name: "TaskList",
 	components: {
 		FilterTask,
-		AddTask
+		AddTask,
+		EditTask
 	},
 	data() {
 		return {
@@ -207,24 +177,10 @@ export default {
 </script>
 
 <style scoped>
-
-/* Estilos de los detalles de la lista de tarea */
 .tasks-list__details {
-	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md mt-2 px-3 py-6 shadow-md
+	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md mt-3 px-3 py-6 shadow-md
 }
 .tasks-list__details .description {
-	@apply font-normal
-}
-.tasks-list__details span {
-	@apply w-full text-start pb-4 pl-2 border-b
-}
-.tasks-list__details input {
-	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 shadow-md font-normal;
-}
-.tasks-list__details small {
-	@apply ml-2 my-2 justify-start
-}
-.noEdit {
-	@apply absolute right-4 bottom-[17rem] xs:bottom-[232px] sm:right-40
+	@apply w-full text-start pb-4 pl-2 border-b font-normal
 }
 </style>

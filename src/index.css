@@ -63,7 +63,7 @@ html {
   @apply grid grid-flow-col justify-start items-center gap-2;
 }
 .tasks-list__tags small {
-  @apply bg-green-600 text-white mt-2 rounded-md px-2;
+  @apply bg-green-600 text-white mt-2 sm:m-0 rounded-md px-2;
 }
 .tasks-list__tags .edit {
   @apply absolute top-3 right-24 sm:top-4 sm:right-24;

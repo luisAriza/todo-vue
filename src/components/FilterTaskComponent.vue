@@ -21,7 +21,6 @@
 export default {
 	name: "FilterTask",
 }
-
 </script>
 
 <style scoped>
