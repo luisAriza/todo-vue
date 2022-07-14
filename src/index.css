@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-  @apply bg-gray-50;
+  @apply bg-slate-50;
 }
 
 #app {
@@ -65,41 +65,14 @@ html {
 .tasks-list__tags small {
   @apply bg-green-600 text-white mt-2 sm:m-0 rounded-md px-2;
 }
-.tasks-list__tags .edit {
-  @apply absolute top-3 right-24 sm:top-4 sm:right-24;
-}
-.tasks-list__tags .arrow {
-  @apply absolute top-4 right-[3.3rem] sm:top-5 sm:right-12;
-}
-.tasks-list__tags .rotate {
-  @apply rotate-90;
-}
-.tasks-list__tags .remove {
-  @apply absolute top-4 right-2 sm:top-5 sm:right-1;
-}
 
 .check {
-  width: 20px;
-  height: 20px;
-  padding: 10px;
-  background-image: url("assets/check.svg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  filter: invert(80%);
+  @apply w-5 h-5 p-[10px] bg-check bg-center bg-cover bg-no-repeat cursor-pointer invert-[90%];
 }
 .uncheck {
-  width: 20px;
-  height: 20px;
-  padding: 10px;
-  background-image: url("assets/uncheck.svg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  filter: invert(60%);
+  @apply w-5 h-5 p-[10px] bg-uncheck bg-center bg-cover bg-no-repeat cursor-pointer invert-[60%];
 }
+
 .checked .task-title {
   @apply text-gray-400;
 }
@@ -108,40 +81,29 @@ html {
   @apply bg-gray-100 text-gray-400;
 }
 .checked .tasks-list__tags .edit {
-  display: none;
+  @apply hidden;
 }
 .checked .tasks-list__tags .arrow {
-  filter: invert(50%);
+  @apply grayscale;
 }
 .tasks-list .list .checked {
   @apply sm:pr-24;
 }
 
 .edit {
-  width: 24px;
-  height: 24px;
-  background-image: url("assets/edit.svg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  cursor: pointer;
+  @apply w-6 h-6 bg-edit bg-center bg-cover bg-no-repeat cursor-pointer
+  absolute top-4 right-24 sm:top-4 sm:right-24;
 }
 .arrow {
-  width: 16px;
-  height: 16px;
-  background-image: url("assets/arrow.svg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  cursor: pointer;
+  @apply w-4 h-4 bg-arrow bg-center bg-cover bg-no-repeat cursor-pointer
+  absolute top-5 right-[3.3rem] sm:top-5 sm:right-12;
+}
+.rotate {
+  @apply rotate-90;
 }
 .remove {
-  width: 13px;
-  height: 13px;
-  background-image: url("assets/delete.svg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  /* filter: invert(75%); */
+  @apply w-3 h-3 bg-remove bg-center bg-cover bg-no-repeat cursor-pointer;
+}
+.tasks-list__tags .remove {
+  @apply absolute top-[22px] right-2 sm:right-1;
 }

@@ -1,6 +1,13 @@
 <template lang="pug">
 nav
-	.navbar(v-if="!userLogged")
+	.navbar(v-if="userLogged")
+		router-link(to="/home").left
+			img(src="../assets/logo.svg" width="40" height="40" alt="logo")
+			p To-do Assist
+		.right
+			p Welcome {{user}}
+			button(@click="Logout()") Log out
+	.navbar(v-else)
 		figure.left
 			img(src="../assets/logo.svg" width="40" height="40" alt="logo")
 			p To-do Assist
@@ -8,13 +15,6 @@ nav
 			router-link(to="/") Log In
 			span  |
 			router-link(to="/register")  Sig Up
-	.navbar(v-else)
-		router-link(to="/home").left
-			img(src="../assets/logo.svg" width="40" height="40" alt="logo")
-			p To-do Assist
-		.right
-			p Welcome {{user}}
-			button(@click="Logout()") Log out
 </template>
 
 <script>

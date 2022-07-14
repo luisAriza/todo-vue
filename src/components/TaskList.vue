@@ -12,11 +12,11 @@ section.tasks
 	AddTask
 	.tasks-list
 		ul.list
-			li(v-for='(task, i) in tasksList', :key='i' :class="taskClass(task)")
+			li(v-for='(task, i) in tasksList', :key='i' :class="classChecked(task)")
 				ul.tasks-list__title
 					span(
 						@click='taskCompleted(task)',
-						:class="taskClass2(task)")
+						:class="classCheck(task)")
 					span(
 						class="task-title",
 						:class="task.details ? 'show-title' : ''") {{ task.title }}
@@ -117,10 +117,10 @@ export default {
 			task.edited = false;
 			localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
 		},
-		taskClass(task) {
+		classChecked(task) {
 			return [task.completed ? "checked" : "unchecked"];
 		},
-		taskClass2(task) {
+		classCheck(task) {
 			return [task.completed ? "check" : "uncheck"];
 		},
 		taskDetails(task) {
@@ -133,9 +133,8 @@ export default {
 				description: this.tasksList[i].description,
 				tags: this.tasksList[i].tags
 			}
-			this.tasksCreated.edited = false
-			task.edited = true;
 			task.details = true;
+			task.edited = true;
 		},
 		doneEdit(task, i) {
 			if (!this.tasksList[i].title) {
