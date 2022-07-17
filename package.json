@@ -10,17 +10,17 @@
   "dependencies": {
     "@vuelidate/core": "^2.0.0-alpha.42",
     "@vuelidate/validators": "^2.0.0-alpha.30",
-    "core-js": "^3.8.3",
+    "core-js": "^3.23.4",
     "vue": "^3.2.13",
-    "vue-router": "^4.1.1",
+    "vue-router": "^4.1.2",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^5.0.7",
-    "@vue/cli-plugin-router": "^5.0.7",
-    "@vue/cli-plugin-unit-jest": "^5.0.7",
-    "@vue/cli-plugin-vuex": "^5.0.7",
-    "@vue/cli-service": "^5.0.7",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-router": "^5.0.8",
+    "@vue/cli-plugin-unit-jest": "^5.0.8",
+    "@vue/cli-plugin-vuex": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
     "@vue/test-utils": "^2.0.0-0",
     "@vue/vue3-jest": "^27.0.0-alpha.1",
     "autoprefixer": "^10.4.7",
@@ -29,7 +29,7 @@
     "postcss": "^8.4.14",
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
-    "tailwindcss": "^3.1.4"
+    "tailwindcss": "^3.1.6"
   },
   "browserslist": [
     "> 1%",

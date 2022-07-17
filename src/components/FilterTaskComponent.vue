@@ -8,7 +8,7 @@
 		placeholder="Search",
 		v-model="this.$parent.search")
 	.filter__tags
-		small(v-for="(tag, i) in this.$parent.tags", :key="i + '0'")
+		small(v-for="(tag, i) in tags", :key="i + '0'")
 			input.hidden(
 				type="checkbox",
 				:id="i + '0'",
@@ -20,6 +20,11 @@
 <script>
 export default {
 	name: "FilterTask",
+	data() {
+		return {
+			tags: this.$store.state.tags
+		}
+	}
 }
 </script>
 

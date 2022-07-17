@@ -9,6 +9,8 @@ section.tasks
 				span.text-blue-400 {{ tasksUncompleted }}
 				|  / {{ tasksCreated.length }} tasks left
 	FilterTask
+	button(@click="this.$store.commit('aumentar')") +
+	p {{ this.$store.state.count }}
 	AddTask
 	.tasks-list
 		ul.list
@@ -60,13 +62,7 @@ export default {
 			showAdd: false,
 			searchTags: [],
 			tasksCreated: [],
-			tags: [
-				"Work",
-				"Study",
-				"Gym",
-				"Urgent",
-				"Important"
-			]
+			tags: this.$store.state.tags
 		}
 	},
 	computed: {
@@ -171,6 +167,9 @@ export default {
 		if (localStorage.getItem("tasks") != null) {
 			this.tasksCreated = this.tasksRecordsUser;
 		}
+	},
+	mounted() {
+		console.log(this.$store.state.count)
 	}
 }
 </script>

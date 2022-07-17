@@ -1,14 +1,16 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    count: 1,
+    tags: ["Work", "Study", "Gym", "Urgent", "Important", "Other"],
   },
-  getters: {
-  },
+  getters: {},
   mutations: {
+    aumentar() {
+      this.state.count++;
+    },
   },
-  actions: {
-  },
-  modules: {
-  }
-})
+  actions: {},
+  modules: {},
+});

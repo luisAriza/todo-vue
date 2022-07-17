@@ -25,7 +25,7 @@ input(
 	@keyup.esc="this.$parent.noEdit(task, i)"
 	@keyup.enter="this.$parent.doneEdit(task, i)")
 p.font-semibold.w-full(v-show="task.edited") Edit Tags
-small.mb-3(v-if="task.edited", v-for="(tag, j) in this.$parent.tags", :key="j")
+small.mb-3(v-if="task.edited", v-for="(tag, j) in tags", :key="j")
 	input.hidden(
 		type="checkbox",
 		v-model="task.tags",
@@ -37,7 +37,12 @@ small.mb-3(v-if="task.edited", v-for="(tag, j) in this.$parent.tags", :key="j")
 <script>
 export default {
 	name: "EditTask",
-	props: ["task", "i"]
+	props: ["task", "i"],
+	data() {
+		return {
+			tags: this.$store.state.tags
+		}
+	}
 }
 </script>
 

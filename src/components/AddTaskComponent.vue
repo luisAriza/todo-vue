@@ -10,7 +10,7 @@ form.w-full(@submit.prevent="addTask()" :class="addClass")
 		cols="30" rows="3"
 		v-model="task.description")
 	.tags.flex.gap-4
-		small(v-for="tag in this.$parent.tags")
+		small(v-for="tag in tags")
 			input.hidden(
 				type="checkbox",
 				:id="tag",
@@ -34,6 +34,7 @@ export default {
 				edited: false,
 				details: false
 			},
+			tags: this.$store.state.tags
 		}
 	},
 	computed: {
