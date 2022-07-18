@@ -18,7 +18,7 @@ form.w-full(@submit.prevent="addTask()" :class="addClass")
 				v-model="task.tags")
 			label(:for='tag') {{ tag }}
 	button(class="submit-btn" type="submit") Add Task
-	p(class="cancel-btn" @click="this.$store.state.showAdd = false") Back
+	p(class="cancel-btn" @click="$store.commit('showAdd')") Back
 </template>
 
 <script>
@@ -52,7 +52,7 @@ export default {
 				this.task.title.length == 0 ||
 				this.task.description.length == 0
 			) {
-				console.log("La tarea ya existe, o no falta llenar campos");
+				console.log("La tarea ya existe ó falta llenar campos");
 			} else {
 				this.$parent.tasksCreated.push({
 					title: this.task.title,
@@ -84,7 +84,7 @@ textarea {
 	@apply w-full max-w-sm outline-none rounded-md px-3 py-2 bg-slate-100 text-slate-500 shadow-md font-normal
 }
 .tags {
-	@apply flex justify-start gap-2 mb-3;
+	@apply flex flex-wrap justify-start gap-2 mb-3;
 }
 .tags label {
 	@apply bg-slate-100 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer shadow-md;

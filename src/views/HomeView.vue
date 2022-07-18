@@ -13,8 +13,6 @@ Navbar
         p.text-slate-500.bg-green-50.px-4.py-1.w-max.rounded-md
           span.text-blue-400 {{ tasksUncompleted }}
           |  / {{ tasksCreated.length }} tasks left
-    button(@click="this.$store.commit('aumentar')") +
-    p {{ this.$store.state.count }}
     FilterTask
     AddTask
     TaskList
@@ -84,22 +82,6 @@ export default {
       }).length;
     }
   },
-  methods: {
-    remove(i) {
-      let sizeTaskCreated = this.tasksCreated.length
-      let sizeTaskList = this.tasksList.length
-
-      if (sizeTaskCreated == sizeTaskList) {
-        this.tasksCreated.splice(i, 1)
-      } else if (sizeTaskCreated > sizeTaskList) {
-        this.tasksCreated
-          .splice(this.tasksCreated
-            .indexOf(this.tasksList
-              .splice(i, 1)[0]), 1)
-      }
-      localStorage.setItem("tasks", JSON.stringify(this.tasksRecords));
-    },
-  },
   created() {
     if (localStorage.getItem("tasks") != null) {
       this.tasksCreated = this.tasksRecordsUser;
@@ -109,5 +91,11 @@ export default {
 </script>
 
 <style scoped>
+.tasks {
+  @apply grid w-full max-w-[50rem] mx-auto mb-10 p-6 rounded-lg shadow-md bg-white;
+}
 
+.info {
+  @apply border-b sm:flex sm:justify-between sm:pb-4 px-2 sm:px-4;
+}
 </style>

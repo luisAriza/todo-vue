@@ -2,7 +2,7 @@
 form.form__container(action name="signup" @submit.prevent="saveRecord()")
   .field
     label(for="name") Name
-    p(v-if="v$.user.$error") Minimum 4 characters | Required
+    p(v-if="v$.user.$error") Required name
   input(id="name"
     type="name"
     placeholder="Julio Perez"
@@ -11,7 +11,7 @@ form.form__container(action name="signup" @submit.prevent="saveRecord()")
     required)
   .field
     label(for="email") Email
-    p(v-if="v$.email.$error") Required
+    p.error(v-if="error") Email existent
   input(id="email"
     type="email"
     placeholder="user@example.com"
@@ -27,7 +27,14 @@ form.form__container(action name="signup" @submit.prevent="saveRecord()")
     v-model="password"
     @blur="v$.password.$touch"
     required)
-  p.error(v-if="error") User or email existent
+  .field
+    p
+    p(v-show="v$.confirmPassword.$error") Password not same
+  input(type="password"
+    placeholder="Confirm password"
+    v-model="confirmPassword"
+    @blur="v$.confirmPassword.$touch"
+    required)
   input(class="submit-btn"
     type="submit"
     value="Sign Up")
@@ -35,7 +42,7 @@ form.form__container(action name="signup" @submit.prevent="saveRecord()")
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, minLength, email } from '@vuelidate/validators'
+import { required, minLength, email, sameAs } from '@vuelidate/validators'
 
 export default {
   name: "Signup",
@@ -44,6 +51,7 @@ export default {
       user: "",
       email: "",
       password: "",
+      confirmPassword: "",
       error: false
     }
   },
@@ -58,11 +66,14 @@ export default {
     saveRecord() {
       let usersRecords = this.usersRecords ? this.usersRecords : [];
 
-      let userRepeat = (v) => v.user == this.user || v.email == this.email;
+      let emailRepeat = usersRecords.some((v) => v.email == this.email);
+      let notSamePassword = this.password != this.confirmPassword;
 
-      if (usersRecords.some(userRepeat)) {
+      if (emailRepeat) {
         this.error = true;
-      } else {
+      } else if (notSamePassword) {
+        console.log("Confirm password")
+      } else if (!emailRepeat && !notSamePassword && this.user) {
         usersRecords.push({
           "user": this.user,
           "email": this.email,
@@ -82,7 +93,6 @@ export default {
     return {
       user: {
         required,
-        minLength: minLength(4)
       },
       email: {
         email,
@@ -91,6 +101,10 @@ export default {
       password: {
         required,
         minLength: minLength(8)
+      },
+      confirmPassword: {
+        required,
+        confirmPassword: sameAs(this.password)
       }
     }
   }

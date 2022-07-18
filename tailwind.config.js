@@ -11,7 +11,7 @@ module.exports = {
         remove: "url('/src/assets/delete.svg')",
       },
       screens: {
-        xs: "433px",
+        xs: "497px",
       },
     },
   },

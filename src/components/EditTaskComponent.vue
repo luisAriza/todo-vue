@@ -16,11 +16,10 @@ input(
 label.font-semibold.w-full(
 	v-show="task.edited"
 	for="editDescription") Edit Description
-input(
+textarea(
 	id="editDescription"
 	v-show="task.edited"
-	type="textarea"
-	rows="3"
+	cols="30" rows="3"
 	v-model="task.description"
 	@keyup.esc="this.$parent.noEdit(task, i)"
 	@keyup.enter="this.$parent.doneEdit(task, i)")
@@ -47,13 +46,20 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .noEdit {
-	@apply absolute right-4 bottom-[17.5rem] xs:bottom-[240px] sm:right-40
+	@apply absolute right-4 bottom-[20.5rem] xs:bottom-72
 }
-.tasks-list__details input {
-	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 shadow-md font-normal;
+.tasks-list__details input,
+.tasks-list__details textarea  {
+	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 shadow-md font-normal resize-none;
 }
 .tasks-list__details small {
 	@apply ml-2 my-2 justify-start
+}
+.tasks-list__details small label {
+	@apply bg-slate-100 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer shadow-md;
 }
 </style>

@@ -12,32 +12,6 @@ html {
 }
 
 /*  Estilos de TaskList.vue */
-.tasks {
-  @apply grid w-full max-w-[50rem] mx-auto mb-10 p-6 rounded-lg shadow-md bg-white;
-}
-.info {
-  @apply border-b sm:flex sm:justify-between sm:pb-4 px-2 sm:px-4;
-}
-.filter {
-  @apply grid py-6 border-b sm:grid-cols-2 items-center;
-}
-.add {
-  @apply bg-green-600 text-white cursor-pointer p-2 mb-4 w-full rounded-md sm:row-start-1 sm:row-end-3 sm:col-start-2 sm:col-end-3 sm:w-40 sm:m-0 sm:justify-self-end;
-}
-.filter__searcher {
-  @apply w-full font-normal sm:max-w-xs outline-none rounded-md bg-slate-100 mb-2 px-3 py-2 text-slate-500 shadow-md;
-}
-.filter__tags {
-  @apply flex justify-start gap-2 mt-2;
-}
-.filter__tags label,
-.tasks-list small label {
-  @apply bg-slate-100 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer shadow-md;
-}
-.filter__tags input:checked ~ label,
-.tasks-list small input:checked ~ label {
-  @apply bg-green-600 text-white;
-}
 .tasks-list {
   @apply pb-2;
 }
@@ -45,7 +19,7 @@ html {
   @apply grid;
 }
 .tasks-list .list li {
-  @apply grid sm:flex items-center flex-wrap sm:justify-between sm:pr-36 w-full py-4 border-b relative sm:flex;
+  @apply grid sm:flex items-center flex-wrap sm:justify-between w-full py-4 border-b relative sm:flex;
 }
 .tasks-list__title {
   @apply flex items-center gap-2;
@@ -60,10 +34,13 @@ html {
   display: none;
 }
 .tasks-list__tags {
-  @apply grid grid-flow-col justify-start items-center gap-2;
+  @apply grid grid-flow-col justify-start items-center gap-2 sm:pr-36;
 }
 .tasks-list__tags small {
   @apply bg-green-600 text-white mt-2 sm:m-0 rounded-md px-2;
+}
+.tasks-list small input:checked ~ label {
+  @apply bg-green-600 text-white;
 }
 
 .check {
@@ -80,14 +57,14 @@ html {
 .checked .tasks-list__details {
   @apply bg-gray-100 text-gray-400;
 }
+.checked .tasks-list__tags {
+  @apply sm:pr-24;
+}
 .checked .tasks-list__tags .edit {
   @apply hidden;
 }
 .checked .tasks-list__tags .arrow {
   @apply grayscale;
-}
-.tasks-list .list .checked {
-  @apply sm:pr-24;
 }
 
 .edit {

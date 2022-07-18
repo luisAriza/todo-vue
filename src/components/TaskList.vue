@@ -26,9 +26,8 @@
 					@click="taskDetails(task)",
 					class="arrow",
 					:class="task.details ? 'rotate' : ''")
-				span(@click='this.$parent.remove(i)', class="remove")
+				span(@click='remove(i)', class="remove")
 			.tasks-list__details(:class="task.details ? 'flex' : 'hidden'")
-				p.font-bold.w-full Description
 				span.description {{ task.description }}
 				EditTask(:task="task" :i="i")
 </template>
@@ -86,14 +85,28 @@ export default {
 				tags: this.cache.tags
 			}
 			task.edited = false;
-		}
+		},
+		remove(i) {
+			let sizeTaskCreated = this.$parent.tasksCreated.length
+			let sizeTaskList = this.$parent.tasksList.length
+
+			if (sizeTaskCreated == sizeTaskList) {
+				this.$parent.tasksCreated.splice(i, 1)
+			} else if (sizeTaskCreated > sizeTaskList) {
+				this.$parent.tasksCreated
+					.splice(this.$parent.tasksCreated
+						.indexOf(this.$parent.tasksList
+							.splice(i, 1)[0]), 1)
+			}
+			localStorage.setItem("tasks", JSON.stringify(this.$parent.tasksRecords));
+		},
 	}
 }
 </script>
 
 <style scoped>
 .tasks-list__details {
-	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md mt-3 px-3 py-6 shadow-md
+	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md mt-3 sm:ml-7 px-3 py-6 shadow-md
 }
 .tasks-list__details .description {
 	@apply w-full text-start pb-4 pl-2 border-b font-normal
