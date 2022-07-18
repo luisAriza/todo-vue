@@ -1,8 +1,8 @@
 <template lang="pug">
-.filter(v-show="!this.$parent.showAdd")
-	button.add(@click="this.$parent.showAdd = true") + Add a Task
+.filter(v-show="!this.$store.state.showAdd")
+	button.add(@click="this.$store.state.showAdd = true") + Add a Task
 	input.filter__searcher(
-		v-show="!this.$parent.showAdd"
+		v-show="!this.$store.state.showAdd"
 		id="searcher",
 		type="text",
 		placeholder="Search",

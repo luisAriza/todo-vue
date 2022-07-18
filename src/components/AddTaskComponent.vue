@@ -18,7 +18,7 @@ form.w-full(@submit.prevent="addTask()" :class="addClass")
 				v-model="task.tags")
 			label(:for='tag') {{ tag }}
 	button(class="submit-btn" type="submit") Add Task
-	p(class="cancel-btn" @click="this.$parent.showAdd = false") Back
+	p(class="cancel-btn" @click="this.$store.state.showAdd = false") Back
 </template>
 
 <script>
@@ -39,7 +39,7 @@ export default {
 	},
 	computed: {
 		addClass() {
-			return this.$parent.showAdd ? "grid" : "hidden";
+			return this.$store.state.showAdd ? "grid" : "hidden";
 		},
 	},
 	methods: {
