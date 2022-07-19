@@ -1,0 +1,36 @@
+.form {
+  @apply grid justify-items-start gap-1.5 w-full;
+  &__field {
+    @apply flex items-end justify-between w-full;
+  }
+  &__field label {
+    @apply pl-2 text-sm font-semibold;
+  }
+  &__field p,
+  &__error {
+    @apply text-xs font-normal text-red-600 pr-2;
+  }
+  &__error {
+    @apply justify-self-center;
+  }
+  &__input {
+    @apply w-full
+    mb-2 py-1.5 pl-4 pr-2
+    text-sm font-normal
+    outline-none rounded-md
+    border border-slate-300
+    bg-slate-50;
+  }
+  &__input::placeholder {
+    @apply text-slate-300;
+  }
+  &__submit-btn {
+    @apply w-full mb-1 p-1.5 rounded-md text-white bg-[#42b983];
+  }
+  &__info {
+    @apply justify-self-center mt-1 text-xs font-normal;
+    &--signup-link {
+      @apply font-semibold text-[#42b983] ml-1;
+    }
+  }
+}

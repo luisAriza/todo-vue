@@ -1,0 +1,14 @@
+.form__container {
+  @apply grid justify-items-center gap-4 w-full my-8;
+  & .title {
+    @apply mt-2 text-xl font-normal;
+  }
+  & .signup,
+  & .login {
+    @apply w-full max-w-xs
+    mx-auto py-6 px-4
+    rounded-lg
+    border border-slate-300
+    bg-slate-200;
+  }
+}

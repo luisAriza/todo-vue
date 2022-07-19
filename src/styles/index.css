@@ -1,0 +1,18 @@
+@import "./components/navbar.css";
+@import "./components/formContainer.css";
+@import "./components/form.css";
+@import "./components/tasksList.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply bg-slate-50;
+}
+
+#app {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  color: #2c3e50;
+}

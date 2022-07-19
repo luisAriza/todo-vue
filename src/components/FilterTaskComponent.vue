@@ -43,7 +43,7 @@ export default {
 }
 
 .filter__searcher {
-	@apply w-full font-normal sm:max-w-sm outline-none rounded-md bg-slate-100 mb-2 px-3 py-2 text-slate-500 shadow-md sm:col-span-2;
+	@apply w-full font-normal sm:max-w-sm outline-none rounded-md bg-slate-50 border mb-2 px-3 py-2 text-slate-500 shadow-md sm:col-span-2;
 }
 
 .filter__tags {
@@ -51,7 +51,7 @@ export default {
 }
 
 .filter__tags label {
-	@apply bg-slate-100 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer shadow-md;
+	@apply bg-slate-50 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer shadow-md;
 }
 
 .filter__tags input:checked ~ label {
