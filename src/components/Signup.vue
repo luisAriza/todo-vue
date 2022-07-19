@@ -1,45 +1,46 @@
 <template lang="pug">
-form.form__container(name="signup" @submit.prevent="saveRecord()")
-  .field
+form.form(name="signup" @submit.prevent="saveRecord()")
+  .form__field
     label(for="name") Name
     p(v-if="v$.user.$error") Required name
-  input(
+  input.form__input(
     id="name"
     type="name"
     placeholder="Luis Ariza"
     @blur="v$.user.$touch"
     v-model="user"
     required)
-  .field
+  .form__field
     label(for="email") Email
     p.error(v-if="error") Email existent
-  input(
+  input.form__input(
     id="email"
     type="email"
     placeholder="user@domain.com"
     v-model="email"
     @blur="v$.email.$touch"
     required)
-  .field
+  .form__field
     label(for="psw") Password
     p(v-if="v$.password.$error") Minimum 8 characters
-  input(
+  input.form__input(
     id="psw"
     type="password"
     placeholder="••••••••"
     v-model="password"
     @blur="v$.password.$touch"
     required)
-  .field
-    p
+  .form__field
+    label(for="rePsw") Repeat Password
     p(v-show="v$.confirmPassword.$error") Password not same
-  input(
+  input.form__input(
+    id="rePsw"
     type="password"
     placeholder="••••••••"
     v-model="confirmPassword"
-    @blur="v$.confirmPassword.$touch"
+    @keypress.enter="v$.confirmPassword.$touch"
     required)
-  button.submit-btn(type="submit") Sign Up
+  button.form__submit-btn(type="submit") Sign Up
 </template>
 
 <script>
@@ -69,13 +70,13 @@ export default {
       let usersRecords = this.usersRecords ? this.usersRecords : [];
 
       let emailRepeat = usersRecords.some((v) => v.email == this.email);
-      let notSamePassword = this.password != this.confirmPassword;
+      let passwordSame = this.password == this.confirmPassword;
 
       if (emailRepeat) {
         this.error = true;
-      } else if (notSamePassword) {
+      } else if (!passwordSame) {
         console.log("Confirm password")
-      } else if (!emailRepeat && !notSamePassword && this.user) {
+      } else if (this.user && !emailRepeat && passwordSame) {
         usersRecords.push({
           "user": this.user,
           "email": this.email,
@@ -112,7 +113,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

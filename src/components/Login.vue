@@ -1,29 +1,29 @@
 <template lang="pug">
-form.form__container(name="login" @submit.prevent="login()")
-  .field
+form.form(name="login" @submit.prevent="login()")
+  .form__field
     label(for="email") Email
     p(v-if="v$.email.$error") Enter your email
-  input(
+  input.form__input(
     id="email"
     type="email"
     placeholder="user@domain.com"
     v-model="email"
     @blur="v$.email.$touch"
     required)
-  .field
+  .form__field
     label(for="psw") Password
     p(v-if="v$.password.$error") Minimum 8 characters
-  input(
+  input.form__input(
     id="psw"
     type="password"
     placeholder="••••••••"
     v-model="password"
     @blur="v$.password.$touch"
     required)
-  p.error(v-if="error") Email or password incorrect
-  button.submit-btn(type="submit") Log In
-  p.info Don't have an account?
-    router-link(to="/register").signup-link Sign Up
+  p.form__error(v-if="error") Email or password incorrect
+  button.form__submit-btn(type="submit") Log In
+  p.form__info Don't have an account?
+    router-link(to="/register").form__info--signup-link Sign Up
 </template>
 
 <script>
@@ -97,8 +97,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
-

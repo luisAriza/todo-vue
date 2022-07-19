@@ -19,7 +19,7 @@ Navbar
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue"
+import Navbar from "@/components/Navbar.vue";
 import FilterTask from "@/components/FilterTaskComponent.vue";
 import AddTask from "@/components/AddTaskComponent.vue";
 import TaskList from "@/components/TaskList.vue"

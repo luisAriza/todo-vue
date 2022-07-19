@@ -12,30 +12,62 @@ html {
   color: #2c3e50;
 }
 
-.signup,
-.login {
-  @apply max-w-xs
-  mx-auto py-6 px-4
-  rounded-lg
-  border border-slate-300
-  bg-slate-200;
+.navbar {
+  @apply flex items-center justify-between px-5 py-3 shadow-sm bg-white;
+  & a {
+    @apply text-[#2c3e50] font-semibold;
+  }
+  & a.router-link-exact-active {
+    @apply border-b-2 border-[#42b983];
+  }
+  &__left {
+    @apply flex items-center gap-1;
+  }
+  &__left p {
+    @apply hidden sm:block text-lg font-medium;
+  }
+  &__right {
+    @apply flex items-center gap-4;
+  }
+  &__right p {
+    @apply font-medium capitalize;
+  }
+  &__logout-btn {
+    @apply text-[#42b983] font-semibold border-[#42b983];
+  }
 }
+
 .form__container {
+  @apply grid justify-items-center gap-4 w-full my-8;
+  & .title {
+    @apply mt-2 text-xl font-normal;
+  }
+  & .signup,
+  & .login {
+    @apply w-full max-w-xs
+    mx-auto py-6 px-4
+    rounded-lg
+    border border-slate-300
+    bg-slate-200;
+  }
+}
+
+.form {
   @apply grid justify-items-start gap-1.5 w-full;
-  & .field {
+  &__field {
     @apply flex items-end justify-between w-full;
   }
-  & .field label {
+  &__field label {
     @apply pl-2 text-sm font-semibold;
   }
-  & .field p,
-  & .error {
+  &__field p,
+  &__error {
     @apply text-xs font-normal text-red-600 pr-2;
   }
-  & .error {
+  &__error {
     @apply justify-self-center;
   }
-  & input {
+  &__input {
     @apply w-full
     mb-2 py-1.5 pl-4 pr-2
     text-sm font-normal
@@ -43,18 +75,15 @@ html {
     border border-slate-300
     bg-slate-50;
   }
-  & input:nth-child(6) {
-    margin-bottom: 2px;
-  }
-  & input::placeholder {
+  &__input::placeholder {
     @apply text-slate-300;
   }
-  & .submit-btn {
+  &__submit-btn {
     @apply w-full mb-1 p-1.5 rounded-md text-white bg-[#42b983];
   }
-  & .info {
+  &__info {
     @apply justify-self-center mt-1 text-xs font-normal;
-    & .signup-link {
+    &--signup-link {
       @apply font-semibold text-[#42b983] ml-1;
     }
   }
