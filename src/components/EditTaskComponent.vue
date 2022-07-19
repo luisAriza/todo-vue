@@ -47,9 +47,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-
 .noEdit {
 	@apply absolute right-4 bottom-[22rem] xs:bottom-80
 }

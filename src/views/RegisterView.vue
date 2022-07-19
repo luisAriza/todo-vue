@@ -1,7 +1,7 @@
 <template lang="pug">
 Navbar
-.login
-	h2.title SIGN UP
+h2.title SIGN UP
+.signup
 	Signup
 </template>
 
@@ -19,11 +19,8 @@ export default {
 </script>
 
 <style scoped>
-
-.login {
-	@apply  grid gap-6 mx-auto max-w-sm pt-16 pb-8 px-5
-}
 .title {
-	@apply text-xl font-bold
+	@apply mt-12 mb-4
+	text-xl font-semibold
 }
 </style>

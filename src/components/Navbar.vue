@@ -1,20 +1,16 @@
 <template lang="pug">
-nav
-	.navbar(v-if="userLogged")
-		router-link(to="/home").left
-			img(src="../assets/logo.svg" width="36" height="36" alt="logo")
-			p To-do Assist
-		.right
-			p Welcome {{user}}
-			button(@click="Logout()") Log out
-	.navbar(v-else)
-		figure.left
-			img(src="../assets/logo.svg" width="36" height="36" alt="logo")
-			p To-do Assist
-		.login
-			router-link(to="/") Log In
-			span  |
-			router-link(to="/register")  Sig Up
+nav.navbar
+  .navbar__left
+    img(src="@/assets/logo.svg",
+      alt="logo",
+      width="32" height="32")
+    p TO-DO
+  .navbar__right
+    //- p Welcome {{ user }}
+    //- button.logout-btn(@click="Logout()") Log out
+    router-link(to="/") Log In
+    span  |
+    router-link(to="/register")  Sig Up
 </template>
 
 <script>
@@ -22,7 +18,7 @@ export default {
   name: "Navbar",
   data() {
     return {
-      user: localStorage.getItem("user"),
+      user: this.$store.state.user,
     };
   },
   computed: {
@@ -40,41 +36,40 @@ export default {
       this.$router.push("/");
     },
   },
+  // created: {
+
+  // }
 };
 </script>
 
 <style scoped>
-nav {
-  @apply bg-white shadow-sm px-5 py-2;
-}
-nav a {
-  font-weight: 600;
-  color: #2c3e50;
-}
-.login a.router-link-exact-active {
-  color: #42b983;
-}
-div {
-  display: inline-block;
-}
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @apply flex justify-between items-center
+  px-5 py-2
+  bg-white shadow-sm
 }
-.left {
-  @apply flex gap-2 items-center font-semibold text-xl;
+.navbar a {
+  @apply font-semibold text-[#2c3e50]
 }
-.left p {
-  @apply hidden sm:block;
+.navbar a.router-link-exact-active {
+  @apply border-b-4 border-[#42b983]
 }
-.right {
+.navbar__left {
+  @apply flex gap-2 items-center;
+}
+.navbar__left p {
+  @apply hidden sm:block font-bold text-lg;
+}
+.navbar__right {
   @apply flex items-center gap-5;
 }
-.right p {
+.navbar__right p {
   @apply font-semibold capitalize;
 }
-button {
-  @apply border-green-600 border text-green-600 px-2 rounded-md font-semibold;
+.logout-btn {
+  @apply px-2
+  rounded-md
+  text-[#42b983] font-semibold
+  border-[#42b983];
 }
 </style>

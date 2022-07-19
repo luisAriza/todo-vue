@@ -5,7 +5,7 @@ form.form__container(action name="login" @submit.prevent="login()")
     p(v-if="v$.email.$error") Enter your email
   input(id="email"
     type="email"
-    placeholder="user@example.com"
+    placeholder="user@domain.com"
     v-model="email"
     @blur="v$.email.$touch"
     required)
@@ -14,16 +14,14 @@ form.form__container(action name="login" @submit.prevent="login()")
     p(v-if="v$.password.$error") Minimum 8 characters
   input(id="psw"
     type="password"
-    placeholder="password"
+    placeholder="••••••••"
     v-model="password"
     @blur="v$.password.$touch"
     required)
   p.error(v-if="error") Email or password incorrect
-  input(class="submit-btn"
-    type="submit"
-    value="Log In")
-  p.msg.text-sm.justify-self-center Don't have an account?
-    router-link(to="/register" class="signup") Sign Up
+  button.submit-btn(type="submit") Log In
+  p.text-xs.font-normal.justify-self-center.mt-3 Don't have an account?
+    router-link(to="/register" class="signup-link") Sign Up
 </template>
 
 <script>
@@ -99,29 +97,6 @@ export default {
 </script>
 
 <style scoped>
-.form__container {
-  @apply grid justify-items-start gap-1 w-full
-}
-label {
-  @apply pl-2 font-semibold text-sm
-}
-.field {
-  @apply w-full flex items-end justify-between
-}
-.field p {
-  @apply text-xs text-red-600 pr-2
-}
-.error {
-  @apply text-xs text-red-600 justify-self-center
-}
-input {
-  @apply border px-2 rounded-md outline-none w-full p-2 mb-5 shadow-md font-normal
-}
-.submit-btn {
-  @apply bg-green-600 border rounded-md p-2 w-full justify-self-center cursor-pointer text-white font-semibold text-lg mb-1
-}
-.signup {
-  @apply text-green-600 font-semibold ml-1
-}
+
 </style>
 

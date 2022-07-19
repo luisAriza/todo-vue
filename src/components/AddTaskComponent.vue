@@ -17,7 +17,7 @@ form.w-full(@submit.prevent="addTask()" :class="addClass")
 				:value="tag",
 				v-model="task.tags")
 			label(:for='tag') {{ tag }}
-	button(class="submit-btn" type="submit") Add Task
+	button.submit-btn(type="submit") Add Task
 	p(class="cancel-btn" @click="$store.commit('showAdd')") Back
 </template>
 
