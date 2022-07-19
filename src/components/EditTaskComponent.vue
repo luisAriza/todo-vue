@@ -3,7 +3,7 @@ small(
 	v-show="task.edited"
 	@click='this.$parent.noEdit(task, i)'
 	class="remove noEdit")
-label.font-semibold.mt-5.w-full(
+label.font-semibold.pt-5.mt-4.w-full.border-t(
 	v-show="task.edited"
 	for="editTitle") Edit Title
 input(
@@ -24,13 +24,14 @@ textarea(
 	@keyup.esc="this.$parent.noEdit(task, i)"
 	@keyup.enter="this.$parent.doneEdit(task, i)")
 p.font-semibold.w-full(v-show="task.edited") Edit Tags
-small.mb-3(v-if="task.edited", v-for="(tag, j) in tags", :key="j")
-	input.hidden(
-		type="checkbox",
-		v-model="task.tags",
-		:id="j + 0",
-		:value="tag")
-	label(:for='j + 0') {{ tag }}
+ul
+	small(v-if="task.edited", v-for="(tag, j) in tags", :key="j")
+		input.hidden(
+			type="checkbox",
+			v-model="task.tags",
+			:id="j + 0",
+			:value="tag")
+		label(:for='j + 0') {{ tag }}
 </template>
 
 <script>
@@ -50,14 +51,14 @@ export default {
 
 
 .noEdit {
-	@apply absolute right-4 bottom-[20.5rem] xs:bottom-72
+	@apply absolute right-4 bottom-[22rem] xs:bottom-80
 }
 .tasks-list__details input,
 .tasks-list__details textarea  {
-	@apply w-full justify-start border rounded-md mb-2 ml-2 px-2 py-1 outline-none bg-white text-slate-500 shadow-md font-normal resize-none;
+	@apply w-full justify-start border rounded-md my-2 mb-3 px-2 py-1 outline-none bg-white text-slate-500 shadow-md font-normal resize-none;
 }
-.tasks-list__details small {
-	@apply ml-2 my-2 justify-start
+.tasks-list__details ul {
+	@apply flex flex-wrap my-2 gap-2 gap-y-3
 }
 .tasks-list__details small label {
 	@apply bg-slate-100 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer shadow-md;

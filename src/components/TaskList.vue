@@ -12,8 +12,7 @@
 				span(
 					class="task-title",
 					:class="task.details ? 'show-title' : ''") {{ task.title }}
-			ul.tasks-list__tags
-				small(v-for='tag in task.tags') {{ tag }}
+			ul
 				span(
 					v-if='!task.edited',
 					@click="edit(task, i)",
@@ -29,6 +28,8 @@
 				span(@click='remove(i)', class="remove")
 			.tasks-list__details(:class="task.details ? 'flex' : 'hidden'")
 				span.description {{ task.description }}
+				ul.tasks-list__tags
+					small(v-for='tag in task.tags') {{ tag }}
 				EditTask(:task="task" :i="i")
 </template>
 
@@ -109,6 +110,6 @@ export default {
 	@apply w-full justify-start flex-wrap gap-1 bg-green-50 rounded-md mt-3 sm:ml-7 px-3 py-6 shadow-md
 }
 .tasks-list__details .description {
-	@apply w-full text-start pb-4 pl-2 border-b font-normal
+	@apply w-full text-start font-normal
 }
 </style>

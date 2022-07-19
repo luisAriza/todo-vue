@@ -34,10 +34,10 @@ html {
   display: none;
 }
 .tasks-list__tags {
-  @apply grid grid-flow-col justify-start items-center gap-2 sm:pr-36;
+  @apply flex flex-wrap justify-start items-center gap-2 mt-2 ml-2;
 }
 .tasks-list__tags small {
-  @apply bg-green-600 text-white mt-2 sm:m-0 rounded-md px-2;
+  @apply bg-green-600 text-white sm:m-0 rounded-md px-2;
 }
 .tasks-list small input:checked ~ label {
   @apply bg-green-600 text-white;
@@ -53,17 +53,16 @@ html {
 .checked .task-title {
   @apply text-gray-400;
 }
-.checked .tasks-list__tags small,
 .checked .tasks-list__details {
   @apply bg-gray-100 text-gray-400;
 }
-.checked .tasks-list__tags {
-  @apply sm:pr-24;
+.checked .tasks-list__tags small {
+  @apply bg-gray-300;
 }
-.checked .tasks-list__tags .edit {
+.checked .edit {
   @apply hidden;
 }
-.checked .tasks-list__tags .arrow {
+.checked .arrow {
   @apply grayscale;
 }
 
@@ -81,6 +80,6 @@ html {
 .remove {
   @apply w-3 h-3 bg-remove bg-center bg-cover bg-no-repeat cursor-pointer;
 }
-.tasks-list__tags .remove {
+ul > .remove {
   @apply absolute top-[22px] right-2 sm:right-1;
 }
