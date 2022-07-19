@@ -1,9 +1,10 @@
 <template lang="pug">
-form.form__container(action name="login" @submit.prevent="login()")
+form.form__container(name="login" @submit.prevent="login()")
   .field
     label(for="email") Email
     p(v-if="v$.email.$error") Enter your email
-  input(id="email"
+  input(
+    id="email"
     type="email"
     placeholder="user@domain.com"
     v-model="email"
@@ -12,7 +13,8 @@ form.form__container(action name="login" @submit.prevent="login()")
   .field
     label(for="psw") Password
     p(v-if="v$.password.$error") Minimum 8 characters
-  input(id="psw"
+  input(
+    id="psw"
     type="password"
     placeholder="••••••••"
     v-model="password"
@@ -20,8 +22,8 @@ form.form__container(action name="login" @submit.prevent="login()")
     required)
   p.error(v-if="error") Email or password incorrect
   button.submit-btn(type="submit") Log In
-  p.text-xs.font-normal.justify-self-center.mt-3 Don't have an account?
-    router-link(to="/register" class="signup-link") Sign Up
+  p.info Don't have an account?
+    router-link(to="/register").signup-link Sign Up
 </template>
 
 <script>

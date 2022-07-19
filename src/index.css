@@ -14,37 +14,50 @@ html {
 
 .signup,
 .login {
-  @apply grid gap-4
-	max-w-xs
+  @apply max-w-xs
   mx-auto py-6 px-4
   rounded-lg
   border border-slate-300
   bg-slate-200;
 }
 .form__container {
-  @apply grid justify-items-start gap-1 w-full;
-}
-label {
-  @apply pl-2 font-semibold text-sm;
-}
-.field {
-  @apply w-full flex items-end justify-between;
-}
-.field p {
-  @apply text-xs text-red-600 pr-2 font-normal;
-}
-.error {
-  @apply text-xs text-red-600 justify-self-center font-normal;
-}
-input {
-  @apply px-2 text-sm rounded-md outline-none w-full py-1.5 pl-4 mb-5 font-normal border border-slate-300 bg-slate-50;
-}
-
-.submit-btn {
-  @apply bg-green-600 border rounded-md p-1.5 w-full justify-self-center cursor-pointer text-white mb-1;
-}
-.signup-link {
-  @apply text-green-600 font-semibold ml-1;
+  @apply grid justify-items-start gap-1.5 w-full;
+  & .field {
+    @apply flex items-end justify-between w-full;
+  }
+  & .field label {
+    @apply pl-2 text-sm font-semibold;
+  }
+  & .field p,
+  & .error {
+    @apply text-xs font-normal text-red-600 pr-2;
+  }
+  & .error {
+    @apply justify-self-center;
+  }
+  & input {
+    @apply w-full
+    mb-2 py-1.5 pl-4 pr-2
+    text-sm font-normal
+    outline-none rounded-md
+    border border-slate-300
+    bg-slate-50;
+  }
+  & input:nth-child(6) {
+    margin-bottom: 2px;
+  }
+  & input::placeholder {
+    @apply text-slate-300;
+  }
+  & .submit-btn {
+    @apply w-full mb-1 p-1.5 rounded-md text-white bg-[#42b983];
+  }
+  & .info {
+    @apply justify-self-center mt-1 text-xs font-normal;
+    & .signup-link {
+      @apply font-semibold text-[#42b983] ml-1;
+    }
+  }
 }
 
 /*  Estilos de TaskList.vue */

@@ -1,9 +1,10 @@
 <template lang="pug">
-form.form__container(action name="signup" @submit.prevent="saveRecord()")
+form.form__container(name="signup" @submit.prevent="saveRecord()")
   .field
     label(for="name") Name
     p(v-if="v$.user.$error") Required name
-  input(id="name"
+  input(
+    id="name"
     type="name"
     placeholder="Luis Ariza"
     @blur="v$.user.$touch"
@@ -12,7 +13,8 @@ form.form__container(action name="signup" @submit.prevent="saveRecord()")
   .field
     label(for="email") Email
     p.error(v-if="error") Email existent
-  input(id="email"
+  input(
+    id="email"
     type="email"
     placeholder="user@domain.com"
     v-model="email"
@@ -21,7 +23,8 @@ form.form__container(action name="signup" @submit.prevent="saveRecord()")
   .field
     label(for="psw") Password
     p(v-if="v$.password.$error") Minimum 8 characters
-  input(id="psw"
+  input(
+    id="psw"
     type="password"
     placeholder="••••••••"
     v-model="password"
@@ -30,7 +33,8 @@ form.form__container(action name="signup" @submit.prevent="saveRecord()")
   .field
     p
     p(v-show="v$.confirmPassword.$error") Password not same
-  input(type="password"
+  input(
+    type="password"
     placeholder="••••••••"
     v-model="confirmPassword"
     @blur="v$.confirmPassword.$touch"
