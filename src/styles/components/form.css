@@ -21,10 +21,7 @@
     border border-slate-300
     bg-slate-50;
   }
-  &__input::placeholder {
-    @apply text-slate-300;
-  }
-  &__submit-btn {
+  & &__submit-btn {
     @apply w-full mb-1 p-1.5 rounded-md text-white bg-[#42b983];
   }
   &__info {

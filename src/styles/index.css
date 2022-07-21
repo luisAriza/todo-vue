@@ -1,6 +1,6 @@
-@import "./components/navbar.css";
 @import "./components/formContainer.css";
 @import "./components/form.css";
+@import "./components/addTask.css";
 @import "./components/tasksList.css";
 
 @tailwind base;
@@ -15,4 +15,17 @@ html {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   color: #2c3e50;
+}
+
+input,
+textarea {
+  @apply font-normal
+  outline-none rounded-md
+  border border-slate-200
+  bg-slate-50;
+}
+
+input::placeholder,
+textarea::placeholder {
+  @apply text-slate-300;
 }

@@ -27,8 +27,8 @@ form.form(name="login" @submit.prevent="login()")
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core'
-import { required, minLength, email } from '@vuelidate/validators'
+import useVuelidate from "@vuelidate/core";
+import { required, minLength, email } from "@vuelidate/validators";
 
 export default {
   name: "Login",
@@ -37,8 +37,8 @@ export default {
       email: "",
       password: "",
       error: false,
-      task: {}
-    }
+      task: {},
+    };
   },
   computed: {
     usersRecords() {
@@ -64,36 +64,36 @@ export default {
         localStorage.setItem("user", currentUser.user);
 
         if (tasksRecords.some((v) => v.user == currentUser.user)) {
-          console.log("Usuario antiguo")
+          console.log("Usuario antiguo");
         } else {
           tasksRecords.push({
-            "user": currentUser.user,
-            "tasks": new Array()
-          })
+            user: currentUser.user,
+            tasks: new Array(),
+          });
           localStorage.setItem("tasks", JSON.stringify(tasksRecords));
         }
         this.$router.push("/home");
       } else {
         this.error = true;
       }
-    }
+    },
   },
   setup() {
     return {
-      v$: useVuelidate()
-    }
+      v$: useVuelidate(),
+    };
   },
   validations() {
     return {
       email: {
         email,
-        required
+        required,
       },
       password: {
         required,
-        minLength: minLength(8)
+        minLength: minLength(8),
       },
-    }
-  }
-}
+    };
+  },
+};
 </script>

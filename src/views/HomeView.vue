@@ -92,9 +92,8 @@ export default {
 
 <style scoped>
 .tasks {
-  @apply grid w-full max-w-[50rem] mx-auto mb-10 p-6 rounded-lg shadow-md bg-white;
+  @apply grid w-full max-w-[50rem] mx-auto mb-10 p-6 rounded-lg shadow-md bg-white border;
 }
-
 .info {
   @apply border-b sm:flex sm:justify-between sm:pb-4 px-2 sm:px-4;
 }
