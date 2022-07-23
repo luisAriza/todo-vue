@@ -22,12 +22,12 @@
     bg-slate-50;
   }
   & &__submit-btn {
-    @apply w-full mb-1 p-1.5 rounded-md text-white bg-[#42b983];
+    @apply w-full mb-1 p-1.5 rounded-md text-white bg-primary;
   }
   &__info {
     @apply justify-self-center mt-1 text-xs font-normal;
     &--signup-link {
-      @apply font-semibold text-[#42b983] ml-1;
+      @apply font-semibold text-primary ml-1;
     }
   }
 }

@@ -10,6 +10,15 @@ module.exports = {
         arrow: "url('/src/assets/arrow.svg')",
         remove: "url('/src/assets/delete.svg')",
       },
+      backgroundColor: (theme) => ({
+        ...theme("colors"),
+        primary: "#42b983",
+        secondary: "#2c3e50",
+      }),
+      textColor: {
+        primary: "#42b983",
+        secondary: "#2c3e50",
+      },
       screens: {
         xs: "469px",
       },

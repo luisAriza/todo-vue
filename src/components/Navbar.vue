@@ -10,61 +10,60 @@ nav.navbar
 		p Welcome {{ user }}
 		button.navbar__logout-btn(@click="Logout()") Log out
 	.navbar__right(v-else)
-		router-link(to="/") Log In
-		span |
-		router-link(to="/register") Sign Up
+		router-link(to="/") Log in
+		router-link(to="/register") Sign up
 </template>
 
 <script>
 export default {
-  name: "Navbar",
-  data() {
-    return {
-      user: localStorage.getItem("user"),
-    };
-  },
-  methods: {
-    Logout() {
-      localStorage.removeItem("user");
-      this.$router.push("/");
-    },
-  },
-  mounted() {
-    this.user ? this.$router.push("/home") : "";
-  },
+	name: "Navbar",
+	data() {
+		return {
+			user: localStorage.getItem("user"),
+		};
+	},
+	methods: {
+		Logout() {
+			localStorage.removeItem("user");
+			this.$router.push("/");
+		},
+	},
+	mounted() {
+		this.user ? this.$router.push("/home") : "";
+	},
 };
 </script>
 
 <style scoped lang="postcss">
 .navbar {
-  @apply flex items-center justify-between px-5 py-3 shadow-sm bg-white;
+	@apply flex items-center justify-between px-5 py-3 text-sm shadow-sm bg-white;
 
-  & a {
-    @apply text-[#2c3e50] font-semibold;
-  }
+	& a {
+		@apply font-semibold text-[#2c3e50];
+	}
 
-  & a.router-link-exact-active {
-    @apply border-b-2 border-[#42b983];
-  }
+	& a.router-link-exact-active {
+		@apply border-b-2 border-[#42b983];
+	}
 
-  &__left {
-    @apply flex items-center gap-1;
-  }
+	&__left {
+		@apply flex items-center gap-1;
+	}
 
-  &__left p {
-    @apply hidden sm:block text-lg font-medium;
-  }
+	&__left p {
+		@apply hidden sm:block text-lg font-medium;
+	}
 
-  &__right {
-    @apply flex items-center gap-4;
-  }
+	&__right {
+		@apply flex items-center gap-5;
+	}
 
-  &__right p {
-    @apply font-medium capitalize;
-  }
+	&__right p {
+		@apply font-thin capitalize;
+	}
 
-  &__logout-btn {
-    @apply text-[#42b983] font-semibold border-[#42b983];
-  }
+	&__logout-btn {
+		@apply text-[#42b983] font-medium;
+	}
 }
 </style>

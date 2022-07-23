@@ -4,7 +4,7 @@
 	input.filter__searcher(
 		id="searcher",
 		type="text",
-		placeholder="Search",
+		placeholder="Search task",
 		v-model="this.$parent.search")
 	.filter__tags
 		small(v-for="(tag, i) in tags", :key="i + '0'")
@@ -32,28 +32,36 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .filter {
-  @apply grid py-6 border-b sm:grid-cols-3 items-center;
-}
-
-.add {
-  @apply bg-green-600 text-white cursor-pointer p-2 mb-4 w-full rounded-md sm:w-44 sm:row-start-1 sm:row-end-3 sm:col-start-3 sm:col-end-4 sm:m-0 sm:justify-self-end;
-}
-
-.filter__searcher {
-  @apply w-full font-normal sm:max-w-sm outline-none rounded-md bg-slate-50 border mb-2 px-3 py-2 text-slate-500 shadow-md sm:col-span-2;
-}
-
-.filter__tags {
-  @apply flex flex-wrap justify-start gap-2 gap-y-3 mt-2 sm:col-span-2;
-}
-
-.filter__tags label {
-  @apply bg-slate-50 text-gray-400 rounded-md py-[2px] px-2 cursor-pointer shadow-md;
-}
-
-.filter__tags input:checked ~ label {
-  @apply bg-green-600 text-white;
+  @apply grid sm:grid-cols-3 items-center py-6 border-b;
+  & .add {
+    @apply sm:justify-self-end
+    w-full sm:w-44
+    p-2 mb-3 sm:m-0
+    text-white
+    cursor-pointer rounded-md
+    sm:row-start-1
+    sm:row-end-3
+    sm:col-start-3
+    sm:col-end-4
+    bg-primary;
+  }
+  &__searcher {
+    @apply w-full sm:max-w-sm mb-1 px-3 py-2 text-sm text-secondary shadow-md sm:col-span-2;
+  }
+  &__tags {
+    @apply flex flex-wrap justify-start gap-x-2 gap-y-3 mt-2 text-sm sm:col-span-2;
+  }
+  &__tags label {
+    @apply py-[2px] px-2
+    text-slate-400
+    shadow-md rounded-md cursor-pointer
+    border border-slate-200
+    bg-slate-50;
+  }
+  &__tags input:checked ~ label {
+    @apply text-white bg-primary border-[#42b983];
+  }
 }
 </style>

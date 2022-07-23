@@ -1,10 +1,10 @@
-.tasks-list {
+.tasks-list__container {
   @apply pb-2;
 }
-.tasks-list .list {
+.tasks-list__container .list {
   @apply grid;
 }
-.tasks-list .list li {
+.tasks-list__container .list li {
   @apply grid sm:flex items-center flex-wrap sm:justify-between w-full py-4 border-b relative sm:flex;
 }
 .tasks-list__title {
@@ -23,10 +23,10 @@
   @apply flex flex-wrap justify-start items-center gap-2 mt-2 ml-2;
 }
 .tasks-list__tags small {
-  @apply bg-green-600 text-white sm:m-0 rounded-md px-2;
+  @apply bg-primary text-white sm:m-0 rounded-md px-2;
 }
-.tasks-list small input:checked ~ label {
-  @apply bg-green-600 text-white;
+.tasks-list__container small input:checked ~ label {
+  @apply bg-primary text-white;
 }
 
 .check {

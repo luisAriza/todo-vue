@@ -1,6 +1,5 @@
 @import "./components/formContainer.css";
 @import "./components/form.css";
-@import "./components/addTask.css";
 @import "./components/tasksList.css";
 
 @tailwind base;

@@ -11,18 +11,14 @@ Navbar
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
-import Signup from '@/components/Signup.vue'
+import Navbar from "@/components/Navbar.vue";
+import Signup from "@/components/Signup.vue";
 
 export default {
-	name: 'RegisterView',
-	components: {
-		Navbar,
-		Signup
-	}
-}
+  name: "RegisterView",
+  components: {
+    Navbar,
+    Signup,
+  },
+};
 </script>
-
-<style scoped>
-
-</style>

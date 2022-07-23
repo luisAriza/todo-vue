@@ -24,58 +24,92 @@ form.addTask(@submit.prevent="addTask()" :class="addClass")
 
 <script>
 export default {
-	name: "AddTask",
-	data() {
-		return {
-			task: {
-				title: "",
-				description: "",
-				tags: [],
-				completed: false,
-				edited: false,
-				details: false
-			},
-			tags: this.$store.state.tags
-		}
-	},
-	computed: {
-		addClass() {
-			return this.$store.state.showAdd ? "grid" : "hidden";
-		},
-	},
-	methods: {
-		addTask() {
-			let tasksUser = this.$parent.tasksRecordsUser;
+  name: "AddTask",
+  data() {
+    return {
+      task: {
+        title: "",
+        description: "",
+        tags: [],
+        completed: false,
+        edited: false,
+        details: false,
+      },
+      tags: this.$store.state.tags,
+    };
+  },
+  computed: {
+    addClass() {
+      return this.$store.state.showAdd ? "grid" : "hidden";
+    },
+  },
+  methods: {
+    addTask() {
+      let tasksUser = this.$parent.tasksRecordsUser;
 
-			let titleRepeat = (v) => v.title == this.task.title;
+      let titleRepeat = (v) => v.title == this.task.title;
 
-			if (tasksUser.some(titleRepeat) ||
-				this.task.title.length == 0 ||
-				this.task.description.length == 0
-			) {
-				console.log("La tarea ya existe ó falta llenar campos");
-			} else {
-				this.$parent.tasksCreated.push({
-					title: this.task.title,
-					description: this.task.description,
-					tags: this.task.tags.sort(),
-					completed: false,
-					edited: false,
-					details: false,
-				});
-				// Para reiniciar el formulario
-				this.task = {
-					title: "",
-					description: "",
-					tags: [],
-				};
-				localStorage.setItem("tasks", JSON.stringify(this.$parent.tasksRecords));
-			}
-		},
-	}
-}
+      if (
+        tasksUser.some(titleRepeat) ||
+        this.task.title.length == 0 ||
+        this.task.description.length == 0
+      ) {
+        console.log("La tarea ya existe ó falta llenar campos");
+      } else {
+        this.$parent.tasksCreated.push({
+          title: this.task.title,
+          description: this.task.description,
+          tags: this.task.tags.sort(),
+          completed: false,
+          edited: false,
+          details: false,
+        });
+        // Para reiniciar el formulario
+        this.task = {
+          title: "",
+          description: "",
+          tags: [],
+        };
+        localStorage.setItem(
+          "tasks",
+          JSON.stringify(this.$parent.tasksRecords)
+        );
+      }
+    },
+  },
+};
 </script>
 
-<style scoped>
-
+<style scoped lang="postcss">
+.addTask {
+  @apply justify-items-center gap-4 w-full p-6 border-b;
+  &__title,
+  &__description {
+    @apply w-full max-w-sm px-3 py-2 text-sm shadow-md;
+  }
+  &__tags {
+    @apply flex flex-wrap justify-start gap-3 mb-2;
+  }
+  &__tags label {
+    @apply py-0.5 px-2
+		text-slate-300
+		rounded-md cursor-pointer
+		border border-slate-200 shadow-md
+		bg-slate-50;
+  }
+  &__tags input:checked ~ label {
+    @apply text-white border-[#42b983] bg-primary;
+  }
+  &__submit-btn {
+    @apply w-full max-w-sm mt-2 p-2 text-white cursor-pointer rounded-md bg-primary;
+  }
+  &__cancel-btn {
+    @apply w-full max-w-sm
+		mb-1 p-2 -mt-1
+		text-primary
+		cursor-pointer rounded-md
+		border border-[#42b983]
+		bg-white;
+  }
+}
 </style>
