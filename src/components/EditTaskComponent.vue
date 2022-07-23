@@ -48,20 +48,20 @@ export default {
 
 <style scoped lang="postcss">
 .noEdit {
-  @apply absolute right-4 bottom-[21rem] xs:bottom-[19rem];
+  @apply absolute right-4 bottom-[20rem] xs:bottom-[18rem];
 }
 .tasks-list__details input,
 .tasks-list__details textarea {
   @apply w-full justify-start
-	my-2 mb-3 px-2 py-1
+	mt-1 mb-3 px-2 py-1
 	text-sm text-slate-500
-	shadow-md resize-none
+	shadow-inner resize-none
 	bg-white;
 }
 .tasks-list__details ul {
   @apply flex flex-wrap gap-x-2 gap-y-3 my-2;
 }
 .tasks-list__details small label {
-  @apply text-gray-400 py-0.5 px-2 cursor-pointer rounded-md shadow-md bg-slate-100;
+  @apply py-0.5 px-2 text-[11.2px] text-gray-400 cursor-pointer rounded-md shadow-md bg-white;
 }
 </style>

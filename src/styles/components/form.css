@@ -17,7 +17,7 @@
     @apply w-full
     mb-2 py-1.5 pl-4 pr-2
     text-sm font-normal
-    outline-none rounded-md
+    outline-none rounded-md shadow-inner
     border border-slate-300
     bg-slate-50;
   }

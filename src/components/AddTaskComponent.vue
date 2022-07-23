@@ -82,19 +82,19 @@ export default {
 
 <style scoped lang="postcss">
 .addTask {
-  @apply justify-items-center gap-4 w-full p-6 border-b;
+  @apply justify-items-center gap-3 w-full p-6 border-b;
   &__title,
   &__description {
-    @apply w-full max-w-sm px-3 py-2 text-sm shadow-md;
+    @apply w-full max-w-sm px-3 py-2 text-sm shadow-inner;
   }
   &__tags {
-    @apply flex flex-wrap justify-start gap-3 mb-2;
+    @apply flex flex-wrap justify-start gap-3 mt-1 mb-2;
   }
   &__tags label {
     @apply py-0.5 px-2
-		text-slate-300
+		text-[11.2px] text-slate-400
 		rounded-md cursor-pointer
-		border border-slate-200 shadow-md
+		border border-slate-200 shadow-inner
 		bg-slate-50;
   }
   &__tags input:checked ~ label {
@@ -105,7 +105,7 @@ export default {
   }
   &__cancel-btn {
     @apply w-full max-w-sm
-		mb-1 p-2 -mt-1
+		mb-1 p-2
 		text-primary
 		cursor-pointer rounded-md
 		border border-[#42b983]
