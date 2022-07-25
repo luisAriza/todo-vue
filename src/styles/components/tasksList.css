@@ -1,32 +1,55 @@
-.tasks-list__container {
-  @apply pb-2;
+.task-item {
+  @apply flex flex-wrap justify-between w-full py-4 border-b relative;
+  &__left {
+    @apply flex items-center gap-2 w-full max-w-xl;
+    & .task-title {
+      @apply h-6 text-left truncate;
+      &--show {
+        @apply h-auto text-clip overflow-auto;
+      }
+    }
+  }
+  &__right {
+    @apply flex items-center gap-4;
+    & .remove {
+      @apply block;
+    }
+    & .arrow {
+      @apply w-4 h-4 bg-arrow bg-center bg-cover bg-no-repeat cursor-pointer;
+    }
+    & .rotate {
+      @apply rotate-90;
+    }
+  }
+  &__details {
+    @apply gap-1
+    w-full
+    mt-3 sm:ml-7 px-3 pt-6 pb-5
+    rounded-md shadow-md
+    bg-slate-50;
+    & .description {
+      @apply w-full pr-10 text-start font-thin;
+    }
+    & .edit {
+      @apply w-6 h-6
+      bg-edit bg-center bg-cover bg-no-repeat
+      cursor-pointer
+      absolute right-5;
+    }
+    &-tags {
+      @apply flex flex-wrap justify-start items-center gap-2 mt-2;
+    }
+    &-tags small {
+      @apply bg-primary text-[11.2px] text-white sm:m-0 rounded-md px-2 py-0.5;
+    }
+  }
 }
-.tasks-list__container .list {
-  @apply grid;
-}
-.tasks-list__container .list li {
-  @apply grid sm:flex items-center flex-wrap sm:justify-between w-full py-4 border-b relative sm:flex;
-}
-.tasks-list__title {
-  @apply flex items-center gap-2;
-}
-.task-title {
-  @apply h-6 w-40 text-left truncate md:w-60;
-}
-.tasks-list__title .show-title {
-  @apply h-auto text-clip overflow-auto;
+
+.remove {
+  @apply w-3 h-3 bg-remove bg-center bg-cover bg-no-repeat cursor-pointer;
 }
 ::-webkit-scrollbar {
   display: none;
-}
-.tasks-list__tags {
-  @apply flex flex-wrap justify-start items-center gap-2 mt-2 ml-2;
-}
-.tasks-list__tags small {
-  @apply bg-primary text-white sm:m-0 rounded-md px-2;
-}
-.tasks-list__container small input:checked ~ label {
-  @apply bg-primary text-white;
 }
 
 .check {
@@ -36,36 +59,20 @@
   @apply w-5 h-5 p-[10px] bg-uncheck bg-center bg-cover bg-no-repeat cursor-pointer invert-[70%];
 }
 
-.checked .task-title {
-  @apply text-gray-400;
-}
-.checked .tasks-list__details {
-  @apply bg-gray-100 text-gray-400;
-}
-.checked .tasks-list__tags small {
-  @apply bg-gray-400;
-}
-.checked .edit {
-  @apply hidden;
-}
-.checked .arrow {
-  @apply grayscale;
-}
-
-.edit {
-  @apply w-6 h-6 bg-edit bg-center bg-cover bg-no-repeat cursor-pointer
-  absolute top-4 right-24 sm:top-4 sm:right-24;
-}
-.arrow {
-  @apply w-4 h-4 bg-arrow bg-center bg-cover bg-no-repeat cursor-pointer
-  absolute top-5 right-[3.3rem] sm:top-5 sm:right-12;
-}
-.rotate {
-  @apply rotate-90;
-}
-.remove {
-  @apply w-3 h-3 bg-remove bg-center bg-cover bg-no-repeat cursor-pointer;
-}
-ul > .remove {
-  @apply absolute top-[22px] right-2 sm:right-1;
+.checked {
+  & .task-title {
+    @apply text-gray-400;
+  }
+  & .task-item__details {
+    @apply bg-gray-50 text-gray-400;
+  }
+  & .task-item__details-tags small {
+    @apply bg-gray-400;
+  }
+  & .edit {
+    @apply hidden;
+  }
+  & .arrow {
+    @apply grayscale;
+  }
 }

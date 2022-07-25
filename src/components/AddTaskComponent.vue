@@ -1,6 +1,6 @@
 <template lang="pug">
 form.addTask(@submit.prevent="addTask()" :class="addClass")
-	h3 Write your task
+	h3.text-lg.font-semibold New task
 	input.addTask__title(
 		id="title",
 		type="text"

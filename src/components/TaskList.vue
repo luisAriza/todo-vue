@@ -1,34 +1,25 @@
 <template lang="pug">
-.tasks-list__container
-	ul.list
-		li(
-			v-for='(task, i) in this.$parent.tasksList',
+.tasks__container.pb-2
+	ul.tasks-list.grid
+		li.task-item(v-for='(task, i) in this.$parent.tasksList',
 			:key='i',
 			:class="classChecked(task)")
-			ul.tasks-list__title
-				span(
-					@click='taskCompleted(task)',
+			.task-item__left
+				span(@click='taskCompleted(task)',
 					:class="classCheck(task)")
-				span(
-					class="task-title",
-					:class="task.details ? 'show-title' : ''") {{ task.title }}
-			ul
-				span(
-					v-if='!task.edited',
-					@click="edit(task, i)",
-					class="edit")
-				span(
-					v-else,
-					@click="doneEdit(task, i)"
-					class="edit")
-				span(
-					@click="taskDetails(task)",
+				span(class="task-title",
+					:class="task.details ? 'task-title--show' : ''") {{ task.title }}
+			.task-item__right
+				span(@click="taskDetails(task)",
 					class="arrow",
 					:class="task.details ? 'rotate' : ''")
 				span(@click='remove(i)', class="remove")
-			.tasks-list__details(:class="task.details ? 'flex' : 'hidden'")
+			.task-item__details(:class="task.details ? 'grid' : 'hidden'")
 				span.description {{ task.description }}
-				ul.tasks-list__tags
+				span(v-if='!task.edited',
+					@click="edit(task, i)",
+					class="edit")
+				ul.task-item__details-tags
 					small(v-for='tag in task.tags') {{ tag }}
 				EditTask(:task="task" :i="i")
 </template>
@@ -106,16 +97,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="postcss">
-.tasks-list__details {
-  @apply flex-wrap justify-start gap-1
-  w-full
-  mt-3 sm:ml-7 px-3 py-6
-  rounded-md shadow-md
-  bg-blue-50;
-}
-.tasks-list__details .description {
-  @apply w-full text-start font-thin;
-}
-</style>
