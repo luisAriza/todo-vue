@@ -16,11 +16,11 @@
 				span(@click='remove(i)', class="remove")
 			.task-item__details(:class="task.details ? 'grid' : 'hidden'")
 				span.description {{ task.description }}
+				ul.task-item__details-tags
+					small(v-for='tag in task.tags') {{ tag }}
 				span(v-if='!task.edited',
 					@click="edit(task, i)",
 					class="edit")
-				ul.task-item__details-tags
-					small(v-for='tag in task.tags') {{ tag }}
 				EditTask(:task="task" :i="i")
 </template>
 

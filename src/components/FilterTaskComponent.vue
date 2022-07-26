@@ -34,7 +34,7 @@ export default {
 
 <style scoped lang="postcss">
 .filter {
-  @apply grid sm:grid-cols-3 items-center py-6 border-b;
+  @apply grid sm:grid-cols-3 items-center pb-8 border-b;
   & .add {
     @apply sm:justify-self-end
     w-full sm:w-44
@@ -61,7 +61,7 @@ export default {
     bg-slate-50;
   }
   &__tags input:checked ~ label {
-    @apply text-white bg-primary border-[#42b983];
+    @apply text-white bg-slate-500 border-slate-500;
   }
 }
 </style>

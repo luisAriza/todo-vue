@@ -20,7 +20,7 @@ module.exports = {
         secondary: "#2c3e50",
       },
       screens: {
-        xs: "453px",
+        xs: "471px",
       },
     },
   },

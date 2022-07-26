@@ -1,18 +1,13 @@
 <template lang="pug">
 Navbar
-.home.w-full.px-2
-  .flex.items-center.justify-center.gap-4.pt-8
-    img(src="../assets/project.svg" width="140" alt="logo")
-    h1(class="sm:block hidden font-bold text-3xl uppercase") Estate Task
+.home
+  header.header
+    h1.title TASKS ASSIST
+    img(src="../assets/project.svg" width="160" height="152" alt="logo")
+    h2.tasks-left
+      span.text-blue-400 {{ tasksUncompleted }}
+      |  / {{ tasksCreated.length }} tasks left
   section.tasks
-    .info
-      .info__title.text-start
-        p.text-xl.font-bold Immediate Steps
-        p.text-gray-400 These are your immediate steps to complete
-      .info__task-left.text-start.mt-4.mb-6
-        p.text-slate-500.bg-blue-50.px-4.py-1.w-max.rounded-md
-          span.text-blue-400 {{ tasksUncompleted }}
-          |  / {{ tasksCreated.length }} tasks left
     FilterTask
     AddTask
     TaskList
@@ -92,10 +87,19 @@ export default {
 </script>
 
 <style scoped lang="postcss">
-.tasks {
-  @apply grid w-full max-w-[50rem] mx-auto mb-10 p-6 rounded-lg shadow-md border bg-white;
-}
-.info {
-  @apply sm:flex sm:justify-between sm:pb-4 px-2 sm:px-4 border-b;
+.home {
+  @apply grid w-full max-w-[50rem] mx-auto my-8 px-2;
+  & .header {
+    @apply flex items-center justify-end sm:justify-between gap-4 px-5;
+  }
+  & .title {
+    @apply hidden sm:block text-4xl font-bold;
+  }
+  & .tasks-left {
+    @apply self-start w-40 m-2 p-1 text-slate-500 font-semibold rounded-md bg-blue-50;
+  }
+  & .tasks {
+    @apply grid w-full p-6 pt-8 rounded-lg shadow-md border bg-white;
+  }
 }
 </style>
