@@ -1,6 +1,6 @@
-# To-Do app con VueJs
+# To-Do app
 
-Aplicacion **to-do** desarrollada con el framework [**Vue**](https://vuejs.org/), además de:
+Aplicacion **to-do** desarrollada con el framework [**VueJs**](https://vuejs.org/), además de:
 
 - [**Pug**](https://pugjs.org/api/getting-started.html): Preprocesador de HTML
 - [**PostCSS**](https://postcss.org/): Preprocesador de CSS 
